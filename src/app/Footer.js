@@ -1,5 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
+import { NavLink as RouterLink } from 'react-router-dom'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBook, faPenFancy } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faBook, faPenFancy)
 
 const NavBar = styled.nav`
   align-items: center;
@@ -9,33 +15,37 @@ const NavBar = styled.nav`
   color: #ffffff;
   display: flex;
   font-size: 2rem;
-  justify-content: center;
+  justify-content: space-evenly;
   position: relative;
 `
 
-const NavLink = styled.a`
+const NavLink = styled(RouterLink)`
   align-items: center;
-  background-color: white;
-  border: solid 1px #979797;
-  border-radius: 20px;
-  bottom: 20px;
-  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
   display: flex;
-  height: 95px;
   justify-content: center;
-  position: relative;
   text-decoration: none;
   width: 65px;
-`
+  color: #ffffff;
 
+  &.active {
+    background-color: white;
+    border: solid 1px #979797;
+    border-radius: 20px;
+    bottom: 20px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+    position: relative;
+    height: 95px;
+    color: #007fbf;
+  }
+`
 export function Footer() {
   return (
     <NavBar>
-      <NavLink href="/">
-        <img
-          src="./icons/listentries-active.png"
-          alt="list diary entries navigation icon"
-        />
+      <NavLink exact to="/">
+        <FontAwesomeIcon icon="book" />
+      </NavLink>
+      <NavLink to="/create">
+        <FontAwesomeIcon icon="pen-fancy" />
       </NavLink>
     </NavBar>
   )
