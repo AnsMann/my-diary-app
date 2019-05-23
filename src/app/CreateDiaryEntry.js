@@ -34,16 +34,17 @@ const SaveButton = styled.button`
   font-size: 1.5rem;
 `
 
-export function CreateDiaryEntryForm() {
+export function CreateDiaryEntryForm({ handleSubmit }) {
+  console.log(handleSubmit)
   return (
-    <DiaryEntryForm>
+    <DiaryEntryForm onSubmit={event => handleSubmit(event)}>
       <label>
         <h3>Entry date</h3>
-        <StyledInput type="text" placeholder="dd-mm-yyyy" />
+        <StyledInput type="text" placeholder="dd-mm-yyyy" name="date" />
       </label>
       <label>
         <h3>Topic of the day</h3>
-        <StyledInput type="text" placeholder="Enter topic" />
+        <StyledInput type="text" placeholder="Enter topic" name="topic" />
       </label>
       <label>
         <h3>Todays rating</h3>

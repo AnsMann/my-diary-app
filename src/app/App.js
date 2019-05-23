@@ -33,6 +33,19 @@ export default function App() {
     },
   ])
 
+  function handleSubmit(event) {
+    const { target } = event
+    event.preventDefault()
+    setDiaryEntries([
+      ...diaryEntries,
+      {
+        title: target.topic.value,
+        date: target.date.value,
+        rating: target.dayrating.value,
+      },
+    ])
+  }
+
   return (
     <Router>
       <GlobalStyles />
@@ -53,7 +66,7 @@ export default function App() {
           render={() => (
             <>
               <Header title={'Create Diary Entries'} />
-              <CreateDiaryEntryForm />
+              <CreateDiaryEntryForm handleSubmit={handleSubmit} />
             </>
           )}
         />

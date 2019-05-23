@@ -9,6 +9,7 @@ const DiaryEntryCard = styled.li`
   display: grid;
   grid-template-columns: 0.8fr auto;
   grid-template-rows: repeat(4, 30px);
+  height: 130px;
   list-style: none;
   margin-bottom: 40px;
   white-space: nowrap;
@@ -49,10 +50,14 @@ export function DiaryEntry({ entries }) {
       <img src="./icons/diary-entry.png" alt="diary entry book icon" />
       <h2>Diary Entry from {entry.date}</h2>
       <h3>Topic of the day</h3>
-      <h4>{entry.title}</h4>
-      <h3>
-        This day was: <span>{evaluateRating(entry.rating)}</span>
-      </h3>
+      <h4>{entry.title || 'No Topic'}</h4>
+      {entry.rating ? (
+        <h3>
+          This day was: <span>{evaluateRating(entry.rating)}</span>
+        </h3>
+      ) : (
+        <h3>No rating of this day</h3>
+      )}
     </DiaryEntryCard>
   ))
 }
