@@ -6,6 +6,7 @@ import GlobalStyles from '../misc/GlobalStyles'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { DiaryEntriesList } from './DiaryEntriesList'
+import { CreateDiaryEntryForm } from './CreateDiaryEntry'
 
 const Grid = styled.div`
   display: grid;
@@ -39,12 +40,22 @@ export default function App() {
         <Route
           exact
           path="/"
-          render={() => <Header title={'My Diary Entries'} />}
+          render={() => (
+            <>
+              <Header title={'My Diary Entries'} />
+              <DiaryEntriesList diaryEntries={diaryEntries} />
+            </>
+          )}
         />
         <Route
           exact
-          path="/"
-          render={() => <DiaryEntriesList diaryEntries={diaryEntries} />}
+          path="/create"
+          render={() => (
+            <>
+              <Header title={'Create Diary Entries'} />
+              <CreateDiaryEntryForm />
+            </>
+          )}
         />
         <Footer />
       </Grid>
