@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import styled from 'styled-components'
 import GlobalStyles from '../misc/GlobalStyles'
-import { Footer } from './Footer'
+
 import { Header } from './Header'
+import { Footer } from './Footer'
 import { DiaryEntriesList } from './DiaryEntriesList'
 
 const Grid = styled.div`

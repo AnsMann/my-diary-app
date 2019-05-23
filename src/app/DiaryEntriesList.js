@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { DiaryEntryCard } from './DiaryEntryCard'
+import { DiaryEntry } from './DiaryEntry'
 
 const DiaryEntriesContainer = styled.ul`
   display: flex;
@@ -12,7 +12,7 @@ const DiaryEntriesContainer = styled.ul`
 export function DiaryEntriesList({ diaryEntries }) {
   return (
     <DiaryEntriesContainer>
-      <DiaryEntryCard entries={diaryEntries} />
+      <DiaryEntry entries={diaryEntries} />
     </DiaryEntriesContainer>
   )
 }

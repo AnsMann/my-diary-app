@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const DiaryCard = styled.li`
+const DiaryEntryCard = styled.li`
   align-items: center;
   border: solid 1px #007fbf;
   border-radius: 10px;
@@ -43,9 +43,9 @@ const DiaryCard = styled.li`
   }
 `
 
-export function DiaryEntryCard({ entries }) {
+export function DiaryEntry({ entries }) {
   return entries.map(entry => (
-    <DiaryCard key={entry.title}>
+    <DiaryEntryCard key={entry.title}>
       <img src="./icons/diary-entry.png" alt="diary entry book icon" />
       <h2>Diary Entry from {entry.date}</h2>
       <h3>Topic of the day</h3>
@@ -53,16 +53,15 @@ export function DiaryEntryCard({ entries }) {
       <h3>
         This day was: <span>{evaluateRating(entry.rating)}</span>
       </h3>
-    </DiaryCard>
+    </DiaryEntryCard>
   ))
 }
 
 function evaluateRating(rating) {
-  if (rating === 1) {
-    return '😔'
-  } else if (rating === 2) {
-    return '😶'
-  } else {
-    return '😃'
+  const ratingMap = {
+    1: '😔',
+    2: '😶',
+    3: '😃',
   }
+  return ratingMap[rating]
 }

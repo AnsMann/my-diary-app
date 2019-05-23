@@ -1,10 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Navbar = styled.nav`
+const NavBar = styled.nav`
   align-items: center;
   background: #007fbf;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   color: #ffffff;
   display: flex;
   font-size: 2rem;
@@ -29,13 +30,13 @@ const NavLink = styled.a`
 
 export function Footer() {
   return (
-    <Navbar>
+    <NavBar>
       <NavLink href="/">
         <img
           src="./icons/listentries-active.png"
           alt="list diary entries navigation icon"
         />
       </NavLink>
-    </Navbar>
+    </NavBar>
   )
 }
