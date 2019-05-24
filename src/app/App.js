@@ -2,10 +2,15 @@ import React, { useState } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import styled from 'styled-components'
 import GlobalStyles from '../misc/GlobalStyles'
+import moment from 'moment'
+import 'moment/locale/de'
 
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { DiaryEntriesList } from './DiaryEntriesList'
+import { CreateDiaryEntryForm } from './CreateDiaryEntry'
+
+moment.locale('de')
 
 const Grid = styled.div`
   display: grid;
@@ -32,6 +37,20 @@ export default function App() {
     },
   ])
 
+  function handleSubmit(event, date) {
+    const { target } = event
+    const pickedDate = moment(date).format('L')
+    event.preventDefault()
+    setDiaryEntries([
+      ...diaryEntries,
+      {
+        title: target.topic.value,
+        date: pickedDate,
+        rating: target.dayrating.value,
+      },
+    ])
+  }
+
   return (
     <Router>
       <GlobalStyles />
@@ -39,12 +58,22 @@ export default function App() {
         <Route
           exact
           path="/"
-          render={() => <Header title={'My Diary Entries'} />}
+          render={() => (
+            <>
+              <Header title={'My Diary Entries'} />
+              <DiaryEntriesList diaryEntries={diaryEntries} />
+            </>
+          )}
         />
         <Route
           exact
-          path="/"
-          render={() => <DiaryEntriesList diaryEntries={diaryEntries} />}
+          path="/create"
+          render={() => (
+            <>
+              <Header title={'Create Diary Entries'} />
+              <CreateDiaryEntryForm handleSubmit={handleSubmit} />
+            </>
+          )}
         />
         <Footer />
       </Grid>
