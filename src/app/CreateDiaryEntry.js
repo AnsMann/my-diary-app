@@ -1,6 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { DayRating } from './DayRating'
+import 'react-dates/initialize'
+import { SingleDatePicker } from 'react-dates'
+import 'react-dates/lib/css/_datepicker.css'
+import moment from 'moment'
+import 'moment/locale/de'
+
+moment.locale('de')
 
 const DiaryEntryForm = styled.form`
   display: grid;
@@ -35,12 +42,24 @@ const SaveButton = styled.button`
 `
 
 export function CreateDiaryEntryForm({ handleSubmit }) {
-  console.log(handleSubmit)
+  const [date, setDate] = useState()
+  const [focused, setFocus] = useState(false)
   return (
-    <DiaryEntryForm onSubmit={event => handleSubmit(event)}>
+    <DiaryEntryForm onSubmit={event => handleSubmit(event, date)}>
       <label>
         <h3>Entry date</h3>
-        <StyledInput type="text" placeholder="dd-mm-yyyy" name="date" />
+        <SingleDatePicker
+          block={true}
+          placeholder={'Enter date'}
+          displayFormat={() => moment.localeData().longDateFormat('L')}
+          showClearDate={true}
+          isOutsideRange={() => false}
+          numberOfMonths={1}
+          date={date}
+          onDateChange={date => setDate(date)}
+          focused={focused}
+          onFocusChange={({ focused }) => setFocus(focused)}
+        />
       </label>
       <label>
         <h3>Topic of the day</h3>

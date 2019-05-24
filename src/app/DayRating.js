@@ -13,7 +13,6 @@ const StyledRatingInput = styled.div`
       border-color: #007fbf;
       &:after {
         transform: scale(1);
-        opacity: 1;
       }
     }
   }
@@ -27,17 +26,17 @@ const StyledRatingInput = styled.div`
     margin-right: 10px;
     width: 20px;
     height: 20px;
-    border: 1.5px solid #007fbf;
-    border-radius: 100%;
+    border: 2px solid #007fbf;
+    border-radius: 50%;
     top: 5px;
     &:after {
       content: '';
       position: absolute;
-      top: 4px;
+      top: 3px;
       left: 3px;
       width: 10px;
       height: 10px;
-      border-radius: 100%;
+      border-radius: 50%;
       background: #007fbf;
       transform: scale(0);
       transition: all 0.2s ease;

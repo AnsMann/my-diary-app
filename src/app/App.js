@@ -2,11 +2,15 @@ import React, { useState } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import styled from 'styled-components'
 import GlobalStyles from '../misc/GlobalStyles'
+import moment from 'moment'
+import 'moment/locale/de'
 
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { DiaryEntriesList } from './DiaryEntriesList'
 import { CreateDiaryEntryForm } from './CreateDiaryEntry'
+
+moment.locale('de')
 
 const Grid = styled.div`
   display: grid;
@@ -33,14 +37,15 @@ export default function App() {
     },
   ])
 
-  function handleSubmit(event) {
+  function handleSubmit(event, date) {
     const { target } = event
+    const pickedDate = moment(date).format('L')
     event.preventDefault()
     setDiaryEntries([
       ...diaryEntries,
       {
         title: target.topic.value,
-        date: target.date.value,
+        date: pickedDate,
         rating: target.dayrating.value,
       },
     ])
