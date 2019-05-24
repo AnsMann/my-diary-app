@@ -18,9 +18,6 @@ const DiaryEntryForm = styled.form`
   h3 {
     color: #007fbf;
   }
-  input {
-    margin-top: 15px;
-  }
   label {
     margin-bottom: 15px;
   }

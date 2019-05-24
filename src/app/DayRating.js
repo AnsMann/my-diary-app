@@ -7,8 +7,8 @@ const StyledRatingInput = styled.div`
   justify-content: space-around;
   padding: 1px;
   input {
-    margin-right: 15px;
     display: none;
+    margin-right: 15px;
     &:checked + span {
       border-color: #007fbf;
       &:after {
@@ -20,26 +20,26 @@ const StyledRatingInput = styled.div`
     position: relative;
   }
   span {
-    position: relative;
-    display: block;
-    float: left;
-    margin-right: 10px;
-    width: 20px;
-    height: 20px;
     border: 2px solid #007fbf;
     border-radius: 50%;
+    display: block;
+    float: left;
+    height: 20px;
+    margin-right: 10px;
+    position: relative;
     top: 5px;
+    width: 20px;
     &:after {
+      background: #007fbf;
+      border-radius: 50%;
       content: '';
+      height: 10px;
+      left: 3px;
       position: absolute;
       top: 3px;
-      left: 3px;
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #007fbf;
       transform: scale(0);
       transition: all 0.2s ease;
+      width: 10px;
     }
   }
 `

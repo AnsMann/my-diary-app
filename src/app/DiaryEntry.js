@@ -12,8 +12,8 @@ const DiaryEntryCard = styled.li`
   height: 130px;
   list-style: none;
   margin-bottom: 40px;
-  white-space: nowrap;
   overflow: hidden;
+  white-space: nowrap;
 
   h2,
   h3,
@@ -21,8 +21,8 @@ const DiaryEntryCard = styled.li`
     color: #007fbf;
     font-size: 1rem;
     justify-self: left;
-    padding: 5px;
     margin: 0;
+    padding: 5px;
   }
   h3 {
     font-size: 0.8rem;
@@ -35,8 +35,8 @@ const DiaryEntryCard = styled.li`
     align-self: center;
     grid-row: span 4;
     justify-self: center;
-    padding: 5px;
     margin: 0 5px;
+    padding: 5px;
   }
   span {
     font-size: 1.3rem;
