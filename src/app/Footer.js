@@ -21,21 +21,23 @@ const NavBar = styled.nav`
 
 const NavLink = styled(RouterLink)`
   align-items: center;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  color: #ffffff;
   display: flex;
   justify-content: center;
   text-decoration: none;
   width: 65px;
-  color: #ffffff;
+  height: 70px;
 
   &.active {
     background-color: white;
     border: solid 1px #979797;
-    border-radius: 20px;
     bottom: 20px;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
-    position: relative;
-    height: 95px;
     color: #007fbf;
+    height: 95px;
+    position: relative;
   }
 `
 export function Footer() {
