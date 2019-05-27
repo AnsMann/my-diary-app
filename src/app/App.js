@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import GlobalStyles from '../misc/GlobalStyles'
 import moment from 'moment'
 import 'moment/locale/de'
+import uid from 'uid'
 
 import { Header } from './Header'
 import { Footer } from './Footer'
@@ -26,18 +27,26 @@ export default function App() {
 
   useEffect(() => setLocalStorage('my diary', diaryEntries), [diaryEntries])
 
-  function handleSubmit(event, date) {
+  function handleSubmit(event, date, history) {
     const { target } = event
+
     const pickedDate = moment(date).format('L')
     event.preventDefault()
     setDiaryEntries([
-      ...diaryEntries,
       {
         title: target.topic.value,
         date: pickedDate,
         rating: target.dayrating.value,
+        content: target['content in own words'].value,
+        positive: target['remember positive'].value,
+        negative: target['remember negative'].value,
+        coachFeedback: target['coach feedback'].value,
+        additional: target['anything else'].value,
+        id: uid(),
       },
+      ...diaryEntries,
     ])
+    history.push('/')
   }
 
   return (
@@ -57,10 +66,10 @@ export default function App() {
         <Route
           exact
           path="/create"
-          render={() => (
+          render={props => (
             <>
               <Header title={'Create Diary Entries'} />
-              <CreateDiaryEntryForm handleSubmit={handleSubmit} />
+              <CreateDiaryEntryForm handleSubmit={handleSubmit} {...props} />
             </>
           )}
         />
