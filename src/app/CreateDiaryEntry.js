@@ -6,7 +6,7 @@ import { SingleDatePicker } from 'react-dates'
 import 'react-dates/lib/css/_datepicker.css'
 import moment from 'moment'
 import 'moment/locale/de'
-import { Questions } from './QuestionCatalogue'
+import { QuestionCatalogue } from './QuestionCatalogue'
 
 moment.locale('de')
 
@@ -61,9 +61,9 @@ export function CreateDiaryEntryForm({ handleSubmit, history }) {
       </label>
       <label>
         <h3>Topic of the day</h3>
-        <StyledInput type="text" placeholder="Enter topic" name="topic" />
+        <StyledInput placeholder="Enter topic" name="topic" />
       </label>
-      <Questions />
+      <QuestionCatalogue />
       <label>
         <h3>Todays rating</h3>
         <DayRating />
