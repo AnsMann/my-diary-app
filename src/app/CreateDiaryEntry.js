@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { DayRating } from './DayRating'
+import { DayRatingInput } from './DayRatingInput'
 import 'react-dates/initialize'
 import { SingleDatePicker } from 'react-dates'
 import 'react-dates/lib/css/_datepicker.css'
@@ -66,7 +66,7 @@ export function CreateDiaryEntryForm({ handleSubmit, history }) {
       <QuestionCatalogue />
       <label>
         <h3>Todays rating</h3>
-        <DayRating />
+        <DayRatingInput />
       </label>
       <SaveButton>Save</SaveButton>
     </DiaryEntryForm>

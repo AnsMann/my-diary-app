@@ -1,5 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+import { ShowDayRating } from './ShowDayRating'
+
+const CardLink = styled(Link)`
+  text-decoration: none;
+`
 
 const DiaryEntryCard = styled.li`
   align-items: center;
@@ -46,27 +52,14 @@ const DiaryEntryCard = styled.li`
 
 export function DiaryEntry({ entries }) {
   return entries.map(entry => (
-    <DiaryEntryCard key={entry.title}>
-      <img src="./icons/diary-entry.png" alt="diary entry book icon" />
-      <h2>Diary Entry from {entry.date}</h2>
-      <h3>Topic of the day</h3>
-      <h4>{entry.title || 'No Topic'}</h4>
-      {entry.rating ? (
-        <h3>
-          This day was: <span>{evaluateRating(entry.rating)}</span>
-        </h3>
-      ) : (
-        <h3>No rating of this day</h3>
-      )}
-    </DiaryEntryCard>
+    <CardLink to={`/cards/${entry.id}`} key={entry.id}>
+      <DiaryEntryCard>
+        <img src="./icons/diary-entry.png" alt="diary entry book icon" />
+        <h2>Diary Entry from {entry.date}</h2>
+        <h3>Topic of the day</h3>
+        <h4>{entry.title || 'No Topic'}</h4>
+        <ShowDayRating entryRating={entry.rating} />>
+      </DiaryEntryCard>
+    </CardLink>
   ))
-}
-
-function evaluateRating(rating) {
-  const ratingMap = {
-    1: '😔',
-    2: '😶',
-    3: '😃',
-  }
-  return ratingMap[rating]
 }

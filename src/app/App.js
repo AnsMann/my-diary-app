@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Route,
+  ScrollRestoration,
+} from 'react-router-dom'
 import styled from 'styled-components'
 import GlobalStyles from '../misc/GlobalStyles'
 import moment from 'moment'
@@ -11,6 +15,7 @@ import { Footer } from './Footer'
 import { DiaryEntriesList } from './DiaryEntriesList'
 import { CreateDiaryEntryForm } from './CreateDiaryEntry'
 import { setLocalStorage, getLocalStorage } from './services'
+import { DiaryEntryDetails } from './DiaryEntryDetails'
 
 moment.locale('de')
 
@@ -49,6 +54,11 @@ export default function App() {
     history.push('/')
   }
 
+  function handleBackClick(history) {
+    history.goBack()
+  }
+  useEffect(() => console.log(window.history), [])
+
   return (
     <Router>
       <GlobalStyles />
@@ -72,6 +82,20 @@ export default function App() {
               <CreateDiaryEntryForm
                 handleSubmit={handleSubmit}
                 history={props.history}
+              />
+            </>
+          )}
+        />
+        <Route
+          exact
+          path="/cards/:id"
+          render={props => (
+            <>
+              <Header title={'My Diary Entries'} />
+              <DiaryEntryDetails
+                diaryEntries={diaryEntries}
+                handleBackClick={handleBackClick}
+                {...props}
               />
             </>
           )}
