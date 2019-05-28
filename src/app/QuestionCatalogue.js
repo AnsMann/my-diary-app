@@ -15,37 +15,32 @@ const Answer = styled.textarea`
   text-align: justify;
 `
 
-export function Questions() {
+export function QuestionCatalogue() {
   const questions = [
     {
-      questionNumber: 1,
       question: 'Was waren die wichtigsten Inhalte in meinen eigenen Worten?',
       name: 'content in own words',
     },
     {
-      questionNumber: 2,
       question: 'Als besonders positiv erinnere ich...',
       name: 'remember positive',
     },
     {
-      questionNumber: 3,
       question: 'Als besonders negativ erinnere ich...',
       name: 'remember negative',
     },
     {
-      questionNumber: 4,
       question: 'Welches Feedback würde ich meinem Coach heute geben?',
       name: 'coach feedback',
     },
     {
-      questionNumber: 5,
       question: 'Zudem ist mir noch folgendes wichtig...',
       name: 'anything else',
     },
   ]
 
   return questions.map(questionObject => (
-    <label key={questionObject.questionNumber}>
+    <label key={questions.indexOf(questionObject)}>
       <Styledquestion>{questionObject.question}</Styledquestion>
       <Answer rows="5" placeholder="Type here" name={questionObject.name} />
     </label>

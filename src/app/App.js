@@ -69,7 +69,10 @@ export default function App() {
           render={props => (
             <>
               <Header title={'Create Diary Entries'} />
-              <CreateDiaryEntryForm handleSubmit={handleSubmit} {...props} />
+              <CreateDiaryEntryForm
+                handleSubmit={handleSubmit}
+                history={props.history}
+              />
             </>
           )}
         />
