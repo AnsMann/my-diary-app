@@ -6,6 +6,7 @@ import { SingleDatePicker } from 'react-dates'
 import 'react-dates/lib/css/_datepicker.css'
 import moment from 'moment'
 import 'moment/locale/de'
+import { Questions } from './QuestionCatalogue'
 
 moment.locale('de')
 
@@ -38,11 +39,11 @@ const SaveButton = styled.button`
   font-size: 1.5rem;
 `
 
-export function CreateDiaryEntryForm({ handleSubmit }) {
-  const [date, setDate] = useState()
+export function CreateDiaryEntryForm({ handleSubmit, history }) {
+  const [date, setDate] = useState(moment())
   const [focused, setFocus] = useState(false)
   return (
-    <DiaryEntryForm onSubmit={event => handleSubmit(event, date)}>
+    <DiaryEntryForm onSubmit={event => handleSubmit(event, date, history)}>
       <label>
         <h3>Entry date</h3>
         <SingleDatePicker
@@ -62,6 +63,7 @@ export function CreateDiaryEntryForm({ handleSubmit }) {
         <h3>Topic of the day</h3>
         <StyledInput type="text" placeholder="Enter topic" name="topic" />
       </label>
+      <Questions />
       <label>
         <h3>Todays rating</h3>
         <DayRating />
