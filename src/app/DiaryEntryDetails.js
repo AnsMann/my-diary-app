@@ -56,7 +56,6 @@ export function DiaryEntryDetails({
   diaryEntries,
   handleBackClick,
   history,
-  location,
 }) {
   const entryIndex = findIndex(match.params.id, diaryEntries)
   const {
@@ -69,17 +68,10 @@ export function DiaryEntryDetails({
     coachFeedback,
     additional,
   } = diaryEntries[entryIndex]
-  console.log(
-    'match:',
-    match,
-    'location key:',
-    location.key,
-    'history:',
-    history
-  )
+
   return (
     <EntryDetails>
-      <ArrowBack onClick={() => handleBackClick(history, match.params.id)}>
+      <ArrowBack onClick={() => handleBackClick(history)}>
         <FontAwesomeIcon icon={faLongArrowAltLeft} />
       </ArrowBack>
       <h2>Dear Diary from {date}</h2>
