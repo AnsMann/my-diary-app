@@ -37,6 +37,7 @@ const SaveButton = styled.button`
   border-radius: 10px;
   color: #ffffff;
   font-size: 1.5rem;
+  height: 60px;
 `
 
 export function CreateDiaryEntryForm({ handleSubmit, history }) {

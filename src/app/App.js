@@ -5,6 +5,7 @@ import GlobalStyles from '../misc/GlobalStyles'
 import moment from 'moment'
 import 'moment/locale/de'
 import uid from 'uid'
+import ScrollMemory from 'react-router-scroll-memory'
 
 import { Header } from './Header'
 import { Footer } from './Footer'
@@ -58,6 +59,7 @@ export default function App() {
     <Router>
       <GlobalStyles />
       <Grid>
+        <ScrollMemory elementID="diary" />
         <Route
           exact
           path="/"
