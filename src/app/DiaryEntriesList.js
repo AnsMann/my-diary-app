@@ -9,7 +9,7 @@ const DiaryEntriesContainer = styled.ul`
 
 export function DiaryEntriesList({ diaryEntries }) {
   return (
-    <DiaryEntriesContainer>
+    <DiaryEntriesContainer id="diary">
       <DiaryEntry entries={diaryEntries} />
     </DiaryEntriesContainer>
   )
