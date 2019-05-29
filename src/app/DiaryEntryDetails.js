@@ -13,7 +13,6 @@ const EntryDetails = styled.section`
   border-radius: 10px;
   margin: 30px 20px 20px;
   padding: 20px;
-  position: relativ;
   overflow: scroll;
   color: #007fbf;
   scroll h2,
