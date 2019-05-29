@@ -44,7 +44,7 @@ const StyledRatingInput = styled.div`
   }
 `
 
-export function DayRating() {
+export function DayRatingInput() {
   const ratingOptions = [
     {
       rating: '3',
