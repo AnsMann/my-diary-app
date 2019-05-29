@@ -57,7 +57,6 @@ export default function App() {
   function handleBackClick(history) {
     history.goBack()
   }
-  useEffect(() => console.log(window.history), [])
 
   return (
     <Router>

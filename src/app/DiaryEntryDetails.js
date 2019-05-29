@@ -79,7 +79,7 @@ export function DiaryEntryDetails({
   )
   return (
     <EntryDetails>
-      <ArrowBack onClick={() => handleBackClick(history)}>
+      <ArrowBack onClick={() => handleBackClick(history, match.params.id)}>
         <FontAwesomeIcon icon={faLongArrowAltLeft} />
       </ArrowBack>
       <h2>Dear Diary from {date}</h2>
@@ -87,9 +87,9 @@ export function DiaryEntryDetails({
       <p>{title}</p>
       <h3>Die wichtigsten Inhalte heute waren</h3>
       <p>{content}</p>
-      <h3>Besonders positiv erinner ich</h3>
+      <h3>Besonders positiv erinnere ich</h3>
       <p>{positive}</p>
-      <h3>Besonders negativ erinner ich</h3>
+      <h3>Besonders negativ erinnere ich</h3>
       <p>{negative}</p>
       <h3>Meinem Coach würde ich sagen</h3>
       <p>{coachFeedback}</p>
