@@ -33,9 +33,12 @@ const ResultArea = styled.section`
   padding: 15px;
   height: 400px;
   overflow: scroll;
+  p {
+    text-align: center;
+  }
 `
 
-const StyledInput = styled.input`
+const StyledSearch = styled.input`
   border: solid 1px #007fbf;
   border-radius: 10px;
   font-size: 1.3rem;
@@ -46,6 +49,10 @@ const StyledInput = styled.input`
 const StyledDiv = styled.div`
   border: solid 1px #007fbf;
   border-radius: 10px;
+`
+const SearchHelp = styled.span`
+  margin: 10px;
+  font-size: 0.8rem;
 `
 
 const Line = styled.div`
@@ -73,10 +80,12 @@ export function ShareDiaryEntry({ match, diaryEntries }) {
         <SearchArea>
           <h2>Diary Entry from {diaryEntries[entryIndex].date}</h2>
           <p>share with</p>
-          <StyledInput
+          <StyledSearch
             type="search"
+            placeholder="Search here"
             onChange={event => setSearchInput(event.target.value.toLowerCase())}
           />
+          <SearchHelp>Search for channels with #</SearchHelp>
         </SearchArea>
         <Line />
         <ResultArea>

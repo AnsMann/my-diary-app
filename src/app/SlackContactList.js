@@ -19,10 +19,14 @@ const SlackLogo = styled.img`
 
 export function SlackContactList({ userContacts, searchInput }) {
   const filteredContacts = filterContacts(userContacts, searchInput)
-  return filteredContacts.map(contact => (
-    <SlackUser key={contact.id}>
-      <SlackLogo src="/icons/Slack_Mark_Web.png" />
-      {contact.name}
-    </SlackUser>
-  ))
+  if (filteredContacts.length !== 0) {
+    return filteredContacts.map(contact => (
+      <SlackUser key={contact.id}>
+        <SlackLogo src="/icons/Slack_Mark_Web.png" />
+        {contact.name}
+      </SlackUser>
+    ))
+  } else {
+    return <p>No match found</p>
+  }
 }
