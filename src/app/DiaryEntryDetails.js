@@ -5,6 +5,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowAltCircleLeft as farArrowAltCircleLeft } from '@fortawesome/free-regular-svg-icons'
 import { faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons'
+import { findIndex } from './utils'
 
 library.add(farArrowAltCircleLeft, faLongArrowAltLeft)
 
@@ -89,9 +90,4 @@ export function DiaryEntryDetails({
       <ShowDayRating entryRating={rating} />
     </EntryDetails>
   )
-}
-
-function findIndex(id, diaryEntries) {
-  const index = diaryEntries.map(entry => entry.id).indexOf(id)
-  return index
 }

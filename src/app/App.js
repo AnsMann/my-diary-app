@@ -13,6 +13,7 @@ import { DiaryEntriesList } from './DiaryEntriesList'
 import { CreateDiaryEntryForm } from './CreateDiaryEntry'
 import { setLocalStorage, getLocalStorage } from './services'
 import { DiaryEntryDetails } from './DiaryEntryDetails'
+import { ShareDiaryEntry } from './ShareDiaryEntry'
 
 moment.locale('de')
 
@@ -94,6 +95,16 @@ export default function App() {
                 handleBackClick={handleBackClick}
                 {...props}
               />
+            </>
+          )}
+        />
+        <Route
+          exact
+          path="/cards/:id/share"
+          render={props => (
+            <>
+              <Header title={'Share via slack'} />
+              <ShareDiaryEntry diaryEntries={diaryEntries} {...props} />
             </>
           )}
         />
