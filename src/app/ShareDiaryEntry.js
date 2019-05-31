@@ -14,6 +14,7 @@ import {
 } from './services'
 import { SlackResultList } from './SlackResultList'
 import { Header } from './Header'
+import { ModalDialogue } from './ModalDialogue'
 
 const ShareContainer = styled.section`
   align-items: center;
@@ -73,7 +74,7 @@ const ResultArea = styled.section`
     text-align: center;
   }
 `
-export function ShareDiaryEntry({ diaryID, diaryEntries }) {
+export function ShareDiaryEntry({ diaryID, diaryEntries, history }) {
   const [searchInput, setSearchInput] = useState('')
   const [slackContacts, setSlackContacts] = useState(
     getLocalStorage('contacts') || []
@@ -81,6 +82,11 @@ export function ShareDiaryEntry({ diaryID, diaryEntries }) {
   const [slackChannels, setSlackChannels] = useState(
     getLocalStorage('channels') || []
   )
+  const [modalStatus, setModalStatus] = useState({
+    showModal: false,
+    shareWith: '',
+  })
+
   const entryIndex = findIndex(diaryID, diaryEntries)
   const diaryEntryToShare = diaryEntries[entryIndex]
 
@@ -104,13 +110,26 @@ export function ShareDiaryEntry({ diaryID, diaryEntries }) {
     fetchChannels()
   }, [])
 
-  function handleContactClick(contactId) {
-    sendMessage(diaryEntryToShare, contactId)
+  function handleContactClick(contactId, contactName) {
+    sendMessage(diaryEntryToShare, contactId).then(() =>
+      setModalStatus({ showModal: true, shareWith: contactName })
+    )
+  }
+  function handleModalButtonClick(history) {
+    setModalStatus({ showModal: false, shareWith: '' })
+    history.push('/')
   }
 
   return (
     <>
       <Header title={'Share via slack'} />
+      {modalStatus.showModal && (
+        <ModalDialogue
+          onModalButtonClik={handleModalButtonClick}
+          shareWith={modalStatus.shareWith}
+          history={history}
+        />
+      )}
       <ShareContainer>
         <StyledDiv>
           <SearchArea>

@@ -27,7 +27,7 @@ export function SlackResultList({
   if (filteredResult.length !== 0) {
     return filteredResult.map(contact => (
       <SlackResult
-        onClick={() => handleContactClick(contact.id)}
+        onClick={() => handleContactClick(contact.id, contact.name)}
         key={contact.id}
       >
         <SlackLogo src="/icons/Slack_Mark_Web.png" />
