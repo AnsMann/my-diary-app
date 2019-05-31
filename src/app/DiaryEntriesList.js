@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { DiaryEntry } from './DiaryEntry'
+import { Header } from './Header'
 
 const DiaryEntriesContainer = styled.ul`
   overflow: scroll;
@@ -9,8 +10,11 @@ const DiaryEntriesContainer = styled.ul`
 
 export function DiaryEntriesList({ diaryEntries }) {
   return (
-    <DiaryEntriesContainer id="diary">
-      <DiaryEntry entries={diaryEntries} />
-    </DiaryEntriesContainer>
+    <>
+      <Header title={'My Diary Entries'} />
+      <DiaryEntriesContainer id="diary">
+        <DiaryEntry entries={diaryEntries} />
+      </DiaryEntriesContainer>
+    </>
   )
 }

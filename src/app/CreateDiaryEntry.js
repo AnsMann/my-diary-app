@@ -7,14 +7,15 @@ import 'react-dates/lib/css/_datepicker.css'
 import moment from 'moment'
 import 'moment/locale/de'
 import { QuestionCatalogue } from './QuestionCatalogue'
+import { Header } from './Header'
 
 moment.locale('de')
 
 const DiaryEntryForm = styled.form`
   display: grid;
   grid-template-rows: auto;
-  overflow: scroll;
   margin-bottom: 15px;
+  overflow: scroll;
   padding: 20px;
   h3 {
     color: #007fbf;
@@ -44,32 +45,35 @@ export function CreateDiaryEntryForm({ handleSubmit, history }) {
   const [date, setDate] = useState(moment())
   const [focused, setFocus] = useState(false)
   return (
-    <DiaryEntryForm onSubmit={event => handleSubmit(event, date, history)}>
-      <label>
-        <h3>Entry date</h3>
-        <SingleDatePicker
-          block={true}
-          placeholder={'Enter date'}
-          displayFormat={() => moment.localeData().longDateFormat('L')}
-          showClearDate={true}
-          isOutsideRange={() => false}
-          numberOfMonths={1}
-          date={date}
-          onDateChange={date => setDate(date)}
-          focused={focused}
-          onFocusChange={({ focused }) => setFocus(focused)}
-        />
-      </label>
-      <label>
-        <h3>Topic of the day</h3>
-        <StyledInput placeholder="Enter topic" name="topic" />
-      </label>
-      <QuestionCatalogue />
-      <label>
-        <h3>Todays rating</h3>
-        <DayRatingInput />
-      </label>
-      <SaveButton>Save</SaveButton>
-    </DiaryEntryForm>
+    <>
+      <Header title={'Create Diary Entries'} />
+      <DiaryEntryForm onSubmit={event => handleSubmit(event, date, history)}>
+        <label>
+          <h3>Entry date</h3>
+          <SingleDatePicker
+            block={true}
+            placeholder={'Enter date'}
+            displayFormat={() => moment.localeData().longDateFormat('L')}
+            showClearDate={true}
+            isOutsideRange={() => false}
+            numberOfMonths={1}
+            date={date}
+            onDateChange={date => setDate(date)}
+            focused={focused}
+            onFocusChange={({ focused }) => setFocus(focused)}
+          />
+        </label>
+        <label>
+          <h3>Topic of the day</h3>
+          <StyledInput placeholder="Enter topic" name="topic" />
+        </label>
+        <QuestionCatalogue />
+        <label>
+          <h3>Todays rating</h3>
+          <DayRatingInput />
+        </label>
+        <SaveButton>Save</SaveButton>
+      </DiaryEntryForm>
+    </>
   )
 }

@@ -7,7 +7,6 @@ import 'moment/locale/de'
 import uid from 'uid'
 import ScrollMemory from 'react-router-scroll-memory'
 
-import { Header } from './Header'
 import { Footer } from './Footer'
 import { DiaryEntriesList } from './DiaryEntriesList'
 import { CreateDiaryEntryForm } from './CreateDiaryEntry'
@@ -64,48 +63,37 @@ export default function App() {
         <Route
           exact
           path="/"
-          render={() => (
-            <>
-              <Header title={'My Diary Entries'} />
-              <DiaryEntriesList diaryEntries={diaryEntries} />
-            </>
-          )}
+          render={() => <DiaryEntriesList diaryEntries={diaryEntries} />}
         />
         <Route
           exact
           path="/create"
           render={props => (
-            <>
-              <Header title={'Create Diary Entries'} />
-              <CreateDiaryEntryForm
-                handleSubmit={handleSubmit}
-                history={props.history}
-              />
-            </>
+            <CreateDiaryEntryForm
+              handleSubmit={handleSubmit}
+              history={props.history}
+            />
           )}
         />
         <Route
           exact
           path="/cards/:id"
           render={props => (
-            <>
-              <Header title={'My Diary Entries'} />
-              <DiaryEntryDetails
-                diaryEntries={diaryEntries}
-                handleBackClick={handleBackClick}
-                {...props}
-              />
-            </>
+            <DiaryEntryDetails
+              diaryEntries={diaryEntries}
+              handleBackClick={handleBackClick}
+              {...props}
+            />
           )}
         />
         <Route
           exact
           path="/cards/:id/share"
           render={props => (
-            <>
-              <Header title={'Share via slack'} />
-              <ShareDiaryEntry diaryEntries={diaryEntries} {...props} />
-            </>
+            <ShareDiaryEntry
+              diaryEntries={diaryEntries}
+              diaryID={props.match.params.id}
+            />
           )}
         />
         <Footer />
