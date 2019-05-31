@@ -1,21 +1,24 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import { ShowDayRating } from './ShowDayRating'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowAltCircleLeft as farArrowAltCircleLeft } from '@fortawesome/free-regular-svg-icons'
 import { faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons'
+import { findIndex } from './utils'
+import { Header } from './Header'
 
 library.add(farArrowAltCircleLeft, faLongArrowAltLeft)
 
 const EntryDetails = styled.section`
   border: solid 1px #007fbf;
   border-radius: 10px;
-  margin: 30px 20px 20px;
-  padding: 20px;
-  overflow: scroll;
   color: #007fbf;
-  scroll h2,
+  margin: 30px 20px 20px;
+  overflow: scroll;
+  padding: 20px;
+  h2,
   h3 {
     font-size: 1.2rem;
     justify-self: left;
@@ -34,20 +37,30 @@ const EntryDetails = styled.section`
 `
 
 const ArrowBack = styled.div`
-  display: flex;
-  justify-content: center;
   align-items: center;
+  background-color: white;
+  border: solid 2px #007fbf;
+  border-radius: 20px;
+  color: #007fbf;
+  display: flex;
   font-size: 3.5rem;
+  height: 60px;
+  justify-content: center;
+  left: 13px;
   position: absolute;
   top: 85px;
-  left: 13px;
-  z-index: 100;
-  height: 60px;
   width: 80px;
-  border: solid 2px #007fbf;
-  color: #007fbf;
-  border-radius: 20px;
-  background-color: white;
+  z-index: 100;
+`
+const ShareButton = styled(Link)`
+  background: #007fbf;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 1.5rem;
+  height: 60px;
+  text-decoration: none;
+  text-align: center;
+  padding: 10px;
 `
 
 export function DiaryEntryDetails({
@@ -58,6 +71,7 @@ export function DiaryEntryDetails({
 }) {
   const entryIndex = findIndex(match.params.id, diaryEntries)
   const {
+    id,
     title,
     date,
     rating,
@@ -69,29 +83,28 @@ export function DiaryEntryDetails({
   } = diaryEntries[entryIndex]
 
   return (
-    <EntryDetails>
-      <ArrowBack onClick={() => handleBackClick(history)}>
-        <FontAwesomeIcon icon={faLongArrowAltLeft} />
-      </ArrowBack>
-      <h2>Dear Diary from {date}</h2>
-      <h3>Todays topic was</h3>
-      <p>{title}</p>
-      <h3>Die wichtigsten Inhalte heute waren</h3>
-      <p>{content}</p>
-      <h3>Besonders positiv erinnere ich</h3>
-      <p>{positive}</p>
-      <h3>Besonders negativ erinnere ich</h3>
-      <p>{negative}</p>
-      <h3>Meinem Coach würde ich sagen</h3>
-      <p>{coachFeedback}</p>
-      <h3>Außerdem war mir heute noch wichtig</h3>
-      <p>{additional}</p>
-      <ShowDayRating entryRating={rating} />
-    </EntryDetails>
+    <>
+      <Header title={'My Diary Entries'} />
+      <EntryDetails>
+        <ArrowBack onClick={() => handleBackClick(history)}>
+          <FontAwesomeIcon icon={faLongArrowAltLeft} />
+        </ArrowBack>
+        <h2>Dear Diary from {date}</h2>
+        <h3>Todays topic was</h3>
+        <p>{title}</p>
+        <h3>Die wichtigsten Inhalte heute waren</h3>
+        <p>{content}</p>
+        <h3>Besonders positiv erinnere ich</h3>
+        <p>{positive}</p>
+        <h3>Besonders negativ erinnere ich</h3>
+        <p>{negative}</p>
+        <h3>Meinem Coach würde ich sagen</h3>
+        <p>{coachFeedback}</p>
+        <h3>Außerdem war mir heute noch wichtig</h3>
+        <p>{additional}</p>
+        <ShowDayRating entryRating={rating} />
+        <ShareButton to={`/cards/${id}/share`}>Share via Slack</ShareButton>
+      </EntryDetails>
+    </>
   )
-}
-
-function findIndex(id, diaryEntries) {
-  const index = diaryEntries.map(entry => entry.id).indexOf(id)
-  return index
 }

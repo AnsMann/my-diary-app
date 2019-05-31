@@ -11,8 +11,8 @@ const Answer = styled.textarea`
   font-family: inherit;
   font-size: 1rem;
   padding: 15px 20px 0;
-  width: 100%;
   text-align: justify;
+  width: 100%;
 `
 
 export function QuestionCatalogue() {

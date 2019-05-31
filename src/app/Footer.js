@@ -25,10 +25,10 @@ const NavLink = styled(RouterLink)`
   border-radius: 20px;
   color: #ffffff;
   display: flex;
+  height: 70px;
   justify-content: center;
   text-decoration: none;
   width: 65px;
-  height: 70px;
 
   &.active {
     background-color: white;
