@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { filterContacts } from './utils'
+import { filterData } from './utils'
 
-const SlackUser = styled.li`
+const SlackResult = styled.li`
   align-items: center;
   background: #39133e;
   border-radius: 10px;
@@ -17,21 +17,22 @@ const SlackLogo = styled.img`
   width: 20%;
 `
 
-export function SlackContactList({
+export function SlackResultList({
   userContacts,
+  channels,
   searchInput,
   handleContactClick,
 }) {
-  const filteredContacts = filterContacts(userContacts, searchInput)
-  if (filteredContacts.length !== 0) {
-    return filteredContacts.map(contact => (
-      <SlackUser
+  const filteredResult = filterData(userContacts, channels, searchInput)
+  if (filteredResult.length !== 0) {
+    return filteredResult.map(contact => (
+      <SlackResult
         onClick={() => handleContactClick(contact.id)}
         key={contact.id}
       >
         <SlackLogo src="/icons/Slack_Mark_Web.png" />
         {contact.name}
-      </SlackUser>
+      </SlackResult>
     ))
   } else {
     return <p>No match found</p>

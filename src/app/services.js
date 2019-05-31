@@ -23,6 +23,22 @@ export function getContacts() {
     .then(data => data.members)
 }
 
+export function getChannels() {
+  return fetch(
+    `https://slack.com/api/channels.list?token=${
+      process.env.REACT_APP_API_KEY
+    }`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    }
+  )
+    .then(res => res.json())
+    .then(data => data.channels)
+}
+
 export function sendMessage(content, id) {
   const messageObject = buildMessageObject(content)
   return fetch(
