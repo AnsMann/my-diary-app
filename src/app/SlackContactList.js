@@ -17,11 +17,18 @@ const SlackLogo = styled.img`
   width: 20%;
 `
 
-export function SlackContactList({ userContacts, searchInput }) {
+export function SlackContactList({
+  userContacts,
+  searchInput,
+  handleContactClick,
+}) {
   const filteredContacts = filterContacts(userContacts, searchInput)
   if (filteredContacts.length !== 0) {
     return filteredContacts.map(contact => (
-      <SlackUser key={contact.id}>
+      <SlackUser
+        onClick={() => handleContactClick(contact.id)}
+        key={contact.id}
+      >
         <SlackLogo src="/icons/Slack_Mark_Web.png" />
         {contact.name}
       </SlackUser>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { findIndex, handleSlackContactData } from './utils'
-import { getContacts } from './services'
+import { getContacts, sendMessage } from './services'
 import { SlackContactList } from './SlackContactList'
 
 const ShareContainer = styled.section`
@@ -67,18 +67,26 @@ export function ShareDiaryEntry({ match, diaryEntries }) {
   const [searchInput, setSearchInput] = useState('')
   const [slackContacts, setSlackContacts] = useState([])
   const entryIndex = findIndex(match.params.id, diaryEntries)
+  const diaryEntryToShare = diaryEntries[entryIndex]
 
-  useEffect(async () => {
-    const contactData = await getContacts()
-    const SlackContactList = handleSlackContactData(contactData)
-    setSlackContacts(SlackContactList)
+  useEffect(() => {
+    async function fetchData() {
+      const contacts = await getContacts()
+      const SlackContactList = handleSlackContactData(contacts)
+      setSlackContacts(SlackContactList)
+    }
+    fetchData()
   }, [])
+
+  function handleContactClick(contactId) {
+    sendMessage(diaryEntryToShare, contactId)
+  }
 
   return (
     <ShareContainer>
       <StyledDiv>
         <SearchArea>
-          <h2>Diary Entry from {diaryEntries[entryIndex].date}</h2>
+          <h2>Diary Entry from {diaryEntryToShare.date}</h2>
           <p>share with</p>
           <StyledSearch
             type="search"
@@ -92,6 +100,7 @@ export function ShareDiaryEntry({ match, diaryEntries }) {
           <SlackContactList
             userContacts={slackContacts}
             searchInput={searchInput}
+            handleContactClick={handleContactClick}
           />
         </ResultArea>
       </StyledDiv>
