@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { findIndex, handleSlackContactData } from './utils'
+import {
+  findIndex,
+  handleSlackContactData,
+  handleSlackChannelData,
+} from './utils'
 import {
   getContacts,
   sendMessage,
   setLocalStorage,
   getLocalStorage,
+  getChannels,
 } from './services'
-import { SlackContactList } from './SlackContactList'
+import { SlackResultList } from './SlackResultList'
 import { Header } from './Header'
 
 const ShareContainer = styled.section`
@@ -73,17 +78,30 @@ export function ShareDiaryEntry({ diaryID, diaryEntries }) {
   const [slackContacts, setSlackContacts] = useState(
     getLocalStorage('contacts') || []
   )
+  const [slackChannels, setSlackChannels] = useState(
+    getLocalStorage('channels') || []
+  )
   const entryIndex = findIndex(diaryID, diaryEntries)
   const diaryEntryToShare = diaryEntries[entryIndex]
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchContacts() {
       const contacts = await getContacts()
       const SlackContactList = handleSlackContactData(contacts)
       setSlackContacts(SlackContactList)
       setLocalStorage('contacts', SlackContactList)
     }
-    fetchData()
+    fetchContacts()
+  }, [])
+
+  useEffect(() => {
+    async function fetchChannels() {
+      const channels = await getChannels()
+      const SlackChannelList = handleSlackChannelData(channels)
+      setSlackChannels(SlackChannelList)
+      setLocalStorage('channels', SlackChannelList)
+    }
+    fetchChannels()
   }, [])
 
   function handleContactClick(contactId) {
@@ -109,8 +127,9 @@ export function ShareDiaryEntry({ diaryID, diaryEntries }) {
           </SearchArea>
           <Line />
           <ResultArea>
-            <SlackContactList
+            <SlackResultList
               userContacts={slackContacts}
+              channels={slackChannels}
               searchInput={searchInput}
               handleContactClick={handleContactClick}
             />

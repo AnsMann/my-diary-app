@@ -15,20 +15,31 @@ export function handleSlackContactData(contactdata) {
     })
 }
 
-export function filterContacts(contacts, searchInput) {
-  const filteredContacts = contacts.filter(contact =>
-    contact.name.toLowerCase().startsWith(searchInput)
-  )
-  const contactsInAlphabeticalOrder = filteredContacts.sort(
-    (contactA, contactB) => {
-      const nameA = contactA.name.toUpperCase()
-      const nameB = contactB.name.toUpperCase()
-      if (nameA < nameB) {
-        return -1
-      } else if (nameA > nameB) {
-        return 1
-      } else return 0
+export function handleSlackChannelData(channeldata) {
+  return channeldata.map(channel => {
+    return {
+      id: channel.id,
+      name: channel.name,
     }
-  )
+  })
+}
+
+export function filterData(contacts, channels, searchInput) {
+  const filteredData = searchInput.startsWith('#')
+    ? channels.filter(channel =>
+        channel.name.toLowerCase().startsWith(searchInput.slice(1))
+      )
+    : contacts.filter(contact =>
+        contact.name.toLowerCase().startsWith(searchInput)
+      )
+  const contactsInAlphabeticalOrder = filteredData.sort((itemA, itemB) => {
+    const nameA = itemA.name.toUpperCase()
+    const nameB = itemB.name.toUpperCase()
+    if (nameA < nameB) {
+      return -1
+    } else if (nameA > nameB) {
+      return 1
+    } else return 0
+  })
   return contactsInAlphabeticalOrder
 }
