@@ -56,8 +56,10 @@ const ShareButton = styled.div`
   display: flex;
   justify-content: center;
   position: absolute;
-  right: 13px;
-  bottom: 85px;
+  right: 15px;
+  bottom: 110px;
+  width: 80px;
+  height: 60px;
 `
 
 export function DiaryEntryDetails({
