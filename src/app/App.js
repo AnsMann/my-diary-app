@@ -13,6 +13,7 @@ import { CreateDiaryEntryForm } from './CreateDiaryEntry'
 import { setLocalStorage, getLocalStorage } from './services'
 import { DiaryEntryDetails } from './DiaryEntryDetails'
 import { ShareDiaryEntry } from './ShareDiaryEntry'
+import { findIndex } from './utils'
 
 moment.locale('de')
 
@@ -45,14 +46,36 @@ export default function App() {
         coachFeedback: target['coach feedback'].value,
         additional: target['anything else'].value,
         id: uid(),
+        showMenu: false,
       },
       ...diaryEntries,
     ])
+
     history.push('/')
   }
 
   function handleBackClick(history) {
     history.goBack()
+  }
+  function handleMenuClick(entryId) {
+    const index = findIndex(entryId, diaryEntries)
+    const diaryentry = diaryEntries[index]
+    const diaryEntryToShowMenu = {
+      ...diaryentry,
+      showMenu: !diaryentry.showMenu,
+    }
+    setDiaryEntries([
+      ...diaryEntries.slice(0, index),
+      diaryEntryToShowMenu,
+      ...diaryEntries.slice(index + 1),
+    ])
+  }
+
+  function resetEntryMenus() {
+    const entriesWithReset = diaryEntries.map(entry => {
+      return { ...entry, showMenu: false }
+    })
+    setDiaryEntries(entriesWithReset)
   }
 
   return (
@@ -63,7 +86,14 @@ export default function App() {
         <Route
           exact
           path="/"
-          render={() => <DiaryEntriesList diaryEntries={diaryEntries} />}
+          render={props => (
+            <DiaryEntriesList
+              resetEntryMenus={resetEntryMenus}
+              diaryEntries={diaryEntries}
+              onMenuClick={handleMenuClick}
+              history={props.history}
+            />
+          )}
         />
         <Route
           exact
