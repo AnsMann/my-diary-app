@@ -44,7 +44,7 @@ export function sendMessage(content, id) {
   return fetch(
     `https://slack.com/api/chat.postMessage?token=${
       process.env.REACT_APP_API_KEY
-    }&blocks=${JSON.stringify(messageObject)}&channel=${id}`,
+    }&blocks=${JSON.stringify(messageObject)}&channel=${id}&as_user=true`,
     {
       method: 'POST',
       headers: {
