@@ -8,7 +8,7 @@ const Menu = styled.section`
   border-radius: 10px;
   position: relative;
   margin-bottom: -150px;
-  top: -132px;
+  top: -115px;
   left: 60px;
   background: white;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);

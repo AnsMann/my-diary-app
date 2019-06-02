@@ -55,9 +55,9 @@ const DiaryEntryContent = styled.li`
   }
 `
 const MenueIcon = styled.button`
-  bottom: 60px;
+  bottom: 50px;
   color: #002f47;
-  font-size: 3rem;
+  font-size: 2rem;
   left: 80%;
   opacity: 0.7;
   position: relative;

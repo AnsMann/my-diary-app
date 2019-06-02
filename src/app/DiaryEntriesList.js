@@ -18,7 +18,7 @@ export function DiaryEntriesList({
   return (
     <>
       <Header title={'My Diary Entries'} />
-      <DiaryEntriesContainer id="diary">
+      <DiaryEntriesContainer onClick={event => console.log(event)} id="diary">
         <DiaryEntry
           entries={diaryEntries}
           onMenuClick={onMenuClick}
