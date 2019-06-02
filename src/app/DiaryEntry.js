@@ -59,8 +59,10 @@ const MenueIcon = styled.button`
   color: #002f47;
   font-size: 2rem;
   left: 80%;
-  opacity: 0.7;
   position: relative;
+  section {
+    font-size: 1.2rem;
+  }
 `
 const DiaryEntryCard = styled.section``
 
@@ -79,13 +81,11 @@ export function DiaryEntry({ entries, onMenuClick, history }) {
         </CardLink>
         <MenueIcon onClick={() => onMenuClick(entry.id)}>
           <FontAwesomeIcon icon={faEllipsisH} />
+          {entry.showMenu ? (
+            <DiaryEntryMenu history={history} entryId={entry.id} />
+          ) : null}
         </MenueIcon>
       </DiaryEntryCard>
-      <DiaryEntryMenu
-        showMenu={entry.showMenu}
-        history={history}
-        entryId={entry.id}
-      />
     </>
   ))
 }

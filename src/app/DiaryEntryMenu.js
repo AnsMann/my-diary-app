@@ -6,10 +6,9 @@ const Menu = styled.section`
   width: 200px;
   border: solid 1px #007fbf;
   border-radius: 10px;
-  position: relative;
-  margin-bottom: -150px;
-  top: -115px;
-  left: 60px;
+  position: absolute;
+  top: -23px;
+  right: 55px;
   background: white;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
   &:after {
@@ -33,8 +32,8 @@ const MenuOption = styled.li`
   font-weight: bold;
 `
 
-export function DiaryEntryMenu({ showMenu, history, entryId }) {
-  return showMenu ? (
+export function DiaryEntryMenu({ history, entryId }) {
+  return (
     <Menu>
       <MenuOption onClick={() => history.push(`/cards/${entryId}/share`)}>
         Share via slack
@@ -46,5 +45,5 @@ export function DiaryEntryMenu({ showMenu, history, entryId }) {
         Delete
       </MenuOption>
     </Menu>
-  ) : null
+  )
 }
