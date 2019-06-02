@@ -125,7 +125,7 @@ export function ShareDiaryEntry({ diaryID, diaryEntries, history }) {
       <Header title={'Share via slack'} />
       {modalStatus.showModal && (
         <ModalDialogue
-          onModalButtonClik={handleModalButtonClick}
+          onModalButtonClick={handleModalButtonClick}
           shareWith={modalStatus.shareWith}
           history={history}
         />
@@ -150,7 +150,7 @@ export function ShareDiaryEntry({ diaryID, diaryEntries, history }) {
               userContacts={slackContacts}
               channels={slackChannels}
               searchInput={searchInput}
-              handleContactClick={handleContactClick}
+              onContactClick={handleContactClick}
             />
           </ResultArea>
         </StyledDiv>

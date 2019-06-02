@@ -21,13 +21,13 @@ export function SlackResultList({
   userContacts,
   channels,
   searchInput,
-  handleContactClick,
+  onContactClick,
 }) {
   const filteredResult = filterData(userContacts, channels, searchInput)
   if (filteredResult.length !== 0) {
     return filteredResult.map(contact => (
       <SlackResult
-        onClick={() => handleContactClick(contact.id, contact.name)}
+        onClick={() => onContactClick(contact.id, contact.name)}
         key={contact.id}
       >
         <SlackLogo src="/icons/Slack_Mark_Web.png" />

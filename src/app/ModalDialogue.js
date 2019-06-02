@@ -6,15 +6,6 @@ import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-i
 
 library.add(farCheckCircle)
 
-const ModalBackground = styled.div`
-  height: 100vh;
-  background: white;
-  opacity: 0.5;
-  position: absolute;
-  top: 0px;
-  width: 100vw;
-  z-index: 100;
-`
 const Dialogue = styled.div`
   align-items: center;
   background: white;
@@ -33,9 +24,17 @@ const Dialogue = styled.div`
   width: 60vw;
   z-index: 200;
 `
-const StyledSpan = styled.span`
-  font-weight: bold;
+
+const ModalBackground = styled.div`
+  background: white;
+  height: 100vh;
+  opacity: 0.5;
+  position: absolute;
+  top: 0px;
+  width: 100vw;
+  z-index: 100;
 `
+
 const StyledIcon = styled.span`
   color: green;
   font-size: 2rem;
@@ -52,17 +51,17 @@ const StyledButton = styled.button`
   width: 80%;
 `
 
-export function ModalDialogue({ onModalButtonClik, shareWith, history }) {
+export function ModalDialogue({ onModalButtonClick, shareWith, history }) {
   return (
     <>
       <ModalBackground />
       <Dialogue>
         Entry shared with
-        <StyledSpan>{shareWith}</StyledSpan>
+        <strong>{shareWith}</strong>
         <StyledIcon>
           <FontAwesomeIcon icon={farCheckCircle} />
         </StyledIcon>
-        <StyledButton onClick={() => onModalButtonClik(history)}>
+        <StyledButton onClick={() => onModalButtonClick(history)}>
           Ok
         </StyledButton>
       </Dialogue>
