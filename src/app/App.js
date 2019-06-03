@@ -93,7 +93,6 @@ export default function App() {
             <ShareDiaryEntry
               diaryEntries={diaryEntries}
               diaryID={props.match.params.id}
-              history={props.history}
             />
           )}
         />
