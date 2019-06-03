@@ -38,12 +38,6 @@ export function DiaryEntryMenu({ history, entryId }) {
       <MenuOption onClick={() => history.push(`/cards/${entryId}/share`)}>
         Share via slack
       </MenuOption>
-      <MenuOption onClick={() => history.push(`/cards/${entryId}/share`)}>
-        Edit
-      </MenuOption>
-      <MenuOption onClick={() => history.push(`/cards/${entryId}/share`)}>
-        Delete
-      </MenuOption>
     </Menu>
   )
 }

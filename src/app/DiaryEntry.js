@@ -81,7 +81,7 @@ export function DiaryEntry({ entry, history }) {
             <ShowDayRating entryRating={entry.rating} />
           </DiaryEntryContent>
         </CardLink>
-        <MenueIcon onClick={() => setShowMenu(true)}>
+        <MenueIcon onClick={() => setShowMenu(!showMenu)}>
           <FontAwesomeIcon icon={faEllipsisH} />
           {showMenu && <DiaryEntryMenu history={history} entryId={entry.id} />}
         </MenueIcon>
