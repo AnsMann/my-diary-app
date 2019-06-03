@@ -9,6 +9,7 @@ import { findIndex } from './utils'
 import { Header } from './Header'
 import { ShareViaSlackButton } from './ShareViaSlackButton'
 import { ShareViaMailButton } from './ShareViaMailButton'
+import { ShareViaPhoneButton } from './ShareViaPhoneButton'
 
 library.add(farArrowAltCircleLeft, faLongArrowAltLeft)
 
@@ -117,6 +118,7 @@ export function DiaryEntryDetails({
         <Share>
           <ShareViaSlackButton idForURL={id} />
           <ShareViaMailButton message={message} entryDate={date} />
+          <ShareViaPhoneButton message={message} />
         </Share>
       </EntryDetails>
     </>
