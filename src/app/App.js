@@ -46,7 +46,6 @@ export default function App() {
         coachFeedback: target['coach feedback'].value,
         additional: target['anything else'].value,
         id: uid(),
-        showMenu: false,
       },
       ...diaryEntries,
     ])
@@ -57,6 +56,7 @@ export default function App() {
   function handleBackClick(history) {
     history.goBack()
   }
+
   function handleMenuClick(entryId) {
     const index = findIndex(entryId, diaryEntries)
     const diaryentry = diaryEntries[index]
@@ -71,13 +71,6 @@ export default function App() {
     ])
   }
 
-  function resetEntryMenus() {
-    const entriesWithReset = diaryEntries.map(entry => {
-      return { ...entry, showMenu: false }
-    })
-    setDiaryEntries(entriesWithReset)
-  }
-
   return (
     <Router>
       <GlobalStyles />
@@ -88,7 +81,6 @@ export default function App() {
           path="/"
           render={props => (
             <DiaryEntriesList
-              resetEntryMenus={resetEntryMenus}
               diaryEntries={diaryEntries}
               onMenuClick={handleMenuClick}
               history={props.history}

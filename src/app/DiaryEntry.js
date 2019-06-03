@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import OutsideClickHandler from 'react-outside-click-handler'
 import { Link } from 'react-router-dom'
 import { ShowDayRating } from './ShowDayRating'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -66,10 +67,11 @@ const MenueIcon = styled.button`
 `
 const DiaryEntryCard = styled.section``
 
-export function DiaryEntry({ entries, onMenuClick, history }) {
-  return entries.map(entry => (
-    <>
-      <DiaryEntryCard key={entry.id}>
+export function DiaryEntry({ entry, history }) {
+  const [showMenu, setShowMenu] = useState(false)
+  return (
+    <OutsideClickHandler onOutsideClick={() => setShowMenu(false)}>
+      <DiaryEntryCard>
         <CardLink to={`/cards/${entry.id}`}>
           <DiaryEntryContent>
             <img src="./icons/diary-entry.png" alt="diary entry book icon" />
@@ -79,13 +81,11 @@ export function DiaryEntry({ entries, onMenuClick, history }) {
             <ShowDayRating entryRating={entry.rating} />
           </DiaryEntryContent>
         </CardLink>
-        <MenueIcon onClick={() => onMenuClick(entry.id)}>
+        <MenueIcon onClick={() => setShowMenu(true)}>
           <FontAwesomeIcon icon={faEllipsisH} />
-          {entry.showMenu ? (
-            <DiaryEntryMenu history={history} entryId={entry.id} />
-          ) : null}
+          {showMenu && <DiaryEntryMenu history={history} entryId={entry.id} />}
         </MenueIcon>
       </DiaryEntryCard>
-    </>
-  ))
+    </OutsideClickHandler>
+  )
 }
