@@ -8,6 +8,7 @@ import { faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons'
 import { findIndex } from './utils'
 import { Header } from './Header'
 import { ShareViaSlackButton } from './ShareViaSlackButton'
+import { ShareViaMailButton } from './ShareViaMailButton'
 
 library.add(farArrowAltCircleLeft, faLongArrowAltLeft)
 
@@ -52,14 +53,11 @@ const ArrowBack = styled.div`
   width: 80px;
   z-index: 100;
 `
-const ShareButton = styled.div`
+
+const Share = styled.div`
   display: flex;
-  justify-content: center;
-  position: absolute;
-  right: 15px;
-  bottom: 110px;
-  width: 80px;
-  height: 60px;
+  justify-content: space-evenly;
+  align-items: center;
 `
 
 export function DiaryEntryDetails({
@@ -81,6 +79,20 @@ export function DiaryEntryDetails({
     additional,
   } = diaryEntries[entryIndex]
 
+  const message = `<h2>Dear Diary from ${date}</h2>
+  <h3>Todays topic was</h3>
+  <p>${title}</p>
+  <h3>Die wichtigsten Inhalte heute waren</h3>
+  <p>${content}</p>
+  <h3>Besonders positiv erinnere ich</h3>
+  <p>${positive}</p>
+  <h3>Besonders negativ erinnere ich</h3>
+  <p>${negative}</p>
+  <h3>Meinem Coach würde ich sagen</h3>
+  <p>${coachFeedback}</p>
+  <h3>Außerdem war mir heute noch wichtig</h3>
+  <p>${additional}</p>`
+
   return (
     <>
       <Header title={'My Diary Entries'} />
@@ -88,9 +100,6 @@ export function DiaryEntryDetails({
         <ArrowBack onClick={() => handleBackClick(history)}>
           <FontAwesomeIcon icon={faLongArrowAltLeft} />
         </ArrowBack>
-        <ShareButton>
-          <ShareViaSlackButton idForURL={id} />
-        </ShareButton>
         <h2>Dear Diary from {date}</h2>
         <h3>Todays topic was</h3>
         <p>{title}</p>
@@ -105,6 +114,10 @@ export function DiaryEntryDetails({
         <h3>Außerdem war mir heute noch wichtig</h3>
         <p>{additional}</p>
         <ShowDayRating entryRating={rating} />
+        <Share>
+          <ShareViaSlackButton idForURL={id} />
+          <ShareViaMailButton message={message} entryDate={date} />
+        </Share>
       </EntryDetails>
     </>
   )
