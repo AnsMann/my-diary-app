@@ -15,6 +15,7 @@ import {
 import { SlackResultList } from './SlackResultList'
 import { Header } from './Header'
 import { ModalDialogue } from './ModalDialogue'
+import { ArrowBack } from './ArrowBack'
 
 const ShareContainer = styled.section`
   align-items: center;
@@ -42,6 +43,7 @@ const SearchArea = styled.section`
   flex-direction: column;
   height: 200px;
   justify-content: center;
+  margin-top: 20px;
   padding: 15px;
   position: relative;
 `
@@ -67,14 +69,19 @@ const Line = styled.div`
 `
 
 const ResultArea = styled.section`
-  height: 400px;
+  height: 350px;
   overflow: scroll;
   padding: 15px;
   p {
     text-align: center;
   }
 `
-export function ShareDiaryEntry({ diaryID, diaryEntries, history }) {
+export function ShareDiaryEntry({
+  diaryID,
+  diaryEntries,
+  history,
+  onBackClick,
+}) {
   const [searchInput, setSearchInput] = useState('')
   const [slackContacts, setSlackContacts] = useState(
     getLocalStorage('contacts') || []
@@ -132,6 +139,7 @@ export function ShareDiaryEntry({ diaryID, diaryEntries, history }) {
       )}
       <ShareContainer>
         <StyledDiv>
+          <ArrowBack onBackClick={onBackClick} history={history} />
           <SearchArea>
             <h2>Diary Entry from {diaryEntryToShare.date}</h2>
             <p>share with</p>
