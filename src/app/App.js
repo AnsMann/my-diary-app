@@ -13,7 +13,6 @@ import { CreateDiaryEntryForm } from './CreateDiaryEntry'
 import { setLocalStorage, getLocalStorage } from './services'
 import { DiaryEntryDetails } from './DiaryEntryDetails'
 import { ShareDiaryEntry } from './ShareDiaryEntry'
-import { findIndex } from './utils'
 
 moment.locale('de')
 
