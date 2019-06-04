@@ -60,9 +60,9 @@ export default function App() {
 
   function handleSharedDiaryEntry(id, contact, date) {
     const index = findIndex(id, diaryEntries)
-    const diaryentry = diaryEntries[index]
+    const diaryEntry = diaryEntries[index]
     const sharedDiaryEntry = {
-      ...diaryentry,
+      ...diaryEntry,
       shared: {
         status: true,
         sharedWith: contact,
