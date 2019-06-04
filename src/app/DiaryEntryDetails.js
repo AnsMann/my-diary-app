@@ -1,14 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { ShowDayRating } from './ShowDayRating'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons'
 import { findIndex } from './utils'
 import { Header } from './Header'
-import { ShareViaSlackButton } from './ShareViaSlackButton'
-
-library.add(faLongArrowAltLeft)
+import { ArrowBack } from './ArrowBack'
 
 const EntryDetails = styled.section`
   border: solid 1px #007fbf;
@@ -35,33 +30,21 @@ const EntryDetails = styled.section`
   }
 `
 
-const ArrowBack = styled.div`
-  align-items: center;
-  background-color: white;
-  border: solid 2px #007fbf;
-  border-radius: 20px;
-  color: #007fbf;
-  display: flex;
-  font-size: 3.5rem;
+const ShareButton = styled(Link)`
+  background: #007fbf;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 1.5rem;
   height: 60px;
-  justify-content: center;
-  left: 13px;
-  position: absolute;
-  top: 85px;
-  width: 80px;
-  z-index: 100;
-`
-
-const Share = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
+  text-decoration: none;
+  text-align: center;
+  padding: 10px;
 `
 
 export function DiaryEntryDetails({
   match,
   diaryEntries,
-  handleBackClick,
+  onBackClick,
   history,
 }) {
   const entryIndex = findIndex(match.params.id, diaryEntries)
@@ -107,9 +90,7 @@ export function DiaryEntryDetails({
     <>
       <Header title={'My Diary Entries'} />
       <EntryDetails>
-        <ArrowBack onClick={() => handleBackClick(history)}>
-          <FontAwesomeIcon icon={faLongArrowAltLeft} />
-        </ArrowBack>
+        <ArrowBack onBackClick={onBackClick} history={history} />
         <h2>Dear Diary from {date}</h2>
         {detailsToRender.map(obj => (
           <section key={obj.headline}>

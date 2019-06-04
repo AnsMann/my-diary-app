@@ -13,6 +13,7 @@ import { CreateDiaryEntryForm } from './CreateDiaryEntry'
 import { setLocalStorage, getLocalStorage } from './services'
 import { DiaryEntryDetails } from './DiaryEntryDetails'
 import { ShareDiaryEntry } from './ShareDiaryEntry'
+import { findIndex } from './utils'
 
 moment.locale('de')
 
@@ -48,6 +49,7 @@ export default function App() {
       },
       ...diaryEntries,
     ])
+
     history.push('/')
   }
 
@@ -63,7 +65,12 @@ export default function App() {
         <Route
           exact
           path="/"
-          render={() => <DiaryEntriesList diaryEntries={diaryEntries} />}
+          render={props => (
+            <DiaryEntriesList
+              diaryEntries={diaryEntries}
+              history={props.history}
+            />
+          )}
         />
         <Route
           exact
@@ -81,7 +88,7 @@ export default function App() {
           render={props => (
             <DiaryEntryDetails
               diaryEntries={diaryEntries}
-              handleBackClick={handleBackClick}
+              onBackClick={handleBackClick}
               {...props}
             />
           )}
@@ -93,6 +100,8 @@ export default function App() {
             <ShareDiaryEntry
               diaryEntries={diaryEntries}
               diaryID={props.match.params.id}
+              history={props.history}
+              onBackClick={handleBackClick}
             />
           )}
         />
