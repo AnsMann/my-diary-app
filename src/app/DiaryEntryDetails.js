@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 import { ShowDayRating } from './ShowDayRating'
 import { findIndex } from './utils'
 import { Header } from './Header'
@@ -61,26 +60,48 @@ export function DiaryEntryDetails({
     additional,
   } = diaryEntries[entryIndex]
 
+  const detailsToRender = [
+    {
+      headline: 'Todays topic was',
+      content: title,
+    },
+    {
+      headline: 'Die wichtigsten Inhalte heute waren',
+      content: content,
+    },
+    {
+      headline: 'Besonders positiv erinnere ich',
+      content: positive,
+    },
+    {
+      headline: 'Besonders negative erinnere ich',
+      content: negative,
+    },
+    {
+      headline: 'Meinem Coach würde ich sagen',
+      content: coachFeedback,
+    },
+    {
+      headline: 'Außerdem war mir heute noch wichtig',
+      content: additional,
+    },
+  ]
   return (
     <>
       <Header title={'My Diary Entries'} />
       <EntryDetails>
         <ArrowBack onBackClick={onBackClick} history={history} />
         <h2>Dear Diary from {date}</h2>
-        <h3>Todays topic was</h3>
-        <p>{title}</p>
-        <h3>Die wichtigsten Inhalte heute waren</h3>
-        <p>{content}</p>
-        <h3>Besonders positiv erinnere ich</h3>
-        <p>{positive}</p>
-        <h3>Besonders negativ erinnere ich</h3>
-        <p>{negative}</p>
-        <h3>Meinem Coach würde ich sagen</h3>
-        <p>{coachFeedback}</p>
-        <h3>Außerdem war mir heute noch wichtig</h3>
-        <p>{additional}</p>
+        {detailsToRender.map(obj => (
+          <section key={obj.headline}>
+            <h3>{obj.headline}</h3>
+            <p>{obj.content}</p>
+          </section>
+        ))}
         <ShowDayRating entryRating={rating} />
-        <ShareButton to={`/cards/${id}/share`}>Share via Slack</ShareButton>
+        <Share>
+          <ShareViaSlackButton idForURL={id} />
+        </Share>
       </EntryDetails>
     </>
   )
