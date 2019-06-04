@@ -7,6 +7,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 import { DiaryEntryMenu } from './DiaryEntryMenu'
+import { DeleteModalDialogue } from './DeleteModalDialogue'
 
 library.add(faEllipsisH)
 
@@ -67,10 +68,29 @@ const MenueIcon = styled.button`
 `
 const DiaryEntryCard = styled.section``
 
-export function DiaryEntry({ entry, history }) {
-  const [showMenu, setShowMenu] = useState(false)
+export function DiaryEntry({ entry, history, onDeleteClick }) {
+  const [isMenuVisible, setIsMenuVisible] = useState(false)
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+
+  function handleDeleteMenuClick() {
+    setIsDeleteModalVisible(true)
+  }
+
+  function resetDeleteModal() {
+    setIsDeleteModalVisible(false)
+  }
+
   return (
-    <OutsideClickHandler onOutsideClick={() => setShowMenu(false)}>
+    <OutsideClickHandler onOutsideClick={() => setIsMenuVisible(false)}>
+      {isDeleteModalVisible && (
+        <DeleteModalDialogue
+          entryId={entry.id}
+          entryDate={entry.date}
+          history={history}
+          onDeleteConfirmation={onDeleteClick}
+          onDeleteAbort={resetDeleteModal}
+        />
+      )}
       <DiaryEntryCard>
         <CardLink to={`/cards/${entry.id}`}>
           <DiaryEntryContent>
@@ -81,9 +101,15 @@ export function DiaryEntry({ entry, history }) {
             <ShowDayRating entryRating={entry.rating} />
           </DiaryEntryContent>
         </CardLink>
-        <MenueIcon onClick={() => setShowMenu(!showMenu)}>
+        <MenueIcon onClick={() => setIsMenuVisible(!isMenuVisible)}>
           <FontAwesomeIcon icon={faEllipsisH} />
-          {showMenu && <DiaryEntryMenu history={history} entryId={entry.id} />}
+          {isMenuVisible && (
+            <DiaryEntryMenu
+              history={history}
+              entryId={entry.id}
+              onDeleteMenuClick={handleDeleteMenuClick}
+            />
+          )}
         </MenueIcon>
       </DiaryEntryCard>
     </OutsideClickHandler>

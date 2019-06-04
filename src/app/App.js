@@ -13,6 +13,7 @@ import { CreateDiaryEntryForm } from './CreateDiaryEntry'
 import { setLocalStorage, getLocalStorage } from './services'
 import { DiaryEntryDetails } from './DiaryEntryDetails'
 import { ShareDiaryEntry } from './ShareDiaryEntry'
+import { findIndex } from './utils'
 
 moment.locale('de')
 
@@ -56,6 +57,15 @@ export default function App() {
     history.goBack()
   }
 
+  function handleDeleteClick(id, history) {
+    const index = findIndex(id, diaryEntries)
+    setDiaryEntries([
+      ...diaryEntries.slice(0, index),
+      ...diaryEntries.slice(index + 1),
+    ])
+    history.push('/')
+  }
+
   return (
     <Router>
       <GlobalStyles />
@@ -68,6 +78,7 @@ export default function App() {
             <DiaryEntriesList
               diaryEntries={diaryEntries}
               history={props.history}
+              onDeleteClick={handleDeleteClick}
             />
           )}
         />
