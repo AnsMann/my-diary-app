@@ -57,20 +57,6 @@ export default function App() {
     history.goBack()
   }
 
-  function handleMenuClick(entryId) {
-    const index = findIndex(entryId, diaryEntries)
-    const diaryentry = diaryEntries[index]
-    const diaryEntryToShowMenu = {
-      ...diaryentry,
-      showMenu: !diaryentry.showMenu,
-    }
-    setDiaryEntries([
-      ...diaryEntries.slice(0, index),
-      diaryEntryToShowMenu,
-      ...diaryEntries.slice(index + 1),
-    ])
-  }
-
   return (
     <Router>
       <GlobalStyles />
@@ -82,7 +68,6 @@ export default function App() {
           render={props => (
             <DiaryEntriesList
               diaryEntries={diaryEntries}
-              onMenuClick={handleMenuClick}
               history={props.history}
             />
           )}
