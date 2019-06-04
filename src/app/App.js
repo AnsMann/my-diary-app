@@ -58,6 +58,7 @@ export default function App() {
     history.goBack()
   }
 
+
   function handleSharedDiaryEntry(id, contact, date) {
     const index = findIndex(id, diaryEntries)
     const diaryEntry = diaryEntries[index]
@@ -74,6 +75,15 @@ export default function App() {
       sharedDiaryEntry,
       ...diaryEntries.slice(index + 1),
     ])
+
+  function handleDeleteClick(id, history) {
+    const index = findIndex(id, diaryEntries)
+    setDiaryEntries([
+      ...diaryEntries.slice(0, index),
+      ...diaryEntries.slice(index + 1),
+    ])
+    history.push('/')
+
   }
 
   return (
@@ -88,6 +98,7 @@ export default function App() {
             <DiaryEntriesList
               diaryEntries={diaryEntries}
               history={props.history}
+              onDeleteClick={handleDeleteClick}
             />
           )}
         />

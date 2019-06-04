@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-icons'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 
-library.add(farCheckCircle)
+library.add(faTrashAlt)
 
 const Dialogue = styled.div`
   align-items: center;
@@ -16,13 +16,17 @@ const Dialogue = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 1.3rem;
-  height: 60vw;
+  height: 70vw;
   justify-content: center;
-  left: 20vw;
+  left: 15vw;
   position: absolute;
   top: 70vw;
-  width: 60vw;
+  width: 70vw;
   z-index: 200;
+  span {
+    line-height: 150%;
+    text-align: center;
+  }
 `
 
 const ModalBackground = styled.div`
@@ -31,12 +35,13 @@ const ModalBackground = styled.div`
   opacity: 0.5;
   position: absolute;
   top: 0px;
+  left: 0px;
   width: 100vw;
   z-index: 100;
 `
 
 const StyledIcon = styled.span`
-  color: green;
+  color: red;
   font-size: 2rem;
   margin-top: 10px;
 `
@@ -51,19 +56,34 @@ const StyledButton = styled.button`
   width: 80%;
 `
 
-export function ModalDialogue({ onModalButtonClick, shareWith, history }) {
+export function DeleteModalDialogue({
+  entryId,
+  entryDate,
+  history,
+  onDeleteConfirmation,
+  onDeleteAbort,
+}) {
   return (
     <>
       <ModalBackground />
       <Dialogue>
-        Entry shared with
-        <strong>{shareWith}</strong>
+        <span>
+          Delete entry from
+          <br />
+          <strong>{entryDate}</strong>
+        </span>
         <StyledIcon>
-          <FontAwesomeIcon icon={farCheckCircle} />
+          <FontAwesomeIcon icon={faTrashAlt} />
         </StyledIcon>
-        <StyledButton onClick={() => onModalButtonClick(history)}>
+        <StyledButton
+          onClick={() => {
+            onDeleteAbort()
+            onDeleteConfirmation(entryId, history)
+          }}
+        >
           Ok
         </StyledButton>
+        <StyledButton onClick={() => onDeleteAbort()}>Abort</StyledButton>
       </Dialogue>
     </>
   )

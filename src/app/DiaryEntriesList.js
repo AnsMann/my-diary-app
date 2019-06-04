@@ -8,13 +8,18 @@ const DiaryEntriesContainer = styled.ul`
   padding: 20px;
 `
 
-export function DiaryEntriesList({ diaryEntries, history }) {
+export function DiaryEntriesList({ diaryEntries, history, onDeleteClick }) {
   return (
     <>
       <Header title={'My Diary Entries'} />
       <DiaryEntriesContainer id="diary">
         {diaryEntries.map(entry => (
-          <DiaryEntry key={entry.id} entry={entry} history={history} />
+          <DiaryEntry
+            key={entry.id}
+            entry={entry}
+            history={history}
+            onDeleteClick={onDeleteClick}
+          />
         ))}
       </DiaryEntriesContainer>
     </>

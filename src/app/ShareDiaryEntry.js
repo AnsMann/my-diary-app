@@ -17,7 +17,7 @@ import {
 } from './services'
 import { SlackResultList } from './SlackResultList'
 import { Header } from './Header'
-import { ModalDialogue } from './ModalDialogue'
+import { ShareModalDialogue } from './ShareModalDialogue'
 import { ArrowBack } from './ArrowBack'
 
 moment.locale('de')
@@ -138,7 +138,7 @@ export function ShareDiaryEntry({
     <>
       <Header title={'Share via slack'} />
       {modalStatus.showModal && (
-        <ModalDialogue
+        <ShareModalDialogue
           onModalButtonClick={handleModalButtonClick}
           shareWith={modalStatus.shareWith}
           history={history}

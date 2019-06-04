@@ -32,12 +32,13 @@ const MenuOption = styled.li`
   font-weight: bold;
 `
 
-export function DiaryEntryMenu({ history, entryId }) {
+export function DiaryEntryMenu({ history, entryId, onDeleteMenuClick }) {
   return (
     <Menu>
       <MenuOption onClick={() => history.push(`/cards/${entryId}/share`)}>
         Share via slack
       </MenuOption>
+      <MenuOption onClick={() => onDeleteMenuClick()}>Delete</MenuOption>
     </Menu>
   )
 }
