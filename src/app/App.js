@@ -81,7 +81,7 @@ export default function App() {
           render={props => (
             <DiaryEntryDetails
               diaryEntries={diaryEntries}
-              handleBackClick={handleBackClick}
+              onBackClick={handleBackClick}
               {...props}
             />
           )}
@@ -94,6 +94,7 @@ export default function App() {
               diaryEntries={diaryEntries}
               diaryID={props.match.params.id}
               history={props.history}
+              onBackClick={handleBackClick}
             />
           )}
         />
