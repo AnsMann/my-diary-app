@@ -57,16 +57,27 @@ const DiaryEntryContent = styled.li`
   }
 `
 const MenueIcon = styled.button`
-  bottom: 50px;
+  bottom: 10%;
   color: #002f47;
   font-size: 2rem;
   left: 80%;
-  position: relative;
+  position: absolute;
   section {
     font-size: 1.2rem;
   }
 `
-const DiaryEntryCard = styled.section``
+
+const SlackLogo = styled.img`
+  width: 15%;
+  position: absolute;
+  top: -25px;
+  left: 0px;
+`
+
+const DiaryEntryCard = styled.section`
+  position: relative;
+  margin-bottom: 30px;
+`
 
 export function DiaryEntry({ entry, history, onDeleteClick }) {
   const [isMenuVisible, setIsMenuVisible] = useState(false)
@@ -101,6 +112,7 @@ export function DiaryEntry({ entry, history, onDeleteClick }) {
             <ShowDayRating entryRating={entry.rating} />
           </DiaryEntryContent>
         </CardLink>
+        {entry.shared.status && <SlackLogo src="/icons/Slack_Mark_Web.png" />}
         <MenueIcon onClick={() => setIsMenuVisible(!isMenuVisible)}>
           <FontAwesomeIcon icon={faEllipsisH} />
           {isMenuVisible && (

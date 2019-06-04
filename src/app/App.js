@@ -46,6 +46,7 @@ export default function App() {
         coachFeedback: target['coach feedback'].value,
         additional: target['anything else'].value,
         id: uid(),
+        shared: { status: false, sharedOn: '', sharedWith: '' },
       },
       ...diaryEntries,
     ])
@@ -57,6 +58,24 @@ export default function App() {
     history.goBack()
   }
 
+
+  function handleSharedDiaryEntry(id, contact, date) {
+    const index = findIndex(id, diaryEntries)
+    const diaryEntry = diaryEntries[index]
+    const sharedDiaryEntry = {
+      ...diaryEntry,
+      shared: {
+        status: true,
+        sharedWith: contact,
+        sharedOn: date,
+      },
+    }
+    setDiaryEntries([
+      ...diaryEntries.slice(0, index),
+      sharedDiaryEntry,
+      ...diaryEntries.slice(index + 1),
+    ])
+
   function handleDeleteClick(id, history) {
     const index = findIndex(id, diaryEntries)
     setDiaryEntries([
@@ -64,6 +83,7 @@ export default function App() {
       ...diaryEntries.slice(index + 1),
     ])
     history.push('/')
+
   }
 
   return (
@@ -112,6 +132,7 @@ export default function App() {
               diaryID={props.match.params.id}
               history={props.history}
               onBackClick={handleBackClick}
+              onShare={handleSharedDiaryEntry}
             />
           )}
         />

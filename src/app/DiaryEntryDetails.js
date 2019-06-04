@@ -5,6 +5,10 @@ import { findIndex } from './utils'
 import { Header } from './Header'
 import { ArrowBack } from './ArrowBack'
 import { ShareViaSlackButton } from './ShareViaSlackButton'
+import moment from 'moment'
+import 'moment/locale/de'
+
+moment.locale('de')
 
 const EntryDetails = styled.section`
   border: solid 1px #007fbf;
@@ -25,6 +29,9 @@ const EntryDetails = styled.section`
     color: #002f47;
     font-size: 1rem;
     margin: 10px;
+  }
+  small {
+    color: #c3b8c5;
   }
   span {
     font-size: 2rem;
@@ -54,6 +61,7 @@ export function DiaryEntryDetails({
     negative,
     coachFeedback,
     additional,
+    shared,
   } = diaryEntries[entryIndex]
 
   const detailsToRender = [
@@ -82,6 +90,7 @@ export function DiaryEntryDetails({
       content: additional,
     },
   ]
+
   return (
     <>
       <Header title={'My Diary Entries'} />
@@ -95,6 +104,12 @@ export function DiaryEntryDetails({
           </section>
         ))}
         <ShowDayRating entryRating={rating} />
+        {shared.status && (
+          <small>
+            last shared with <strong>{shared.sharedWith}</strong>
+            <br /> on <strong>{shared.sharedOn}</strong>
+          </small>
+        )}
         <Share>
           <ShareViaSlackButton idForURL={id} />
         </Share>
