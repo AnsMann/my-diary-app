@@ -4,6 +4,7 @@ import { ShowDayRating } from './ShowDayRating'
 import { findIndex } from './utils'
 import { Header } from './Header'
 import { ArrowBack } from './ArrowBack'
+import { ShareViaSlackButton } from './ShareViaSlackButton'
 
 const EntryDetails = styled.section`
   border: solid 1px #007fbf;
@@ -30,15 +31,10 @@ const EntryDetails = styled.section`
   }
 `
 
-const ShareButton = styled(Link)`
-  background: #007fbf;
-  border-radius: 10px;
-  color: #ffffff;
-  font-size: 1.5rem;
-  height: 60px;
-  text-decoration: none;
-  text-align: center;
-  padding: 10px;
+const Share = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 `
 
 export function DiaryEntryDetails({
