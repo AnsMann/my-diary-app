@@ -1,13 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import OutsideClickHandler from 'react-outside-click-handler'
 import { Link } from 'react-router-dom'
 import { ShowDayRating } from './ShowDayRating'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
+import { DiaryEntryMenu } from './DiaryEntryMenu'
+
+library.add(faEllipsisH)
 
 const CardLink = styled(Link)`
   text-decoration: none;
+  overflow: hidden;
+  height: 150px;
 `
 
-const DiaryEntryCard = styled.li`
+const DiaryEntryContent = styled.li`
   align-items: center;
   border: solid 1px #007fbf;
   border-radius: 10px;
@@ -17,9 +26,6 @@ const DiaryEntryCard = styled.li`
   grid-template-rows: repeat(4, 30px);
   height: 130px;
   list-style: none;
-  margin-bottom: 40px;
-  overflow: hidden;
-  white-space: nowrap;
 
   h2,
   h3,
@@ -49,17 +55,37 @@ const DiaryEntryCard = styled.li`
     margin-left: 15px;
   }
 `
+const MenueIcon = styled.button`
+  bottom: 50px;
+  color: #002f47;
+  font-size: 2rem;
+  left: 80%;
+  position: relative;
+  section {
+    font-size: 1.2rem;
+  }
+`
+const DiaryEntryCard = styled.section``
 
-export function DiaryEntry({ entries }) {
-  return entries.map(entry => (
-    <CardLink to={`/cards/${entry.id}`} key={entry.id}>
+export function DiaryEntry({ entry, history }) {
+  const [showMenu, setShowMenu] = useState(false)
+  return (
+    <OutsideClickHandler onOutsideClick={() => setShowMenu(false)}>
       <DiaryEntryCard>
-        <img src="./icons/diary-entry.png" alt="diary entry book icon" />
-        <h2>Diary Entry from {entry.date}</h2>
-        <h3>Topic of the day</h3>
-        <h4>{entry.title || 'No Topic'}</h4>
-        <ShowDayRating entryRating={entry.rating} />>
+        <CardLink to={`/cards/${entry.id}`}>
+          <DiaryEntryContent>
+            <img src="./icons/diary-entry.png" alt="diary entry book icon" />
+            <h2>Diary Entry from {entry.date}</h2>
+            <h3>Topic of the day</h3>
+            <h4>{entry.title || 'No Topic'}</h4>
+            <ShowDayRating entryRating={entry.rating} />
+          </DiaryEntryContent>
+        </CardLink>
+        <MenueIcon onClick={() => setShowMenu(!showMenu)}>
+          <FontAwesomeIcon icon={faEllipsisH} />
+          {showMenu && <DiaryEntryMenu history={history} entryId={entry.id} />}
+        </MenueIcon>
       </DiaryEntryCard>
-    </CardLink>
-  ))
+    </OutsideClickHandler>
+  )
 }
