@@ -78,6 +78,33 @@ export function DiaryEntryDetails({
     additional,
   } = diaryEntries[entryIndex]
 
+  const detailsToRender = [
+    {
+      headline: 'Todays topic was',
+      content: title,
+    },
+    {
+      headline: 'Die wichtigsten Inhalte heute waren',
+      content: content,
+    },
+    {
+      headline: 'Besonders positiv erinnere ich',
+      content: positive,
+    },
+    {
+      headline: 'Besonders negative erinnere ich',
+      content: negative,
+    },
+    {
+      headline: 'Meinem Coach würde ich sagen',
+      content: coachFeedback,
+    },
+    {
+      headline: 'Außerdem war mir heute noch wichtig',
+      content: additional,
+    },
+  ]
+
   const message = `<h2>Dear Diary from ${date}</h2>
   <h3>Todays topic was</h3>
   <p>${title}</p>
@@ -100,18 +127,12 @@ export function DiaryEntryDetails({
           <FontAwesomeIcon icon={faLongArrowAltLeft} />
         </ArrowBack>
         <h2>Dear Diary from {date}</h2>
-        <h3>Todays topic was</h3>
-        <p>{title}</p>
-        <h3>Die wichtigsten Inhalte heute waren</h3>
-        <p>{content}</p>
-        <h3>Besonders positiv erinnere ich</h3>
-        <p>{positive}</p>
-        <h3>Besonders negativ erinnere ich</h3>
-        <p>{negative}</p>
-        <h3>Meinem Coach würde ich sagen</h3>
-        <p>{coachFeedback}</p>
-        <h3>Außerdem war mir heute noch wichtig</h3>
-        <p>{additional}</p>
+        {detailsToRender.map(obj => (
+          <section key={obj.headline}>
+            <h3>{obj.headline}</h3>
+            <p>{obj.content}</p>
+          </section>
+        ))}
         <ShowDayRating entryRating={rating} />
         <Share>
           <ShareViaSlackButton idForURL={id} />
