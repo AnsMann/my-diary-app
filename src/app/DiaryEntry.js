@@ -7,6 +7,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 import { DiaryEntryMenu } from './DiaryEntryMenu'
+import { DeleteModalDialogue } from './DeleteModalDialogue'
 
 library.add(faEllipsisH)
 
@@ -67,10 +68,29 @@ const MenueIcon = styled.button`
 `
 const DiaryEntryCard = styled.section``
 
-export function DiaryEntry({ entry, history }) {
+export function DiaryEntry({ entry, history, onDeleteClick }) {
   const [showMenu, setShowMenu] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+
+  function handleDeleteMenuClick() {
+    setShowDeleteModal(true)
+  }
+
+  function resetDeleteModal() {
+    setShowDeleteModal(false)
+  }
+
   return (
     <OutsideClickHandler onOutsideClick={() => setShowMenu(false)}>
+      {showDeleteModal && (
+        <DeleteModalDialogue
+          entryId={entry.id}
+          entryDate={entry.date}
+          history={history}
+          onDeleteConfirmation={onDeleteClick}
+          onDeleteAbort={resetDeleteModal}
+        />
+      )}
       <DiaryEntryCard>
         <CardLink to={`/cards/${entry.id}`}>
           <DiaryEntryContent>
@@ -83,7 +103,13 @@ export function DiaryEntry({ entry, history }) {
         </CardLink>
         <MenueIcon onClick={() => setShowMenu(!showMenu)}>
           <FontAwesomeIcon icon={faEllipsisH} />
-          {showMenu && <DiaryEntryMenu history={history} entryId={entry.id} />}
+          {showMenu && (
+            <DiaryEntryMenu
+              history={history}
+              entryId={entry.id}
+              onDeleteMenuClick={handleDeleteMenuClick}
+            />
+          )}
         </MenueIcon>
       </DiaryEntryCard>
     </OutsideClickHandler>
