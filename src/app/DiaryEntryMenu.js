@@ -11,6 +11,7 @@ const Menu = styled.section`
   right: 55px;
   background: white;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+  z-index: 10;
   &:after {
     position: absolute;
     right: -15px;
