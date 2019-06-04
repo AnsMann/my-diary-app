@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import moment from 'moment'
+import 'moment/locale/de'
+
 import {
   findIndex,
   handleSlackContactData,
@@ -16,6 +19,8 @@ import { SlackResultList } from './SlackResultList'
 import { Header } from './Header'
 import { ModalDialogue } from './ModalDialogue'
 import { ArrowBack } from './ArrowBack'
+
+moment.locale('de')
 
 const ShareContainer = styled.section`
   align-items: center;
@@ -81,6 +86,7 @@ export function ShareDiaryEntry({
   diaryEntries,
   history,
   onBackClick,
+  onShare,
 }) {
   const [searchInput, setSearchInput] = useState('')
   const [slackContacts, setSlackContacts] = useState(
@@ -118,10 +124,11 @@ export function ShareDiaryEntry({
   }, [])
 
   function handleContactClick(contactId, contactName) {
-    sendMessage(diaryEntryToShare, contactId).then(() =>
-      setModalStatus({ showModal: true, shareWith: contactName })
-    )
+    sendMessage(diaryEntryToShare, contactId)
+      .then(() => setModalStatus({ showModal: true, shareWith: contactName }))
+      .then(() => onShare(diaryID, contactName, moment(new Date()).format('L')))
   }
+
   function handleModalButtonClick(history) {
     setModalStatus({ showModal: false, shareWith: '' })
     history.push('/')

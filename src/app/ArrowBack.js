@@ -20,7 +20,7 @@ const Back = styled.div`
   position: absolute;
   top: 85px;
   width: 80px;
-  z-index: 100;
+  z-index: 50;
 `
 
 export function ArrowBack({ onBackClick, history }) {

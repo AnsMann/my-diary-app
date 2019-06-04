@@ -13,6 +13,7 @@ import { CreateDiaryEntryForm } from './CreateDiaryEntry'
 import { setLocalStorage, getLocalStorage } from './services'
 import { DiaryEntryDetails } from './DiaryEntryDetails'
 import { ShareDiaryEntry } from './ShareDiaryEntry'
+import { findIndex } from './utils'
 
 moment.locale('de')
 
@@ -45,6 +46,7 @@ export default function App() {
         coachFeedback: target['coach feedback'].value,
         additional: target['anything else'].value,
         id: uid(),
+        shared: { status: false, sharedOn: '', sharedWith: '' },
       },
       ...diaryEntries,
     ])
@@ -54,6 +56,24 @@ export default function App() {
 
   function handleBackClick(history) {
     history.goBack()
+  }
+
+  function handleSharedDiaryEntry(id, contact, date) {
+    const index = findIndex(id, diaryEntries)
+    const diaryentry = diaryEntries[index]
+    const sharedDiaryEntry = {
+      ...diaryentry,
+      shared: {
+        status: true,
+        sharedWith: contact,
+        sharedOn: date,
+      },
+    }
+    setDiaryEntries([
+      ...diaryEntries.slice(0, index),
+      sharedDiaryEntry,
+      ...diaryEntries.slice(index + 1),
+    ])
   }
 
   return (
@@ -101,6 +121,7 @@ export default function App() {
               diaryID={props.match.params.id}
               history={props.history}
               onBackClick={handleBackClick}
+              onShare={handleSharedDiaryEntry}
             />
           )}
         />
