@@ -69,20 +69,20 @@ const MenueIcon = styled.button`
 const DiaryEntryCard = styled.section``
 
 export function DiaryEntry({ entry, history, onDeleteClick }) {
-  const [showMenu, setShowMenu] = useState(false)
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [isMenuVisible, setIsMenuVisible] = useState(false)
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
 
   function handleDeleteMenuClick() {
-    setShowDeleteModal(true)
+    setIsDeleteModalVisible(true)
   }
 
   function resetDeleteModal() {
-    setShowDeleteModal(false)
+    setIsDeleteModalVisible(false)
   }
 
   return (
-    <OutsideClickHandler onOutsideClick={() => setShowMenu(false)}>
-      {showDeleteModal && (
+    <OutsideClickHandler onOutsideClick={() => setIsMenuVisible(false)}>
+      {isDeleteModalVisible && (
         <DeleteModalDialogue
           entryId={entry.id}
           entryDate={entry.date}
@@ -101,9 +101,9 @@ export function DiaryEntry({ entry, history, onDeleteClick }) {
             <ShowDayRating entryRating={entry.rating} />
           </DiaryEntryContent>
         </CardLink>
-        <MenueIcon onClick={() => setShowMenu(!showMenu)}>
+        <MenueIcon onClick={() => setIsMenuVisible(!isMenuVisible)}>
           <FontAwesomeIcon icon={faEllipsisH} />
-          {showMenu && (
+          {isMenuVisible && (
             <DiaryEntryMenu
               history={history}
               entryId={entry.id}
