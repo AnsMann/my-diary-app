@@ -58,7 +58,6 @@ export default function App() {
     history.goBack()
   }
 
-
   function handleSharedDiaryEntry(id, contact, date) {
     const index = findIndex(id, diaryEntries)
     const diaryEntry = diaryEntries[index]
@@ -75,6 +74,7 @@ export default function App() {
       sharedDiaryEntry,
       ...diaryEntries.slice(index + 1),
     ])
+  }
 
   function handleDeleteClick(id, history) {
     const index = findIndex(id, diaryEntries)
@@ -83,7 +83,6 @@ export default function App() {
       ...diaryEntries.slice(index + 1),
     ])
     history.push('/')
-
   }
 
   return (
