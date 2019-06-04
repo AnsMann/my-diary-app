@@ -3,15 +3,13 @@ import styled from 'styled-components'
 import { ShowDayRating } from './ShowDayRating'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowAltCircleLeft as farArrowAltCircleLeft } from '@fortawesome/free-regular-svg-icons'
 import { faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons'
 import { findIndex } from './utils'
 import { Header } from './Header'
 import { ShareViaSlackButton } from './ShareViaSlackButton'
 import { ShareViaMailButton } from './ShareViaMailButton'
-import { ShareViaPhoneButton } from './ShareViaPhoneButton'
 
-library.add(farArrowAltCircleLeft, faLongArrowAltLeft)
+library.add(faLongArrowAltLeft)
 
 const EntryDetails = styled.section`
   border: solid 1px #007fbf;
@@ -118,7 +116,6 @@ export function DiaryEntryDetails({
         <Share>
           <ShareViaSlackButton idForURL={id} />
           <ShareViaMailButton message={message} entryDate={date} />
-          <ShareViaPhoneButton message={message} />
         </Share>
       </EntryDetails>
     </>
