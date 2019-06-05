@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
 const StyledRatingInput = styled.div`
@@ -49,30 +49,42 @@ export function DayRatingInput() {
     {
       rating: '3',
       output: '😃',
+      default: false,
     },
     {
       rating: '2',
       output: '😶',
+      default: false,
     },
     {
       rating: '1',
       output: '😔',
+      default: false,
     },
   ]
 
   return (
     <StyledRatingInput>
-      <RatingOptions options={ratingOptions} />
+      {ratingOptions.map(option => (
+        <RatingOptions key={option.rating} options={option} />
+      ))}
     </StyledRatingInput>
   )
 }
 
 function RatingOptions({ options }) {
-  return options.map(option => (
-    <label key={option.rating}>
-      <input type="radio" name="dayrating" value={option.rating} />
+  const [isChecked, setIsChecked] = useState(options.default)
+  return (
+    <label>
+      <input
+        onChange={() => setIsChecked(!isChecked)}
+        type="radio"
+        name="dayrating"
+        value={options.rating}
+        checked={isChecked}
+      />
       <span />
-      {option.output}
+      {options.output}
     </label>
-  ))
+  )
 }

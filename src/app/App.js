@@ -85,6 +85,20 @@ export default function App() {
     history.push('/')
   }
 
+  function handleEditEntryDetailsPage(entryId, changedKey, changedInput) {
+    const index = findIndex(entryId, diaryEntries)
+    const diaryEntry = diaryEntries[index]
+    const diaryEntryToChange = {
+      ...diaryEntry,
+      [changedKey]: changedInput,
+    }
+    setDiaryEntries([
+      ...diaryEntries.slice(0, index),
+      diaryEntryToChange,
+      ...diaryEntries.slice(index + 1),
+    ])
+  }
+
   return (
     <Router>
       <GlobalStyles />
@@ -119,6 +133,7 @@ export default function App() {
               diaryEntries={diaryEntries}
               onBackClick={handleBackClick}
               {...props}
+              onEdit={handleEditEntryDetailsPage}
             />
           )}
         />

@@ -16,15 +16,19 @@ export function AnswerTextArea({
   placeholder = 'Type here',
   value,
   rows = '5',
+  onEdit = null,
 }) {
-  const [inputValue, setInputValue] = useState('')
+  const [inputValue, setInputValue] = useState(value || '')
   return (
     <Answer
-      onChange={event => setInputValue(event.target.value)}
+      onChange={event => {
+        setInputValue(event.target.value)
+        onEdit && onEdit(name, event.target.value)
+      }}
       rows={rows}
       placeholder={placeholder}
       name={name}
-      value={value || inputValue}
+      value={inputValue}
     />
   )
 }
