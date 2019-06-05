@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { AnswerTextArea } from './AnswerTextArea'
 
 const Styledquestion = styled.h4`
   color: #007fbf;
@@ -42,7 +43,7 @@ export function QuestionCatalogue() {
   return questions.map(questionObject => (
     <label key={questions.indexOf(questionObject)}>
       <Styledquestion>{questionObject.question}</Styledquestion>
-      <Answer rows="5" placeholder="Type here" name={questionObject.name} />
+      <AnswerTextArea name={questionObject.name} />
     </label>
   ))
 }
