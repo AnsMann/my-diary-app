@@ -16,12 +16,16 @@ const SingleDetail = styled.section`
   }
 `
 
-export function ShowSingleDetail({ title, content, onEdit, detailType }) {
+export function ShowSingleDetail({ title, content, onEditDetail, detailType }) {
   const [isEditable, setIsEditable] = useState(false)
   return isEditable ? (
     <OutsideClickHandler onOutsideClick={() => setIsEditable(false)}>
       <h3>{title}</h3>
-      <AnswerTextArea value={content} name={detailType} onEdit={onEdit} />
+      <AnswerTextArea
+        value={content}
+        name={detailType}
+        onEditText={onEditDetail}
+      />
     </OutsideClickHandler>
   ) : (
     <SingleDetail>

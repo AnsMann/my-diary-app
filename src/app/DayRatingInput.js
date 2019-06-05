@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { findIndex } from './utils'
 
 const StyledRatingInput = styled.div`
   display: flex;
@@ -44,7 +45,7 @@ const StyledRatingInput = styled.div`
   }
 `
 
-export function DayRatingInput() {
+export function DayRatingInput({ defaultValue = false, onEditRating = false }) {
   const ratingOptions = [
     {
       rating: '3',
@@ -62,22 +63,40 @@ export function DayRatingInput() {
       default: false,
     },
   ]
-
+  let ratingOptionsWithDefault = false
+  if (defaultValue) {
+    ratingOptionsWithDefault = changeRationOptions(ratingOptions, defaultValue)
+  }
   return (
     <StyledRatingInput>
-      {ratingOptions.map(option => (
-        <RatingOptions key={option.rating} options={option} />
-      ))}
+      {ratingOptionsWithDefault
+        ? ratingOptionsWithDefault.map(option => (
+            <RatingOptions
+              key={option.rating}
+              options={option}
+              onEditRating={onEditRating}
+            />
+          ))
+        : ratingOptions.map(option => (
+            <RatingOptions
+              key={option.rating}
+              options={option}
+              onEditRating={onEditRating}
+            />
+          ))}
     </StyledRatingInput>
   )
 }
 
-function RatingOptions({ options }) {
+function RatingOptions({ options, onEditRating }) {
   const [isChecked, setIsChecked] = useState(options.default)
   return (
     <label>
       <input
-        onChange={() => setIsChecked(!isChecked)}
+        onChange={event => {
+          onEditRating && onEditRating(event.target)
+          setIsChecked(!isChecked)
+        }}
         type="radio"
         name="dayrating"
         value={options.rating}
@@ -87,4 +106,20 @@ function RatingOptions({ options }) {
       {options.output}
     </label>
   )
+}
+
+function changeRationOptions(ratingOptions, defaultValue) {
+  const index = ratingOptions.map(option => option.rating).indexOf(defaultValue)
+  const Rating = ratingOptions[index]
+  console.log(Rating)
+  const RatingToCheck = {
+    ...Rating,
+    default: true,
+  }
+  const ratingWithDefault = [
+    ...ratingOptions.slice(0, index),
+    RatingToCheck,
+    ...ratingOptions.slice(index + 1),
+  ]
+  return ratingWithDefault
 }

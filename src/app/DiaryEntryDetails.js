@@ -46,7 +46,8 @@ export function DiaryEntryDetails({
   diaryEntries,
   onBackClick,
   history,
-  onEdit,
+  onEditDetails,
+  onEditRating,
 }) {
   const entryIndex = findIndex(match.params.id, diaryEntries)
   const {
@@ -100,8 +101,11 @@ export function DiaryEntryDetails({
     setEditrating(true)
   }
 
-  function handleEdit(detailType, input) {
-    onEdit(id, detailType, input)
+  function handleEditDetails(detailType, input) {
+    onEditDetails(id, detailType, input)
+  }
+  function handleEditRating(target) {
+    onEditRating(id)
   }
 
   return (
@@ -110,17 +114,20 @@ export function DiaryEntryDetails({
       <EntryDetails>
         <ArrowBack onBackClick={onBackClick} history={history} />
         <h2>Dear Diary from {date}</h2>
-        {detailsToRender.map(obj => (
+        {detailsToRender.map(detailObject => (
           <ShowSingleDetail
-            key={obj.headline}
-            title={obj.headline}
-            content={obj.content}
-            onEdit={handleEdit}
-            detailType={obj.type}
+            key={detailObject.headline}
+            title={detailObject.headline}
+            content={detailObject.content}
+            onEditDetail={handleEditDetails}
+            detailType={detailObject.type}
           />
         ))}
         {editRating ? (
-          <DayRatingInput />
+          <DayRatingInput
+            defaultValue={rating}
+            onEditRating={handleEditRating}
+          />
         ) : (
           <ShowDayRating
             onShowDayRatingClick={handleDayRatingClick}
