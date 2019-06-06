@@ -65,6 +65,11 @@ const EditIcon = styled.div`
   top: -50px;
   right: -275px;
 `
+const StyledDiv = styled.div`
+  color: #c3b8c5;
+  font-size: 1rem;
+  margin-bottom: 15px;
+`
 
 export function DiaryEntryDetails({
   match,
@@ -85,6 +90,7 @@ export function DiaryEntryDetails({
     coachFeedback,
     additional,
     shared,
+    edit,
   } = diaryEntries[entryIndex]
 
   const detailsToRender = [
@@ -169,6 +175,11 @@ export function DiaryEntryDetails({
               <FontAwesomeIcon icon={faPencilAlt} />
             </EditIcon>
           </div>
+        )}
+        {edit.status && (
+          <StyledDiv>
+            last edit on <strong>{moment(edit.editOn).format('L')}</strong>
+          </StyledDiv>
         )}
         {shared.status && (
           <small>

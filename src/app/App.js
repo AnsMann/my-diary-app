@@ -33,7 +33,6 @@ export default function App() {
 
   function handleSubmit(event, date, history, entryId = null) {
     const { target } = event
-    //const pickedDate = moment(date).format('L')
     event.preventDefault()
     if (entryId) {
       const index = findIndex(entryId, diaryEntries)
@@ -48,6 +47,7 @@ export default function App() {
         negative: target['remember negative'].value,
         coachFeedback: target['coach feedback'].value,
         additional: target['anything else'].value,
+        edit: { status: true, editOn: moment() },
       }
       setDiaryEntries([
         ...diaryEntries.slice(0, index),
@@ -67,6 +67,7 @@ export default function App() {
           additional: target['anything else'].value,
           id: uid(),
           shared: { status: false, sharedOn: '', sharedWith: '' },
+          edit: { status: false, editOn: '' },
         },
         ...diaryEntries,
       ])
@@ -112,6 +113,7 @@ export default function App() {
     const diaryEntryToChange = {
       ...diaryEntry,
       [changedKey]: changedInput,
+      edit: { status: true, editOn: moment() },
     }
     setDiaryEntries([
       ...diaryEntries.slice(0, index),
