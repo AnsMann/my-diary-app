@@ -1,18 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
+import { AnswerTextArea } from './AnswerTextArea'
 
 const Styledquestion = styled.h4`
   color: #007fbf;
-`
-
-const Answer = styled.textarea`
-  border: 1px solid #007fbf;
-  border-radius: 10px;
-  font-family: inherit;
-  font-size: 1rem;
-  padding: 15px 20px 0;
-  text-align: justify;
-  width: 100%;
 `
 
 export function QuestionCatalogue() {
@@ -42,7 +33,7 @@ export function QuestionCatalogue() {
   return questions.map(questionObject => (
     <label key={questions.indexOf(questionObject)}>
       <Styledquestion>{questionObject.question}</Styledquestion>
-      <Answer rows="5" placeholder="Type here" name={questionObject.name} />
+      <AnswerTextArea name={questionObject.name} />
     </label>
   ))
 }

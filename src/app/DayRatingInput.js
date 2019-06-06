@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { RatingOptions } from './RatingOptions'
 
 const StyledRatingInput = styled.div`
   display: flex;
@@ -62,17 +63,9 @@ export function DayRatingInput() {
 
   return (
     <StyledRatingInput>
-      <RatingOptions options={ratingOptions} />
+      {ratingOptions.map(option => (
+        <RatingOptions key={option.rating} options={option} />
+      ))}
     </StyledRatingInput>
   )
-}
-
-function RatingOptions({ options }) {
-  return options.map(option => (
-    <label key={option.rating}>
-      <input type="radio" name="dayrating" value={option.rating} />
-      <span />
-      {option.output}
-    </label>
-  ))
 }

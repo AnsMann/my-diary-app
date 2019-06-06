@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import OutsideClickHandler from 'react-outside-click-handler'
 import { ShowDayRating } from './ShowDayRating'
 import { findIndex } from './utils'
 import { Header } from './Header'
@@ -7,6 +8,8 @@ import { ArrowBack } from './ArrowBack'
 import { ShareViaSlackButton } from './ShareViaSlackButton'
 import moment from 'moment'
 import 'moment/locale/de'
+import { ShowSingleDetail } from './ShowSingleDetail'
+import { DayRatingInput } from './DayRatingInput'
 
 moment.locale('de')
 
@@ -25,11 +28,6 @@ const EntryDetails = styled.section`
   h2 {
     font-size: 1.4rem;
   }
-  p {
-    color: #002f47;
-    font-size: 1rem;
-    margin: 10px;
-  }
   small {
     color: #c3b8c5;
   }
@@ -43,12 +41,23 @@ const Share = styled.div`
   justify-content: space-evenly;
   align-items: center;
 `
+const SaveButton = styled.button`
+  background: #007fbf;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 1rem;
+  height: 30px;
+  margin: 5px 0;
+  width: 100%;
+`
 
 export function DiaryEntryDetails({
   match,
   diaryEntries,
   onBackClick,
   history,
+  onEditDetails,
+  onEditRating,
 }) {
   const entryIndex = findIndex(match.params.id, diaryEntries)
   const {
@@ -68,28 +77,50 @@ export function DiaryEntryDetails({
     {
       headline: 'Todays topic was',
       content: title,
+      type: 'title',
     },
     {
       headline: 'Die wichtigsten Inhalte heute waren',
       content: content,
+      type: 'content',
     },
     {
       headline: 'Besonders positiv erinnere ich',
       content: positive,
+      type: 'positive',
     },
     {
       headline: 'Besonders negative erinnere ich',
       content: negative,
+      type: 'negative',
     },
     {
       headline: 'Meinem Coach würde ich sagen',
       content: coachFeedback,
+      type: 'coachFeedback',
     },
     {
       headline: 'Außerdem war mir heute noch wichtig',
       content: additional,
+      type: 'additional',
     },
   ]
+  const [isRatingEditable, setIsRatingEditable] = useState(false)
+
+  function handleDayRatingClick() {
+    setEditrating(true)
+  }
+
+  function handleEditDetails(detailType, input) {
+    onEditDetails(id, detailType, input)
+  }
+
+  function handleEditRating(event) {
+    const { target } = event
+    event.preventDefault()
+    setEditrating(false)
+    onEditDetails(id, 'rating', target.dayrating.value)
+  }
 
   return (
     <>
@@ -97,13 +128,36 @@ export function DiaryEntryDetails({
       <EntryDetails>
         <ArrowBack onBackClick={onBackClick} history={history} />
         <h2>Dear Diary from {date}</h2>
-        {detailsToRender.map(obj => (
-          <section key={obj.headline}>
-            <h3>{obj.headline}</h3>
-            <p>{obj.content}</p>
-          </section>
+        {detailsToRender.map(detailObject => (
+          <ShowSingleDetail
+            key={detailObject.headline}
+            title={detailObject.headline}
+            content={detailObject.content}
+            onEditDetail={handleEditDetails}
+            detailType={detailObject.type}
+          />
         ))}
-        <ShowDayRating entryRating={rating} />
+        {isRatingEditable ? (
+          <OutsideClickHandler
+            onOutsideClick={() => setIsRatingEditable(false)}
+          >
+            <form
+              onSubmit={event => {
+                handleEditRating(event)
+              }}
+            >
+              <label>
+                <DayRatingInput />
+              </label>
+              <SaveButton>Edit Rating</SaveButton>
+            </form>
+          </OutsideClickHandler>
+        ) : (
+          <ShowDayRating
+            onShowDayRatingClick={handleDayRatingClick}
+            entryRating={rating}
+          />
+        )}
         {shared.status && (
           <small>
             last shared with <strong>{shared.sharedWith}</strong>
