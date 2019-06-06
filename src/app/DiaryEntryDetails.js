@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import OutsideClickHandler from 'react-outside-click-handler'
 import { ShowDayRating } from './ShowDayRating'
 import { findIndex } from './utils'
 import { Header } from './Header'
@@ -39,6 +40,15 @@ const Share = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+`
+const SaveButton = styled.button`
+  background: #007fbf;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 1rem;
+  height: 30px;
+  margin: 5px 0;
+  width: 100%;
 `
 
 export function DiaryEntryDetails({
@@ -104,8 +114,12 @@ export function DiaryEntryDetails({
   function handleEditDetails(detailType, input) {
     onEditDetails(id, detailType, input)
   }
-  function handleEditRating(target) {
-    onEditRating(id)
+
+  function handleEditRating(event) {
+    const { target } = event
+    event.preventDefault()
+    setEditrating(false)
+    onEditDetails(id, 'rating', target.dayrating.value)
   }
 
   return (
@@ -124,10 +138,18 @@ export function DiaryEntryDetails({
           />
         ))}
         {editRating ? (
-          <DayRatingInput
-            defaultValue={rating}
-            onEditRating={handleEditRating}
-          />
+          <OutsideClickHandler onOutsideClick={() => setEditrating(false)}>
+            <form
+              onSubmit={event => {
+                handleEditRating(event)
+              }}
+            >
+              <label>
+                <DayRatingInput />
+              </label>
+              <SaveButton>Edit Rating</SaveButton>
+            </form>
+          </OutsideClickHandler>
         ) : (
           <ShowDayRating
             onShowDayRatingClick={handleDayRatingClick}

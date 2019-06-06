@@ -85,7 +85,7 @@ export default function App() {
     history.push('/')
   }
 
-  function handleEditEntryOnDetailsPage(entryId, changedKey, changedInput) {
+  function handleEditOnDetailsPage(entryId, changedKey, changedInput) {
     const index = findIndex(entryId, diaryEntries)
     const diaryEntry = diaryEntries[index]
     const diaryEntryToChange = {
@@ -135,8 +135,7 @@ export default function App() {
               diaryEntries={diaryEntries}
               onBackClick={handleBackClick}
               {...props}
-              onEditDetails={handleEditEntryOnDetailsPage}
-              onEditRating={handleEditDayRatingOnDetailsPage}
+              onEditDetails={handleEditOnDetailsPage}
             />
           )}
         />
