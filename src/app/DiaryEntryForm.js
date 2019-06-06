@@ -85,7 +85,7 @@ export function DiaryEntryForm({
       />
       <label>
         <h3>Todays rating</h3>
-        <DayRatingInput />
+        <DayRatingInput defaultValue={diaryEntryToEdit.rating} />
       </label>
       <SaveButton>Save</SaveButton>
     </StyledForm>

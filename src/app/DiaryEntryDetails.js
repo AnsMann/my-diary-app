@@ -157,7 +157,7 @@ export function DiaryEntryDetails({
               }}
             >
               <label>
-                <DayRatingInput />
+                <DayRatingInput defaultValue={rating} />
               </label>
               <SaveButton>Change rating</SaveButton>
             </form>
