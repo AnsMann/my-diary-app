@@ -105,7 +105,7 @@ export function DiaryEntryDetails({
       type: 'additional',
     },
   ]
-  const [editRating, setEditrating] = useState(false)
+  const [isRatingEditable, setIsRatingEditable] = useState(false)
 
   function handleDayRatingClick() {
     setEditrating(true)
@@ -137,8 +137,10 @@ export function DiaryEntryDetails({
             detailType={detailObject.type}
           />
         ))}
-        {editRating ? (
-          <OutsideClickHandler onOutsideClick={() => setEditrating(false)}>
+        {isRatingEditable ? (
+          <OutsideClickHandler
+            onOutsideClick={() => setIsRatingEditable(false)}
+          >
             <form
               onSubmit={event => {
                 handleEditRating(event)

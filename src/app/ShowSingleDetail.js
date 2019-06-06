@@ -30,9 +30,7 @@ export function ShowSingleDetail({ title, content, onEditDetail, detailType }) {
   ) : (
     <SingleDetail>
       <h3>{title}</h3>
-      <p onClick={() => setIsEditable(true)}>
-        {content ? content : 'Kein Eintrag'}
-      </p>
+      <p onClick={() => setIsEditable(true)}>{content || 'Kein Eintrag'}</p>
     </SingleDetail>
   )
 }
