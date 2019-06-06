@@ -27,6 +27,13 @@ const EntryDetails = styled.section`
   }
   h2 {
     font-size: 1.4rem;
+    margin-bottom: 0;
+  }
+  h5 {
+    color: #002f47;
+    font-size: 0.8rem;
+    font-weight: lighter;
+    margin-top: 5px;
   }
   small {
     color: #c3b8c5;
@@ -57,7 +64,6 @@ export function DiaryEntryDetails({
   onBackClick,
   history,
   onEditDetails,
-  onEditRating,
 }) {
   const entryIndex = findIndex(match.params.id, diaryEntries)
   const {
@@ -108,7 +114,7 @@ export function DiaryEntryDetails({
   const [isRatingEditable, setIsRatingEditable] = useState(false)
 
   function handleDayRatingClick() {
-    setEditrating(true)
+    setIsRatingEditable(true)
   }
 
   function handleEditDetails(detailType, input) {
@@ -118,7 +124,7 @@ export function DiaryEntryDetails({
   function handleEditRating(event) {
     const { target } = event
     event.preventDefault()
-    setEditrating(false)
+    setIsRatingEditable(false)
     onEditDetails(id, 'rating', target.dayrating.value)
   }
 
@@ -128,6 +134,7 @@ export function DiaryEntryDetails({
       <EntryDetails>
         <ArrowBack onBackClick={onBackClick} history={history} />
         <h2>Dear Diary from {date}</h2>
+        <h5>To edit your Text just tap on your text</h5>
         {detailsToRender.map(detailObject => (
           <ShowSingleDetail
             key={detailObject.headline}
