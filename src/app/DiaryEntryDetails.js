@@ -10,6 +10,11 @@ import moment from 'moment'
 import 'moment/locale/de'
 import { ShowSingleDetail } from './ShowSingleDetail'
 import { DayRatingInput } from './DayRatingInput'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+library.add(faPencilAlt)
 
 moment.locale('de')
 
@@ -28,12 +33,6 @@ const EntryDetails = styled.section`
   h2 {
     font-size: 1.4rem;
     margin-bottom: 0;
-  }
-  h5 {
-    color: #002f47;
-    font-size: 0.8rem;
-    font-weight: lighter;
-    margin-top: 5px;
   }
   small {
     color: #c3b8c5;
@@ -56,6 +55,15 @@ const SaveButton = styled.button`
   height: 30px;
   margin: 5px 0;
   width: 100%;
+`
+
+const EditIcon = styled.div`
+  color: #007fbf;
+  display: inline;
+  font-size: 1rem;
+  position: relative;
+  top: -50px;
+  right: -275px;
 `
 
 export function DiaryEntryDetails({
@@ -113,10 +121,6 @@ export function DiaryEntryDetails({
   ]
   const [isRatingEditable, setIsRatingEditable] = useState(false)
 
-  function handleDayRatingClick() {
-    setIsRatingEditable(true)
-  }
-
   function handleEditDetails(detailType, input) {
     onEditDetails(id, detailType, input)
   }
@@ -134,7 +138,6 @@ export function DiaryEntryDetails({
       <EntryDetails>
         <ArrowBack onBackClick={onBackClick} history={history} />
         <h2>Dear Diary from {date}</h2>
-        <h5>To edit your Text just tap on your text</h5>
         {detailsToRender.map(detailObject => (
           <ShowSingleDetail
             key={detailObject.headline}
@@ -156,14 +159,16 @@ export function DiaryEntryDetails({
               <label>
                 <DayRatingInput />
               </label>
-              <SaveButton>Edit Rating</SaveButton>
+              <SaveButton>Change rating</SaveButton>
             </form>
           </OutsideClickHandler>
         ) : (
-          <ShowDayRating
-            onShowDayRatingClick={handleDayRatingClick}
-            entryRating={rating}
-          />
+          <div onClick={() => setIsRatingEditable(true)}>
+            <ShowDayRating entryRating={rating} />
+            <EditIcon>
+              <FontAwesomeIcon icon={faPencilAlt} />
+            </EditIcon>
+          </div>
         )}
         {shared.status && (
           <small>

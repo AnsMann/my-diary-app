@@ -14,6 +14,7 @@ import { setLocalStorage, getLocalStorage } from './services'
 import { DiaryEntryDetails } from './DiaryEntryDetails'
 import { ShareDiaryEntry } from './ShareDiaryEntry'
 import { findIndex } from './utils'
+import { EditDiaryEntry } from './EditDiaryEntry'
 
 moment.locale('de')
 
@@ -30,13 +31,15 @@ export default function App() {
 
   useEffect(() => setLocalStorage('my diary', diaryEntries), [diaryEntries])
 
-  function handleSubmit(event, date, history) {
+  function handleSubmit(event, date, history, entryId = null) {
     const { target } = event
-
     const pickedDate = moment(date).format('L')
     event.preventDefault()
-    setDiaryEntries([
-      {
+    if (entryId) {
+      const index = findIndex(entryId, diaryEntries)
+      const diaryEntrytoChange = diaryEntries[index]
+      const changedDiaryEntry = {
+        ...diaryEntrytoChange,
         title: target.topic.value,
         date: pickedDate,
         rating: target.dayrating.value,
@@ -45,11 +48,29 @@ export default function App() {
         negative: target['remember negative'].value,
         coachFeedback: target['coach feedback'].value,
         additional: target['anything else'].value,
-        id: uid(),
-        shared: { status: false, sharedOn: '', sharedWith: '' },
-      },
-      ...diaryEntries,
-    ])
+      }
+      setDiaryEntries([
+        ...diaryEntries.slice(0, index),
+        changedDiaryEntry,
+        ...diaryEntries.slice(index + 1),
+      ])
+    } else {
+      setDiaryEntries([
+        {
+          title: target.topic.value,
+          date: pickedDate,
+          rating: target.dayrating.value,
+          content: target['content in own words'].value,
+          positive: target['remember positive'].value,
+          negative: target['remember negative'].value,
+          coachFeedback: target['coach feedback'].value,
+          additional: target['anything else'].value,
+          id: uid(),
+          shared: { status: false, sharedOn: '', sharedWith: '' },
+        },
+        ...diaryEntries,
+      ])
+    }
 
     history.push('/')
   }
@@ -99,8 +120,6 @@ export default function App() {
     ])
   }
 
-  function handleEditDayRatingOnDetailsPage() {}
-
   return (
     <Router>
       <GlobalStyles />
@@ -149,6 +168,18 @@ export default function App() {
               history={props.history}
               onBackClick={handleBackClick}
               onShare={handleSharedDiaryEntry}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/cards/:id/edit"
+          render={props => (
+            <EditDiaryEntry
+              diaryEntries={diaryEntries}
+              diaryID={props.match.params.id}
+              history={props.history}
+              handleSubmit={handleSubmit}
             />
           )}
         />
