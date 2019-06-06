@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import moment from 'moment'
+import 'moment/locale/de'
+moment.locale('de')
 
 library.add(faTrashAlt)
 
@@ -70,7 +73,7 @@ export function DeleteModalDialogue({
         <span>
           Delete entry from
           <br />
-          <strong>{entryDate}</strong>
+          <strong>{moment(entryDate).format('L')}</strong>
         </span>
         <StyledIcon>
           <FontAwesomeIcon icon={faTrashAlt} />

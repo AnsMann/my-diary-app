@@ -137,7 +137,7 @@ export function DiaryEntryDetails({
       <Header title={'My Diary Entries'} />
       <EntryDetails>
         <ArrowBack onBackClick={onBackClick} history={history} />
-        <h2>Dear Diary from {date}</h2>
+        <h2>Dear Diary from {moment(date).format('L')}</h2>
         {detailsToRender.map(detailObject => (
           <ShowSingleDetail
             key={detailObject.headline}
@@ -173,7 +173,7 @@ export function DiaryEntryDetails({
         {shared.status && (
           <small>
             last shared with <strong>{shared.sharedWith}</strong>
-            <br /> on <strong>{shared.sharedOn}</strong>
+            <br /> on <strong>{moment(shared.sharedOn).format('L')}</strong>
           </small>
         )}
         <Share>

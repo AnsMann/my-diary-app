@@ -8,6 +8,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 import { DiaryEntryMenu } from './DiaryEntryMenu'
 import { DeleteModalDialogue } from './DeleteModalDialogue'
+import moment from 'moment'
+import 'moment/locale/de'
+moment.locale('de')
 
 library.add(faEllipsisH)
 
@@ -106,7 +109,7 @@ export function DiaryEntry({ entry, history, onDeleteClick }) {
         <CardLink to={`/cards/${entry.id}`}>
           <DiaryEntryContent>
             <img src="./icons/diary-entry.png" alt="diary entry book icon" />
-            <h2>Diary Entry from {entry.date}</h2>
+            <h2>Diary Entry from {moment(entry.date).format('L')}</h2>
             <h3>Topic of the day</h3>
             <h4>{entry.title || 'No Topic'}</h4>
             <ShowDayRating entryRating={entry.rating} />

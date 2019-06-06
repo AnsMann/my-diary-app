@@ -33,7 +33,7 @@ export default function App() {
 
   function handleSubmit(event, date, history, entryId = null) {
     const { target } = event
-    const pickedDate = moment(date).format('L')
+    //const pickedDate = moment(date).format('L')
     event.preventDefault()
     if (entryId) {
       const index = findIndex(entryId, diaryEntries)
@@ -41,7 +41,7 @@ export default function App() {
       const changedDiaryEntry = {
         ...diaryEntrytoChange,
         title: target.topic.value,
-        date: pickedDate,
+        date: date,
         rating: target.dayrating.value,
         content: target['content in own words'].value,
         positive: target['remember positive'].value,
@@ -58,7 +58,7 @@ export default function App() {
       setDiaryEntries([
         {
           title: target.topic.value,
-          date: pickedDate,
+          date: date,
           rating: target.dayrating.value,
           content: target['content in own words'].value,
           positive: target['remember positive'].value,
