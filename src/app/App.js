@@ -14,6 +14,7 @@ import { setLocalStorage, getLocalStorage } from './services'
 import { DiaryEntryDetails } from './DiaryEntryDetails'
 import { ShareDiaryEntry } from './ShareDiaryEntry'
 import { findIndex } from './utils'
+import { Settings } from './Settings'
 
 moment.locale('de')
 
@@ -152,6 +153,7 @@ export default function App() {
             />
           )}
         />
+        <Route exact path="/settings" render={() => <Settings />} />
         <Footer />
       </Grid>
     </Router>
