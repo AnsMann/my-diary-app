@@ -23,7 +23,6 @@ export function SlackResultList({
   searchInput,
   onContactClick,
 }) {
-  console.log(channels)
   const filteredResult = filterData(userContacts, channels, searchInput)
   if (channels.length === 0 && userContacts.length === 0) {
     return <p>No connection to slack</p>
