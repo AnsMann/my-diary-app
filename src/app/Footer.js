@@ -1,4 +1,4 @@
-import React from 'react'
+import Reactfrom 'react'
 import styled from 'styled-components'
 import { NavLink as RouterLink } from 'react-router-dom'
 import { library } from '@fortawesome/fontawesome-svg-core'
