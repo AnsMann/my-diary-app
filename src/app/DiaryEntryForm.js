@@ -40,21 +40,16 @@ const SaveButton = styled.button`
   height: 60px;
 `
 
-export function DiaryEntryForm({
-  onFormSubmit,
-  history,
-  diaryEntryToEdit = '',
-}) {
+export function DiaryEntryForm({ onFormSubmit, diaryEntryToEdit = '' }) {
   const [date, setDate] = useState(diaryEntryToEdit.date || moment(new Date()))
   const [focused, setFocus] = useState(false)
 
   return (
     <StyledForm
-      onSubmit={event =>
-        diaryEntryToEdit
-          ? onFormSubmit(event, date, history, diaryEntryToEdit.id)
-          : onFormSubmit(event, date, history)
-      }
+      onSubmit={event => {
+        event.preventDefault()
+        onFormSubmit(event.target, date)
+      }}
     >
       <label>
         <h3>Entry date</h3>

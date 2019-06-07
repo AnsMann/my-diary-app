@@ -93,16 +93,18 @@ export function DiaryEntry({ entry, history, onDeleteClick }) {
   function resetDeleteModal() {
     setIsDeleteModalVisible(false)
   }
+  function handleDeleteConfirmation() {
+    onDeleteClick(entry.id, history)
+    resetDeleteModal()
+  }
 
   return (
     <OutsideClickHandler onOutsideClick={() => setIsMenuVisible(false)}>
       {isDeleteModalVisible && (
         <DeleteModalDialogue
-          entryId={entry.id}
           entryDate={entry.date}
-          history={history}
-          onDeleteConfirmation={onDeleteClick}
-          onDeleteAbort={resetDeleteModal}
+          onDeleteConfirmation={handleDeleteConfirmation}
+          resetDeleteModal={resetDeleteModal}
         />
       )}
       <DiaryEntryCard>

@@ -23,8 +23,11 @@ export function SlackResultList({
   searchInput,
   onContactClick,
 }) {
+  console.log(channels)
   const filteredResult = filterData(userContacts, channels, searchInput)
-  if (filteredResult.length !== 0) {
+  if (channels.length === 0 && userContacts.length === 0) {
+    return <p>No connection to slack</p>
+  } else if (filteredResult.length !== 0) {
     return filteredResult.map(contact => (
       <SlackResult
         onClick={() => onContactClick(contact.id, contact.name)}

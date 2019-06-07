@@ -106,7 +106,7 @@ export function ShareDiaryEntry({
   useEffect(() => {
     async function fetchContacts() {
       const contacts = await getContacts()
-      const SlackContactList = handleSlackContactData(contacts)
+      const SlackContactList = handleSlackContactData(contacts || [])
       setSlackContacts(SlackContactList)
       setLocalStorage('contacts', SlackContactList)
     }
@@ -116,7 +116,7 @@ export function ShareDiaryEntry({
   useEffect(() => {
     async function fetchChannels() {
       const channels = await getChannels()
-      const SlackChannelList = handleSlackChannelData(channels)
+      const SlackChannelList = handleSlackChannelData(channels || [])
       setSlackChannels(SlackChannelList)
       setLocalStorage('channels', SlackChannelList)
     }
@@ -124,13 +124,27 @@ export function ShareDiaryEntry({
   }, [])
 
   function handleContactClick(contactId, contactName) {
-    sendMessage(diaryEntryToShare, contactId)
-      .then(() => setModalStatus({ showModal: true, shareWith: contactName }))
-      .then(() => onShare(diaryID, contactName, moment()))
+    sendMessage(diaryEntryToShare, contactId).then(res => {
+      res
+        ? setModalStatus({ showModal: true, shareWith: contactName })
+        : setModalStatus({ showModal: true, shareWith: '' })
+    })
   }
 
-  function handleModalButtonClick(history) {
-    setModalStatus({ showModal: false, shareWith: '' })
+  function handleModalButtonClick(history, success, contactName) {
+    if (success) {
+      const sharedDiaryEntry = {
+        ...diaryEntryToShare,
+        shared: {
+          status: true,
+          sharedWith: contactName,
+          sharedOn: moment(),
+        },
+      }
+      onShare(sharedDiaryEntry, entryIndex)
+    } else {
+      setModalStatus({ showModal: false, shareWith: '' })
+    }
     history.push('/')
   }
 
