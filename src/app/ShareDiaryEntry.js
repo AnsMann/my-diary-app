@@ -126,7 +126,7 @@ export function ShareDiaryEntry({
   function handleContactClick(contactId, contactName) {
     sendMessage(diaryEntryToShare, contactId)
       .then(() => setModalStatus({ showModal: true, shareWith: contactName }))
-      .then(() => onShare(diaryID, contactName, moment(new Date()).format('L')))
+      .then(() => onShare(diaryID, contactName, moment()))
   }
 
   function handleModalButtonClick(history) {
@@ -148,7 +148,9 @@ export function ShareDiaryEntry({
         <StyledDiv>
           <ArrowBack onBackClick={onBackClick} history={history} />
           <SearchArea>
-            <h2>Diary Entry from {diaryEntryToShare.date}</h2>
+            <h2>
+              Diary Entry from {moment(diaryEntryToShare.date).format('L')}
+            </h2>
             <p>share with</p>
             <StyledSearch
               type="search"
