@@ -41,7 +41,7 @@ const SaveButton = styled.button`
 `
 
 export function DiaryEntryForm({
-  handleSubmit,
+  onFormSubmit,
   history,
   diaryEntryToEdit = '',
 }) {
@@ -52,8 +52,8 @@ export function DiaryEntryForm({
     <StyledForm
       onSubmit={event =>
         diaryEntryToEdit
-          ? handleSubmit(event, date, history, diaryEntryToEdit.id)
-          : handleSubmit(event, date, history)
+          ? onFormSubmit(event, date, history, diaryEntryToEdit.id)
+          : onFormSubmit(event, date, history)
       }
     >
       <label>

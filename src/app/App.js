@@ -144,7 +144,7 @@ export default function App() {
           path="/create"
           render={props => (
             <CreateDiaryEntryForm
-              handleSubmit={handleSubmit}
+              onFormSubmit={handleSubmit}
               history={props.history}
             />
           )}
@@ -182,7 +182,7 @@ export default function App() {
               diaryEntries={diaryEntries}
               diaryID={props.match.params.id}
               history={props.history}
-              handleSubmit={handleSubmit}
+              onFormSubmit={handleSubmit}
             />
           )}
         />

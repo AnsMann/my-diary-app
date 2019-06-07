@@ -7,7 +7,7 @@ export function EditDiaryEntry({
   diaryEntries,
   diaryID,
   history,
-  handleSubmit,
+  onFormSubmit,
 }) {
   const entryIndex = findIndex(diaryID, diaryEntries)
 
@@ -15,7 +15,7 @@ export function EditDiaryEntry({
     <>
       <Header title={'Edit Diary Entries'} />
       <DiaryEntryForm
-        handleSubmit={handleSubmit}
+        onFormSubmit={onFormSubmit}
         history={history}
         diaryEntryToEdit={diaryEntries[entryIndex]}
       />
