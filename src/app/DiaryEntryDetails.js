@@ -67,8 +67,8 @@ const EditIcon = styled.div`
 `
 const StyledDiv = styled.div`
   color: #c3b8c5;
-  font-size: 1rem;
-  margin-bottom: 15px;
+  font-size: 0.8rem;
+  margin-bottom: 10px;
 `
 
 export function DiaryEntryDetails({
@@ -91,6 +91,7 @@ export function DiaryEntryDetails({
     additional,
     shared,
     edit,
+    createDate,
   } = diaryEntries[entryIndex]
 
   const detailsToRender = [
@@ -176,16 +177,19 @@ export function DiaryEntryDetails({
             </EditIcon>
           </div>
         )}
+        <StyledDiv>
+          Created on <strong>{moment(createDate).format('L')}</strong>
+        </StyledDiv>
         {edit.status && (
           <StyledDiv>
-            last edit on <strong>{moment(edit.editOn).format('L')}</strong>
+            Last edit on <strong>{moment(edit.editOn).format('L')}</strong>
           </StyledDiv>
         )}
         {shared.status && (
-          <small>
-            last shared with <strong>{shared.sharedWith}</strong>
+          <StyledDiv>
+            Last shared with <strong>{shared.sharedWith}</strong>
             <br /> on <strong>{moment(shared.sharedOn).format('L')}</strong>
-          </small>
+          </StyledDiv>
         )}
         <Share>
           <ShareViaSlackButton idForURL={id} />

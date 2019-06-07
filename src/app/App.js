@@ -68,6 +68,7 @@ export default function App() {
           id: uid(),
           shared: { status: false, sharedOn: '', sharedWith: '' },
           edit: { status: false, editOn: '' },
+          createDate: moment(),
         },
         ...diaryEntries,
       ])
