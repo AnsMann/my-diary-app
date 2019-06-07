@@ -41,7 +41,7 @@ const SaveButton = styled.button`
 `
 
 export function DiaryEntryForm({ onFormSubmit, diaryEntryToEdit = '' }) {
-  const [date, setDate] = useState(diaryEntryToEdit.date || moment(new Date()))
+  const [date, setDate] = useState(moment(diaryEntryToEdit.date) || moment())
   const [focused, setFocus] = useState(false)
 
   return (

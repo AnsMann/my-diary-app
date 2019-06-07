@@ -40,13 +40,14 @@ const ShareContainer = styled.section`
 const StyledDiv = styled.div`
   border: solid 1px #007fbf;
   border-radius: 10px;
+  height: 90%;
 `
 
 const SearchArea = styled.section`
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 200px;
+  height: 40%;
   justify-content: center;
   margin-top: 20px;
   padding: 15px;
@@ -74,7 +75,7 @@ const Line = styled.div`
 `
 
 const ResultArea = styled.section`
-  height: 350px;
+  height: 60%;
   overflow: scroll;
   padding: 15px;
   p {

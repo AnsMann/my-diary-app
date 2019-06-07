@@ -23,7 +23,7 @@ const Dialogue = styled.div`
   justify-content: center;
   left: 15vw;
   position: absolute;
-  top: 70vw;
+  top: 50vw;
   width: 70vw;
   z-index: 200;
   span {
