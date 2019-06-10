@@ -43,3 +43,18 @@ export function filterData(contacts, channels, searchInput) {
   })
   return contactsInAlphabeticalOrder
 }
+
+export function filterEntries(allEntries, filter) {
+  switch (filter) {
+    case 'shared':
+      return allEntries.filter(entry => entry.shared.status)
+    case '😃':
+      return allEntries.filter(entry => entry.rating === '3')
+    case '😶':
+      return allEntries.filter(entry => entry.rating === '2')
+    case '😔':
+      return allEntries.filter(entry => entry.rating === '1')
+    default:
+      return allEntries
+  }
+}
