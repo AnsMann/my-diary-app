@@ -52,6 +52,9 @@ export function Filtermenu({ onFilterbuttonClick, filter }) {
       <MenuOption onClick={() => onFilterbuttonClick('shared')}>
         shared
       </MenuOption>
+      <MenuOption onClick={() => onFilterbuttonClick('not shared')}>
+        not shared
+      </MenuOption>
       <MenuOption>Dayrating</MenuOption>
       <EmojiOption onClick={() => onFilterbuttonClick('😃')}>
         <span>😃</span>

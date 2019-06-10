@@ -54,6 +54,8 @@ export function filterEntries(allEntries, filter) {
       return allEntries.filter(entry => entry.rating === '2')
     case '😔':
       return allEntries.filter(entry => entry.rating === '1')
+    case 'not shared':
+      return allEntries.filter(entry => !entry.shared.status)
     default:
       return allEntries
   }
