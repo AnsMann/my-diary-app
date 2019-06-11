@@ -7,7 +7,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 import { DiaryEntryMenu } from './DiaryEntryMenu'
-import { DeleteModalDialogue } from './DeleteModalDialogue'
+import { DeleteEntryModalDialogue } from './DeleteEntryModalDialogue'
 import moment from 'moment'
 import 'moment/locale/de'
 moment.locale('de')
@@ -101,7 +101,7 @@ export function DiaryEntry({ entry, history, onDeleteClick }) {
   return (
     <OutsideClickHandler onOutsideClick={() => setIsMenuVisible(false)}>
       {isDeleteModalVisible && (
-        <DeleteModalDialogue
+        <DeleteEntryModalDialogue
           entryDate={entry.date}
           onDeleteConfirmation={handleDeleteConfirmation}
           resetDeleteModal={resetDeleteModal}

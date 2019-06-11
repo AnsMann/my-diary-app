@@ -59,7 +59,7 @@ const StyledButton = styled.button`
   width: 80%;
 `
 
-export function DeleteModalDialogue({
+export function DeleteEntryModalDialogue({
   entryDate,
   onDeleteConfirmation,
   resetDeleteModal,
