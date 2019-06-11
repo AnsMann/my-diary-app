@@ -7,7 +7,7 @@ const Menu = styled.section`
   border-radius: 10px;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
   height: 200px;
-  left: -2px;
+  right: -2px;
   position: absolute;
   padding: 5px 0;
   top: 45px;
@@ -20,7 +20,7 @@ const Menu = styled.section`
     content: '';
     font-size: 0.5rem;
     height: 0px;
-    left: 10px;
+    right: 10px;
     position: absolute;
     top: -15px;
     width: 0px;
@@ -41,13 +41,8 @@ const MenuOption = styled.li`
   font-size: 1rem;
   text-align: left;
 `
-const EmojiOption = styled.li`
-  list-style: none;
-  font-size: 1.2rem;
-  margin-bottom: 5px;
-`
 
-export function FilterMenu({ onFilterbuttonClick, filter }) {
+export function SortMenu({ onFilterbuttonClick, filter }) {
   return (
     <Menu>
       <ul>
@@ -62,16 +57,6 @@ export function FilterMenu({ onFilterbuttonClick, filter }) {
         <MenuOption onClick={() => onFilterbuttonClick('not shared')}>
           Not shared
         </MenuOption>
-        <MenuOption>Dayrating</MenuOption>
-        <EmojiOption onClick={() => onFilterbuttonClick('😃')}>
-          <span>😃</span>
-        </EmojiOption>
-        <EmojiOption onClick={() => onFilterbuttonClick('😶')}>
-          <span>😶</span>
-        </EmojiOption>
-        <EmojiOption onClick={() => onFilterbuttonClick('😔')}>
-          <span>😔</span>
-        </EmojiOption>
       </ul>
     </Menu>
   )
