@@ -33,7 +33,8 @@ const MenuOption = styled.li`
   padding: 15px;
   color: #007fbf;
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  text-align: left;
 `
 const EmojiOption = styled.li`
   list-style: none;

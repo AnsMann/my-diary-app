@@ -6,6 +6,11 @@ import { Header } from './Header'
 import { Filtermenu } from './FilterMenu'
 import { filterEntries } from './utils'
 import { DiaryLogo } from './DiaryLogo'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFilter } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faFilter)
 
 const DiaryEntriesContainer = styled.ul`
   overflow: scroll;
@@ -14,6 +19,8 @@ const DiaryEntriesContainer = styled.ul`
 
 const Filterbutton = styled.button`
   position: relative;
+  font-size: 1.5rem;
+  color: #002f47;
 `
 const Filter = styled.span`
   color: #007fbf;
@@ -50,7 +57,7 @@ export function DiaryEntriesList({ diaryEntries, history, onDeleteClick }) {
         <FilterBox>
           <OutsideClickHandler onOutsideClick={() => setIsMenuVisible(false)}>
             <Filterbutton onClick={() => setIsMenuVisible(!isMenuVisible)}>
-              Filter
+              <FontAwesomeIcon icon={faFilter} />
               {isMenuVisible && (
                 <Filtermenu
                   onFilterbuttonClick={handleFilterbuttonClick}
