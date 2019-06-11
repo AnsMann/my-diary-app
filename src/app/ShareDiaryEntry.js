@@ -75,7 +75,7 @@ const Line = styled.div`
 `
 
 const ResultArea = styled.section`
-  height: 60%;
+  height: 35vh;
   overflow: scroll;
   padding: 15px;
   p {
@@ -126,7 +126,7 @@ export function ShareDiaryEntry({
 
   function handleContactClick(contactId, contactName) {
     sendMessage(diaryEntryToShare, contactId).then(res => {
-      res
+      res.ok
         ? setModalStatus({ showModal: true, shareWith: contactName })
         : setModalStatus({ showModal: true, shareWith: '' })
     })
