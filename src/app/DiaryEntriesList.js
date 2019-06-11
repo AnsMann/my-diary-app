@@ -14,6 +14,7 @@ import { faFilter, faSort } from '@fortawesome/free-solid-svg-icons'
 library.add(faFilter, faSort)
 
 const DiaryEntriesContainer = styled.ul`
+  margin: 0;
   overflow: scroll;
   padding: 20px;
 `
@@ -27,6 +28,7 @@ const Sortbutton = styled.button`
   color: #002f47;
   font-size: 1.5rem;
   position: relative;
+  margin-right: 6px;
 `
 
 const Filter = styled.span`
@@ -55,12 +57,16 @@ const StyledSpan = styled.span`
 `
 
 export function DiaryEntriesList({ diaryEntries, history, onDeleteClick }) {
-  const [filter, setFilter] = useState('all')
+  const [filter, setFilter] = useState({ filter: 'all', sortBy: 'all' })
   const [isFilterMenuVisible, setIsFilterMenuVisible] = useState(false)
   const [isSortMenuVisible, setIsSortMenuVisible] = useState(false)
 
-  function handleFilterbuttonClick(filter) {
-    setFilter(filter)
+  function handleFilterbuttonClick(changedFilter) {
+    setFilter({ ...filter, filter: changedFilter })
+  }
+
+  function handleSortbuttonClick(changedSortBy) {
+    setFilter({ ...filter, sortBy: changedSortBy })
   }
 
   return (
@@ -79,16 +85,22 @@ export function DiaryEntriesList({ diaryEntries, history, onDeleteClick }) {
               {isFilterMenuVisible && (
                 <FilterMenu
                   onFilterbuttonClick={handleFilterbuttonClick}
-                  filter={filter}
+                  filter={filter.filter}
                 />
               )}
             </Filterbutton>
           </OutsideClickHandler>
           <div>
-            {filter !== 'all' && (
+            {filter.filter !== 'all' && (
               <>
                 <StyledSpan>Active Filter: </StyledSpan>
-                <Filter>{filter}</Filter>
+                <Filter>{filter.filter}</Filter>
+              </>
+            )}
+            {filter.sortBy !== 'all' && (
+              <>
+                <StyledSpan>sorted by: </StyledSpan>
+                <Filter>{filter.sortBy}</Filter>
               </>
             )}
           </div>
@@ -101,8 +113,8 @@ export function DiaryEntriesList({ diaryEntries, history, onDeleteClick }) {
               <FontAwesomeIcon icon={faSort} />
               {isSortMenuVisible && (
                 <SortMenu
-                  onFilterbuttonClick={handleFilterbuttonClick}
-                  filter={filter}
+                  onSortbuttonClick={handleSortbuttonClick}
+                  sortBy={filter.sortBy}
                 />
               )}
             </Sortbutton>

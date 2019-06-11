@@ -29,6 +29,7 @@ const NavLink = styled(RouterLink)`
   justify-content: center;
   text-decoration: none;
   width: 65px;
+  z-index: 50;
 
   &.active {
     background-color: white;

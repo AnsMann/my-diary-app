@@ -34,13 +34,14 @@ export default function App() {
   function handleSubmit(event, date, history, entryId = null) {
     const { target } = event
     event.preventDefault()
+    console.log(date._i)
     if (entryId) {
       const index = findIndex(entryId, diaryEntries)
       const diaryEntrytoChange = diaryEntries[index]
       const changedDiaryEntry = {
         ...diaryEntrytoChange,
         title: target.topic.value,
-        date: date,
+        date: date._i,
         rating: target.dayrating.value,
         content: target['content in own words'].value,
         positive: target['remember positive'].value,

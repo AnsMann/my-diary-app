@@ -1,5 +1,9 @@
+import moment from 'moment'
+import 'moment/locale/de'
+
 import dotenv from 'dotenv'
 dotenv.config()
+moment.locale('de')
 
 export function setLocalStorage(name, data) {
   localStorage.setItem(name, JSON.stringify(data))
@@ -60,7 +64,7 @@ function buildMessageObject(content) {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*New diary entry from ${content.date}*`,
+        text: `*New diary entry from ${moment(content.date).format('L')}*`,
       },
     },
     {
@@ -116,8 +120,8 @@ function buildMessageObject(content) {
 
 function evaluateRatingForSlack(rating) {
   const ratingMap = {
-    1: ':gedankenvoll:',
-    2: ':kein_mund:',
+    1: ':pensive:',
+    2: ':no_mouth:',
     3: ':smiley:',
   }
   return ratingMap[rating]

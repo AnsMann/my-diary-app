@@ -7,7 +7,7 @@ const Menu = styled.section`
   border-radius: 10px;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
   height: 200px;
-  right: -2px;
+  right: -8px;
   position: absolute;
   padding: 5px 0;
   top: 45px;
@@ -42,19 +42,19 @@ const MenuOption = styled.li`
   text-align: left;
 `
 
-export function SortMenu({ onFilterbuttonClick, filter }) {
+export function SortMenu({ onSortbuttonClick, sortBy }) {
   return (
     <Menu>
       <ul>
-        {filter !== 'all' && (
-          <MenuOption onClick={() => onFilterbuttonClick('all')}>
+        {sortBy !== 'all' && (
+          <MenuOption onClick={() => onSortbuttonClick('all')}>
             Reset filter
           </MenuOption>
         )}
-        <MenuOption onClick={() => onFilterbuttonClick('shared')}>
-          Shared
+        <MenuOption onClick={() => onSortbuttonClick('Entry date')}>
+          Entry date
         </MenuOption>
-        <MenuOption onClick={() => onFilterbuttonClick('not shared')}>
+        <MenuOption onClick={() => onSortbuttonClick('not shared')}>
           Not shared
         </MenuOption>
       </ul>

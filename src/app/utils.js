@@ -1,3 +1,7 @@
+import moment from 'moment'
+import 'moment/locale/de'
+moment.locale('de')
+
 export function findIndex(id, diaryEntries) {
   const index = diaryEntries.map(entry => entry.id).indexOf(id)
   return index
@@ -44,10 +48,21 @@ export function filterData(contacts, channels, searchInput) {
   return contactsInAlphabeticalOrder
 }
 
+export function sortEntries(Entries, sortBy) {
+  switch (sortBy) {
+    case 'Entry date':
+      return Entries.sort((a, b) => moment(a.date) - moment(b.date))
+    default:
+      return Entries
+  }
+}
+
 export function filterEntries(allEntries, filter) {
-  switch (filter) {
+  switch (filter.filter) {
     case 'shared':
-      return allEntries.filter(entry => entry.shared.status)
+      const filteredEntries = allEntries.filter(entry => entry.shared.status)
+      const sortedEntries = sortEntries(filteredEntries, filter.sortBy)
+      return sortedEntries
     case '😃':
       return allEntries.filter(entry => entry.rating === '3')
     case '😶':
@@ -57,6 +72,7 @@ export function filterEntries(allEntries, filter) {
     case 'not shared':
       return allEntries.filter(entry => !entry.shared.status)
     default:
-      return allEntries
+      const Entries = sortEntries(allEntries, filter.sortby)
+      return Entries
   }
 }

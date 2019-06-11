@@ -45,7 +45,9 @@ export function DiaryEntryForm({
   history,
   diaryEntryToEdit = '',
 }) {
-  const [date, setDate] = useState(diaryEntryToEdit.date || moment(new Date()))
+  const [date, setDate] = useState(
+    moment(diaryEntryToEdit.date) || moment(new Date())
+  )
   const [focused, setFocus] = useState(false)
 
   return (
