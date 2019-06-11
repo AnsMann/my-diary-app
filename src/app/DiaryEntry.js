@@ -22,6 +22,7 @@ const CardLink = styled(Link)`
 
 const DiaryEntryContent = styled.li`
   align-items: center;
+  background: white;
   border: solid 1px #007fbf;
   border-radius: 10px;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);

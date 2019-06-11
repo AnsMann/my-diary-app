@@ -5,6 +5,7 @@ import { DiaryEntry } from './DiaryEntry'
 import { Header } from './Header'
 import { Filtermenu } from './FilterMenu'
 import { filterEntries } from './utils'
+import { DiaryLogo } from './DiaryLogo'
 
 const DiaryEntriesContainer = styled.ul`
   overflow: scroll;
@@ -45,6 +46,7 @@ export function DiaryEntriesList({ diaryEntries, history, onDeleteClick }) {
     <>
       <Header title={'My Diary Entries'} />
       <DiaryEntriesContainer id="diary">
+        <DiaryLogo />
         <FilterBox>
           <OutsideClickHandler onOutsideClick={() => setIsMenuVisible(false)}>
             <Filterbutton onClick={() => setIsMenuVisible(!isMenuVisible)}>
