@@ -7,7 +7,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 import { DiaryEntryMenu } from './DiaryEntryMenu'
-import { DeleteModalDialogue } from './DeleteModalDialogue'
+import { DeleteEntryModalDialogue } from './DeleteEntryModalDialogue'
 import moment from 'moment'
 import 'moment/locale/de'
 moment.locale('de')
@@ -84,25 +84,29 @@ const DiaryEntryCard = styled.section`
 
 export function DiaryEntry({ entry, history, onDeleteClick }) {
   const [isMenuVisible, setIsMenuVisible] = useState(false)
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [isDeleteEntryModalVisible, setIsDeleteEntryModalVisible] = useState(
+    false
+  )
 
-  function handleDeleteMenuClick() {
-    setIsDeleteModalVisible(true)
+  function handleDeleteEntryMenuClick() {
+    setIsDeleteEntryModalVisible(true)
   }
 
-  function resetDeleteModal() {
-    setIsDeleteModalVisible(false)
+  function resetDeleteEntryModal() {
+    setIsDeleteEntryModalVisible(false)
+  }
+  function handleDeleteEntryConfirmation() {
+    onDeleteClick(entry.id, history)
+    resetDeleteEntryModal()
   }
 
   return (
     <OutsideClickHandler onOutsideClick={() => setIsMenuVisible(false)}>
-      {isDeleteModalVisible && (
-        <DeleteModalDialogue
-          entryId={entry.id}
+      {isDeleteEntryModalVisible && (
+        <DeleteEntryModalDialogue
           entryDate={entry.date}
-          history={history}
-          onDeleteConfirmation={onDeleteClick}
-          onDeleteAbort={resetDeleteModal}
+          onDeleteConfirmation={handleDeleteEntryConfirmation}
+          resetDeleteEntryModal={resetDeleteEntryModal}
         />
       )}
       <DiaryEntryCard>
@@ -122,7 +126,7 @@ export function DiaryEntry({ entry, history, onDeleteClick }) {
             <DiaryEntryMenu
               history={history}
               entryId={entry.id}
-              onDeleteMenuClick={handleDeleteMenuClick}
+              onDeleteMenuClick={handleDeleteEntryMenuClick}
             />
           )}
         </MenueIcon>

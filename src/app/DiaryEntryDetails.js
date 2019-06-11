@@ -79,6 +79,7 @@ export function DiaryEntryDetails({
   onEditDetails,
 }) {
   const entryIndex = findIndex(match.params.id, diaryEntries)
+  const diaryEntry = diaryEntries[entryIndex]
   const {
     id,
     title,
@@ -92,7 +93,7 @@ export function DiaryEntryDetails({
     shared,
     edit,
     createDate,
-  } = diaryEntries[entryIndex]
+  } = diaryEntry
 
   const detailsToRender = [
     {
@@ -129,14 +130,23 @@ export function DiaryEntryDetails({
   const [isRatingEditable, setIsRatingEditable] = useState(false)
 
   function handleEditDetails(detailType, input) {
-    onEditDetails(id, detailType, input)
+    const diaryEntryToChange = {
+      ...diaryEntry,
+      [detailType]: input,
+      edit: { status: true, editOn: moment() },
+    }
+    onEditDetails(diaryEntryToChange)
   }
 
   function handleEditRating(event) {
-    const { target } = event
     event.preventDefault()
     setIsRatingEditable(false)
-    onEditDetails(id, 'rating', target.dayrating.value)
+    const diaryEntryToChange = {
+      ...diaryEntry,
+      rating: event.target.dayrating.value,
+      edit: { status: true, editOn: moment() },
+    }
+    onEditDetails(diaryEntryToChange)
   }
 
   return (
