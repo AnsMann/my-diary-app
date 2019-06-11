@@ -8,10 +8,9 @@ const Menu = styled.section`
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
   height: 200px;
   left: -2px;
-  overflow: scroll;
   position: absolute;
   padding: 5px 0;
-  top: 40px;
+  top: 45px;
   width: 150px;
   z-index: 15;
   &:after {
@@ -23,8 +22,14 @@ const Menu = styled.section`
     height: 0px;
     left: 10px;
     position: absolute;
-    top: -10px;
+    top: -15px;
     width: 0px;
+  }
+  ul {
+    height: 180px;
+    list-style: none;
+    overflow: scroll;
+    padding: 0 0 10px 0;
   }
 `
 
@@ -45,27 +50,29 @@ const EmojiOption = styled.li`
 export function Filtermenu({ onFilterbuttonClick, filter }) {
   return (
     <Menu>
-      {filter !== 'all' && (
-        <MenuOption onClick={() => onFilterbuttonClick('all')}>
-          reset filter
+      <ul>
+        {filter !== 'all' && (
+          <MenuOption onClick={() => onFilterbuttonClick('all')}>
+            Reset filter
+          </MenuOption>
+        )}
+        <MenuOption onClick={() => onFilterbuttonClick('shared')}>
+          Shared
         </MenuOption>
-      )}
-      <MenuOption onClick={() => onFilterbuttonClick('shared')}>
-        shared
-      </MenuOption>
-      <MenuOption onClick={() => onFilterbuttonClick('not shared')}>
-        not shared
-      </MenuOption>
-      <MenuOption>Dayrating</MenuOption>
-      <EmojiOption onClick={() => onFilterbuttonClick('😃')}>
-        <span>😃</span>
-      </EmojiOption>
-      <EmojiOption onClick={() => onFilterbuttonClick('😶')}>
-        <span>😶</span>
-      </EmojiOption>
-      <EmojiOption onClick={() => onFilterbuttonClick('😔')}>
-        <span>😔</span>
-      </EmojiOption>
+        <MenuOption onClick={() => onFilterbuttonClick('not shared')}>
+          Not shared
+        </MenuOption>
+        <MenuOption>Dayrating</MenuOption>
+        <EmojiOption onClick={() => onFilterbuttonClick('😃')}>
+          <span>😃</span>
+        </EmojiOption>
+        <EmojiOption onClick={() => onFilterbuttonClick('😶')}>
+          <span>😶</span>
+        </EmojiOption>
+        <EmojiOption onClick={() => onFilterbuttonClick('😔')}>
+          <span>😔</span>
+        </EmojiOption>
+      </ul>
     </Menu>
   )
 }
