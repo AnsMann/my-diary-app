@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 const Menu = styled.section`
@@ -11,7 +11,7 @@ const Menu = styled.section`
   overflow: scroll;
   position: absolute;
   padding: 5px 0;
-  top: 30px;
+  top: 40px;
   width: 150px;
   z-index: 15;
   &:after {
@@ -23,7 +23,7 @@ const Menu = styled.section`
     height: 0px;
     left: 10px;
     position: absolute;
-    top: -15px;
+    top: -10px;
     width: 0px;
   }
 `

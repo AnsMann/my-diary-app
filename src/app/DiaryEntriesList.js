@@ -31,7 +31,6 @@ const FilterBox = styled.div`
   border-bottom: solid 1px #007fbf;
   display: grid;
   grid-template-columns: 1fr 3fr;
-  grid-template-rows: 1fr 0.5fr;
   align-items: center;
   margin-bottom: 25px;
 `

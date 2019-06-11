@@ -8,7 +8,7 @@ const Logo = styled.img`
   top: 35vw;
   left: 20vw;
   z-index: -10;
-  opacity: 0.5;
+  opacity: 0.2;
 `
 
 export function DiaryLogo() {
