@@ -62,7 +62,7 @@ const StyledButton = styled.button`
 export function DeleteEntryModalDialogue({
   entryDate,
   onDeleteConfirmation,
-  resetDeleteModal,
+  resetDeleteEntryModal,
 }) {
   return (
     <>
@@ -77,7 +77,9 @@ export function DeleteEntryModalDialogue({
           <FontAwesomeIcon icon={faTrashAlt} />
         </StyledIcon>
         <StyledButton onClick={() => onDeleteConfirmation()}>Ok</StyledButton>
-        <StyledButton onClick={() => resetDeleteModal()}>Abort</StyledButton>
+        <StyledButton onClick={() => resetDeleteEntryModal()}>
+          Abort
+        </StyledButton>
       </Dialogue>
     </>
   )

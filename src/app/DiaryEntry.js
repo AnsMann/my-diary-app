@@ -84,27 +84,29 @@ const DiaryEntryCard = styled.section`
 
 export function DiaryEntry({ entry, history, onDeleteClick }) {
   const [isMenuVisible, setIsMenuVisible] = useState(false)
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [isDeleteEntryModalVisible, setIsDeleteEntryModalVisible] = useState(
+    false
+  )
 
-  function handleDeleteMenuClick() {
-    setIsDeleteModalVisible(true)
+  function handleDeleteEntryMenuClick() {
+    setIsDeleteEntryModalVisible(true)
   }
 
-  function resetDeleteModal() {
-    setIsDeleteModalVisible(false)
+  function resetDeleteEntryModal() {
+    setIsDeleteEntryModalVisible(false)
   }
-  function handleDeleteConfirmation() {
+  function handleDeleteEntryConfirmation() {
     onDeleteClick(entry.id, history)
-    resetDeleteModal()
+    resetDeleteEntryModal()
   }
 
   return (
     <OutsideClickHandler onOutsideClick={() => setIsMenuVisible(false)}>
-      {isDeleteModalVisible && (
+      {isDeleteEntryModalVisible && (
         <DeleteEntryModalDialogue
           entryDate={entry.date}
-          onDeleteConfirmation={handleDeleteConfirmation}
-          resetDeleteModal={resetDeleteModal}
+          onDeleteConfirmation={handleDeleteEntryConfirmation}
+          resetDeleteEntryModal={resetDeleteEntryModal}
         />
       )}
       <DiaryEntryCard>
@@ -124,7 +126,7 @@ export function DiaryEntry({ entry, history, onDeleteClick }) {
             <DiaryEntryMenu
               history={history}
               entryId={entry.id}
-              onDeleteMenuClick={handleDeleteMenuClick}
+              onDeleteMenuClick={handleDeleteEntryMenuClick}
             />
           )}
         </MenueIcon>
