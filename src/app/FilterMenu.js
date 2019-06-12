@@ -7,7 +7,7 @@ const Menu = styled.section`
   border-radius: 10px;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
   height: 200px;
-  left: -2px;
+  right: 0;
   position: absolute;
   padding: 5px 0;
   top: 45px;
@@ -20,7 +20,7 @@ const Menu = styled.section`
     content: '';
     font-size: 0.5rem;
     height: 0px;
-    left: 10px;
+    right: 10px;
     position: absolute;
     top: -15px;
     width: 0px;

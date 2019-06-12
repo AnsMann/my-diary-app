@@ -15,7 +15,7 @@ const Menu = styled.section`
   border-radius: 10px;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
   height: 200px;
-  right: -8px;
+  right: 0;
   position: absolute;
   padding: 5px 0;
   top: 45px;
