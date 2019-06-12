@@ -24,14 +24,14 @@ const Menu = styled.section`
   &:after {
     border-color: transparent transparent #007fbf transparent;
     border-style: solid;
-    border-width: 0px 10px 15px 10px;
+    border-width: 0 10px 15px 10px;
     content: '';
     font-size: 0.5rem;
-    height: 0px;
+    height: 0;
     right: 10px;
     position: absolute;
     top: -15px;
-    width: 0px;
+    width: 0;
   }
   ul {
     height: 180px;
