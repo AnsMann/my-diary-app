@@ -34,7 +34,6 @@ export default function App() {
   function handleSubmit(event, date, history, entryId = null) {
     const { target } = event
     event.preventDefault()
-    console.log(date._i)
     if (entryId) {
       const index = findIndex(entryId, diaryEntries)
       const diaryEntrytoChange = diaryEntries[index]

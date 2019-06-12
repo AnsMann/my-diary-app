@@ -1,5 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faLongArrowAltUp,
+  faLongArrowAltDown,
+} from '@fortawesome/free-solid-svg-icons'
+
+library.add(faLongArrowAltUp, faLongArrowAltDown)
 
 const Menu = styled.section`
   background: white;
@@ -51,11 +59,17 @@ export function SortMenu({ onSortbuttonClick, sortBy }) {
             Reset filter
           </MenuOption>
         )}
-        <MenuOption onClick={() => onSortbuttonClick('Entry date')}>
-          Entry date
+        <MenuOption onClick={() => onSortbuttonClick('Entry date up')}>
+          Entry date <FontAwesomeIcon icon={faLongArrowAltUp} />
         </MenuOption>
-        <MenuOption onClick={() => onSortbuttonClick('not shared')}>
-          Not shared
+        <MenuOption onClick={() => onSortbuttonClick('Entry date down')}>
+          Entry date <FontAwesomeIcon icon={faLongArrowAltDown} />
+        </MenuOption>
+        <MenuOption onClick={() => onSortbuttonClick('Create date up')}>
+          Create date <FontAwesomeIcon icon={faLongArrowAltUp} />
+        </MenuOption>
+        <MenuOption onClick={() => onSortbuttonClick('Create date down')}>
+          Create date <FontAwesomeIcon icon={faLongArrowAltDown} />
         </MenuOption>
       </ul>
     </Menu>

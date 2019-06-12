@@ -5,7 +5,7 @@ import { DiaryEntry } from './DiaryEntry'
 import { Header } from './Header'
 import { FilterMenu } from './FilterMenu'
 import { SortMenu } from './SortMenu'
-import { filterEntries } from './utils'
+import { filterEntries, sortEntries } from './utils'
 import { DiaryLogo } from './DiaryLogo'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -68,7 +68,8 @@ export function DiaryEntriesList({ diaryEntries, history, onDeleteClick }) {
   function handleSortbuttonClick(changedSortBy) {
     setFilter({ ...filter, sortBy: changedSortBy })
   }
-
+  const filteredEntries = filterEntries(diaryEntries, filter.filter)
+  const sortedAndFilteredEntries = sortEntries(filteredEntries, filter.sortBy)
   return (
     <>
       <Header title={'My Diary Entries'} />
@@ -120,7 +121,7 @@ export function DiaryEntriesList({ diaryEntries, history, onDeleteClick }) {
             </Sortbutton>
           </OutsideClickHandler>
         </FilterBox>
-        {filterEntries(diaryEntries, filter).map(entry => (
+        {sortedAndFilteredEntries.map(entry => (
           <DiaryEntry
             key={entry.id}
             entry={entry}
