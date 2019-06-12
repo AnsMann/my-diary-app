@@ -5,6 +5,7 @@ import 'moment/locale/de'
 
 import { Header } from './Header'
 import { DiaryEntryForm } from './DiaryEntryForm'
+import { DiaryLogo } from './DiaryLogo'
 
 moment.locale('de')
 

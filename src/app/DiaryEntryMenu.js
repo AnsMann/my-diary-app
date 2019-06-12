@@ -2,27 +2,27 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Menu = styled.section`
-  height: 150px;
-  width: 200px;
+  background: white;
   border: solid 1px #007fbf;
   border-radius: 10px;
-  position: absolute;
-  top: -23px;
-  right: 55px;
-  background: white;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+  height: 150px;
+  position: absolute;
+  right: 55px;
+  top: -23px;
+  width: 200px;
   z-index: 10;
   &:after {
+    border-color: transparent transparent transparent #007fbf;
+    border-style: solid;
+    border-width: 10px 0px 10px 15px;
+    content: '';
+    font-size: 0.5rem;
+    height: 0px;
     position: absolute;
     right: -15px;
     top: 30px;
-    content: '';
     width: 0px;
-    height: 0px;
-    border-style: solid;
-    border-width: 10px 0px 10px 15px;
-    border-color: transparent transparent transparent #007fbf;
-    font-size: 0.5rem;
   }
 `
 
