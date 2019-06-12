@@ -3,8 +3,9 @@ import styled from 'styled-components'
 
 const Settingslabel = styled.label`
   color: #007fbf;
-  position: relative;
+  font-weight: bold;
   height: 25px;
+  position: relative;
 
   &:after {
     content: '';
