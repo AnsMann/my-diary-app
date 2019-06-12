@@ -23,7 +23,7 @@ const Dialogue = styled.div`
   justify-content: center;
   left: 15vw;
   position: absolute;
-  top: 70vw;
+  top: 50vw;
   width: 70vw;
   z-index: 200;
   span {
@@ -59,12 +59,10 @@ const StyledButton = styled.button`
   width: 80%;
 `
 
-export function DeleteModalDialogue({
-  entryId,
+export function DeleteEntryModalDialogue({
   entryDate,
-  history,
   onDeleteConfirmation,
-  onDeleteAbort,
+  resetDeleteEntryModal,
 }) {
   return (
     <>
@@ -78,15 +76,10 @@ export function DeleteModalDialogue({
         <StyledIcon>
           <FontAwesomeIcon icon={faTrashAlt} />
         </StyledIcon>
-        <StyledButton
-          onClick={() => {
-            onDeleteAbort()
-            onDeleteConfirmation(entryId, history)
-          }}
-        >
-          Ok
+        <StyledButton onClick={() => onDeleteConfirmation()}>Ok</StyledButton>
+        <StyledButton onClick={() => resetDeleteEntryModal()}>
+          Abort
         </StyledButton>
-        <StyledButton onClick={() => onDeleteAbort()}>Abort</StyledButton>
       </Dialogue>
     </>
   )

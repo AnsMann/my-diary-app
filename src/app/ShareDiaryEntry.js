@@ -40,13 +40,14 @@ const ShareContainer = styled.section`
 const StyledDiv = styled.div`
   border: solid 1px #007fbf;
   border-radius: 10px;
+  height: 90%;
 `
 
 const SearchArea = styled.section`
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 200px;
+  height: 40%;
   justify-content: center;
   margin-top: 20px;
   padding: 15px;
@@ -74,7 +75,7 @@ const Line = styled.div`
 `
 
 const ResultArea = styled.section`
-  height: 350px;
+  height: 35vh;
   overflow: scroll;
   padding: 15px;
   p {
@@ -106,7 +107,7 @@ export function ShareDiaryEntry({
   useEffect(() => {
     async function fetchContacts() {
       const contacts = await getContacts()
-      const SlackContactList = handleSlackContactData(contacts)
+      const SlackContactList = handleSlackContactData(contacts || [])
       setSlackContacts(SlackContactList)
       setLocalStorage('contacts', SlackContactList)
     }
@@ -116,7 +117,7 @@ export function ShareDiaryEntry({
   useEffect(() => {
     async function fetchChannels() {
       const channels = await getChannels()
-      const SlackChannelList = handleSlackChannelData(channels)
+      const SlackChannelList = handleSlackChannelData(channels || [])
       setSlackChannels(SlackChannelList)
       setLocalStorage('channels', SlackChannelList)
     }
@@ -124,13 +125,27 @@ export function ShareDiaryEntry({
   }, [])
 
   function handleContactClick(contactId, contactName) {
-    sendMessage(diaryEntryToShare, contactId)
-      .then(() => setModalStatus({ showModal: true, shareWith: contactName }))
-      .then(() => onShare(diaryID, contactName, moment()))
+    sendMessage(diaryEntryToShare, contactId).then(res => {
+      res.ok
+        ? setModalStatus({ showModal: true, shareWith: contactName })
+        : setModalStatus({ showModal: true, shareWith: '' })
+    })
   }
 
-  function handleModalButtonClick(history) {
-    setModalStatus({ showModal: false, shareWith: '' })
+  function handleModalButtonClick(history, success, contactName) {
+    if (success) {
+      const sharedDiaryEntry = {
+        ...diaryEntryToShare,
+        shared: {
+          status: true,
+          sharedWith: contactName,
+          sharedOn: moment(),
+        },
+      }
+      onShare(sharedDiaryEntry, entryIndex)
+    } else {
+      setModalStatus({ showModal: false, shareWith: '' })
+    }
     history.push('/')
   }
 
