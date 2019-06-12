@@ -3,6 +3,9 @@ import styled from 'styled-components'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import moment from 'moment'
+import 'moment/locale/de'
+moment.locale('de')
 
 library.add(faTrashAlt)
 
@@ -20,7 +23,7 @@ const Dialogue = styled.div`
   justify-content: center;
   left: 15vw;
   position: absolute;
-  top: 70vw;
+  top: 50vw;
   width: 70vw;
   z-index: 200;
   span {
@@ -56,12 +59,10 @@ const StyledButton = styled.button`
   width: 80%;
 `
 
-export function DeleteModalDialogue({
-  entryId,
+export function DeleteEntryModalDialogue({
   entryDate,
-  history,
   onDeleteConfirmation,
-  onDeleteAbort,
+  resetDeleteEntryModal,
 }) {
   return (
     <>
@@ -70,20 +71,15 @@ export function DeleteModalDialogue({
         <span>
           Delete entry from
           <br />
-          <strong>{entryDate}</strong>
+          <strong>{moment(entryDate).format('L')}</strong>
         </span>
         <StyledIcon>
           <FontAwesomeIcon icon={faTrashAlt} />
         </StyledIcon>
-        <StyledButton
-          onClick={() => {
-            onDeleteAbort()
-            onDeleteConfirmation(entryId, history)
-          }}
-        >
-          Ok
+        <StyledButton onClick={() => onDeleteConfirmation()}>Ok</StyledButton>
+        <StyledButton onClick={() => resetDeleteEntryModal()}>
+          Abort
         </StyledButton>
-        <StyledButton onClick={() => onDeleteAbort()}>Abort</StyledButton>
       </Dialogue>
     </>
   )

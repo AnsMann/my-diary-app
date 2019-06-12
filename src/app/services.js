@@ -21,6 +21,7 @@ export function getContacts() {
   )
     .then(res => res.json())
     .then(data => data.members)
+    .catch(err => console.log(err))
 }
 
 export function getChannels() {
@@ -37,6 +38,7 @@ export function getChannels() {
   )
     .then(res => res.json())
     .then(data => data.channels)
+    .catch(err => console.log(err))
 }
 
 export function sendMessage(content, id) {
@@ -51,7 +53,9 @@ export function sendMessage(content, id) {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     }
-  ).then(res => res.json())
+  )
+    .then(res => res.json())
+    .catch(err => console.log(err))
 }
 
 function buildMessageObject(content) {

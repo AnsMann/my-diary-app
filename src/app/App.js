@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import GlobalStyles from '../misc/GlobalStyles'
 import moment from 'moment'
 import 'moment/locale/de'
-import uid from 'uid'
 import ScrollMemory from 'react-router-scroll-memory'
 
 import { Footer } from './Footer'
@@ -14,7 +13,7 @@ import { setLocalStorage, getLocalStorage } from './services'
 import { DiaryEntryDetails } from './DiaryEntryDetails'
 import { ShareDiaryEntry } from './ShareDiaryEntry'
 import { findIndex } from './utils'
-import { Settings } from './Settings'
+import { EditDiaryEntry } from './EditDiaryEntry'
 
 moment.locale('de')
 
@@ -31,27 +30,8 @@ export default function App() {
 
   useEffect(() => setLocalStorage('my diary', diaryEntries), [diaryEntries])
 
-  function handleSubmit(event, date, history) {
-    const { target } = event
-
-    const pickedDate = moment(date).format('L')
-    event.preventDefault()
-    setDiaryEntries([
-      {
-        title: target.topic.value,
-        date: pickedDate,
-        rating: target.dayrating.value,
-        content: target['content in own words'].value,
-        positive: target['remember positive'].value,
-        negative: target['remember negative'].value,
-        coachFeedback: target['coach feedback'].value,
-        additional: target['anything else'].value,
-        id: uid(),
-        shared: { status: false, sharedOn: '', sharedWith: '' },
-      },
-      ...diaryEntries,
-    ])
-
+  function handleFormSubmit(newDiaryEntries, history) {
+    setDiaryEntries(newDiaryEntries)
     history.push('/')
   }
 
@@ -59,17 +39,7 @@ export default function App() {
     history.goBack()
   }
 
-  function handleSharedDiaryEntry(id, contact, date) {
-    const index = findIndex(id, diaryEntries)
-    const diaryEntry = diaryEntries[index]
-    const sharedDiaryEntry = {
-      ...diaryEntry,
-      shared: {
-        status: true,
-        sharedWith: contact,
-        sharedOn: date,
-      },
-    }
+  function handleSharedDiaryEntry(sharedDiaryEntry, index) {
     setDiaryEntries([
       ...diaryEntries.slice(0, index),
       sharedDiaryEntry,
@@ -86,21 +56,14 @@ export default function App() {
     history.push('/')
   }
 
-  function handleEditOnDetailsPage(entryId, changedKey, changedInput) {
-    const index = findIndex(entryId, diaryEntries)
-    const diaryEntry = diaryEntries[index]
-    const diaryEntryToChange = {
-      ...diaryEntry,
-      [changedKey]: changedInput,
-    }
+  function handleEditOnDetailsPage(diaryEntryToChange) {
+    const index = findIndex(diaryEntryToChange.id, diaryEntries)
     setDiaryEntries([
       ...diaryEntries.slice(0, index),
       diaryEntryToChange,
       ...diaryEntries.slice(index + 1),
     ])
   }
-
-  function handleEditDayRatingOnDetailsPage() {}
 
   return (
     <Router>
@@ -123,8 +86,9 @@ export default function App() {
           path="/create"
           render={props => (
             <CreateDiaryEntryForm
-              handleSubmit={handleSubmit}
+              onFormSubmit={handleFormSubmit}
               history={props.history}
+              diaryEntries={diaryEntries}
             />
           )}
         />
@@ -153,7 +117,22 @@ export default function App() {
             />
           )}
         />
+<<<<<<< HEAD
         <Route exact path="/settings" render={() => <Settings />} />
+=======
+        <Route
+          exact
+          path="/cards/:id/edit"
+          render={props => (
+            <EditDiaryEntry
+              diaryEntries={diaryEntries}
+              diaryID={props.match.params.id}
+              history={props.history}
+              onFormSubmit={handleFormSubmit}
+            />
+          )}
+        />
+>>>>>>> master
         <Footer />
       </Grid>
     </Router>

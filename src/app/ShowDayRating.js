@@ -1,12 +1,12 @@
 import React from 'react'
 
-export function ShowDayRating({ entryRating, onShowDayRatingClick = null }) {
+export function ShowDayRating({ entryRating }) {
   return entryRating ? (
-    <h3 onClick={onShowDayRatingClick}>
+    <h3>
       This day was: <span>{evaluateRating(entryRating)}</span>
     </h3>
   ) : (
-    <h3 onClick={onShowDayRatingClick}>No rating of this day</h3>
+    <h3>No rating of this day</h3>
   )
 }
 

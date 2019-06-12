@@ -33,8 +33,8 @@ export function filterData(contacts, channels, searchInput) {
         contact.name.toLowerCase().startsWith(searchInput)
       )
   const contactsInAlphabeticalOrder = filteredData.sort((itemA, itemB) => {
-    const nameA = itemA.name.toUpperCase()
-    const nameB = itemB.name.toUpperCase()
+    const nameA = itemA.name.toLowerCase()
+    const nameB = itemB.name.toLowerCase()
     if (nameA < nameB) {
       return -1
     } else if (nameA > nameB) {
