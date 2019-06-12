@@ -22,6 +22,7 @@ export function SlackResultList({
   channels,
   searchInput,
   onContactClick,
+  sendAnonymous,
 }) {
   const filteredResult = filterData(userContacts, channels, searchInput)
   if (channels.length === 0 && userContacts.length === 0) {
@@ -29,7 +30,7 @@ export function SlackResultList({
   } else if (filteredResult.length !== 0) {
     return filteredResult.map(contact => (
       <SlackResult
-        onClick={() => onContactClick(contact.id, contact.name)}
+        onClick={() => onContactClick(contact.id, contact.name, sendAnonymous)}
         key={contact.id}
       >
         <SlackLogo src="/icons/Slack_Mark_Web.png" />

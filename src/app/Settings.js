@@ -8,12 +8,18 @@ const SettingsContainer = styled.ul`
   padding: 20px;
 `
 
-export function Settings() {
+export function Settings({
+  anonymousCheckboxStatus,
+  onAnonymousCheckboxClick,
+}) {
   return (
     <>
       <Header title={'Settings'} />
       <SettingsContainer>
-        <SettingsSetAnonymous />
+        <SettingsSetAnonymous
+          anonymousCheckboxStatus={anonymousCheckboxStatus}
+          onCheck={onAnonymousCheckboxClick}
+        />
       </SettingsContainer>
     </>
   )

@@ -41,12 +41,14 @@ export function getChannels() {
     .catch(err => console.log(err))
 }
 
-export function sendMessage(content, id) {
+export function sendMessage(content, id, sendAsAnonymous) {
   const messageObject = buildMessageObject(content)
   return fetch(
     `https://slack.com/api/chat.postMessage?token=${
       process.env.REACT_APP_API_KEY
-    }&blocks=${JSON.stringify(messageObject)}&channel=${id}&as_user=true`,
+    }&blocks=${JSON.stringify(
+      messageObject
+    )}&channel=${id}&as_user=${!sendAsAnonymous}`,
     {
       method: 'POST',
       headers: {

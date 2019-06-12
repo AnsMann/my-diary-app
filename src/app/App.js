@@ -14,6 +14,7 @@ import { DiaryEntryDetails } from './DiaryEntryDetails'
 import { ShareDiaryEntry } from './ShareDiaryEntry'
 import { findIndex } from './utils'
 import { EditDiaryEntry } from './EditDiaryEntry'
+import { Settings } from './Settings'
 
 moment.locale('de')
 
@@ -27,9 +28,19 @@ export default function App() {
   const [diaryEntries, setDiaryEntries] = useState(
     getLocalStorage('my diary') || []
   )
+  const [sendAnonymous, setSendAnonymous] = useState(
+    getLocalStorage('sendAnonymous') || false
+  )
 
   useEffect(() => setLocalStorage('my diary', diaryEntries), [diaryEntries])
 
+  useEffect(() => setLocalStorage('sendAnonymous', sendAnonymous), [
+    sendAnonymous,
+  ])
+  function handleAnonymousCheckbox() {
+    console.log('klappt')
+    setSendAnonymous(!sendAnonymous)
+  }
   function handleFormSubmit(newDiaryEntries, history) {
     setDiaryEntries(newDiaryEntries)
     history.push('/')
@@ -114,12 +125,10 @@ export default function App() {
               history={props.history}
               onBackClick={handleBackClick}
               onShare={handleSharedDiaryEntry}
+              sendAnonymous={sendAnonymous}
             />
           )}
         />
-<<<<<<< HEAD
-        <Route exact path="/settings" render={() => <Settings />} />
-=======
         <Route
           exact
           path="/cards/:id/edit"
@@ -132,7 +141,16 @@ export default function App() {
             />
           )}
         />
->>>>>>> master
+        <Route
+          exact
+          path="/settings"
+          render={() => (
+            <Settings
+              anonymousCheckboxStatus={sendAnonymous}
+              onAnonymousCheckboxClick={handleAnonymousCheckbox}
+            />
+          )}
+        />
         <Footer />
       </Grid>
     </Router>
