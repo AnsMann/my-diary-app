@@ -9,9 +9,9 @@ import { filterEntries, sortEntries } from './utils'
 import { DiaryLogo } from './DiaryLogo'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFilter, faSort } from '@fortawesome/free-solid-svg-icons'
+import { faFilter, faSortAmountUp } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faFilter, faSort)
+library.add(faFilter, faSortAmountUp)
 
 const DiaryEntriesContainer = styled.ul`
   margin: 0;
@@ -27,8 +27,8 @@ const Filterbutton = styled.button`
 const Sortbutton = styled.button`
   color: #002f47;
   font-size: 1.5rem;
-  position: relative;
   margin-right: 6px;
+  position: relative;
 `
 
 const Filter = styled.span`
@@ -37,23 +37,29 @@ const Filter = styled.span`
 `
 
 const FilterBox = styled.div`
+  align-items: center;
   border-bottom: solid 1px #007fbf;
   display: grid;
-  grid-template-columns: 1fr 4fr 1fr;
-  align-items: center;
+  grid-template-columns: 4fr 1fr 1fr;
   margin-bottom: 25px;
 
-  div:nth-child(3n) {
+  div {
     justify-self: end;
-  }
-  div:nth-last-child(3n) {
-    justify-self: start;
   }
 `
 const StyledSpan = styled.span`
+  align-items: center;
   color: #002f47;
+  display: flex;
   font-size: 0.7rem;
+  justify-content: center;
   margin-right: 10px;
+`
+const FilterArea = styled.section`
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr 1fr;
+  justify-self: start;
 `
 
 export function DiaryEntriesList({ diaryEntries, history, onDeleteClick }) {
@@ -76,6 +82,20 @@ export function DiaryEntriesList({ diaryEntries, history, onDeleteClick }) {
       <DiaryEntriesContainer id="diary">
         <DiaryLogo />
         <FilterBox>
+          <FilterArea>
+            {filter.filter !== 'all' && (
+              <>
+                <StyledSpan>Active Filter: </StyledSpan>
+                <Filter>{filter.filter}</Filter>
+              </>
+            )}
+            {filter.sortBy !== 'all' && (
+              <>
+                <StyledSpan>Sorted by: </StyledSpan>
+                <Filter>{filter.sortBy}</Filter>
+              </>
+            )}
+          </FilterArea>
           <OutsideClickHandler
             onOutsideClick={() => setIsFilterMenuVisible(false)}
           >
@@ -91,27 +111,13 @@ export function DiaryEntriesList({ diaryEntries, history, onDeleteClick }) {
               )}
             </Filterbutton>
           </OutsideClickHandler>
-          <div>
-            {filter.filter !== 'all' && (
-              <>
-                <StyledSpan>Active Filter: </StyledSpan>
-                <Filter>{filter.filter}</Filter>
-              </>
-            )}
-            {filter.sortBy !== 'all' && (
-              <>
-                <StyledSpan>sorted by: </StyledSpan>
-                <Filter>{filter.sortBy}</Filter>
-              </>
-            )}
-          </div>
           <OutsideClickHandler
             onOutsideClick={() => setIsSortMenuVisible(false)}
           >
             <Sortbutton
               onClick={() => setIsSortMenuVisible(!isSortMenuVisible)}
             >
-              <FontAwesomeIcon icon={faSort} />
+              <FontAwesomeIcon icon={faSortAmountUp} />
               {isSortMenuVisible && (
                 <SortMenu
                   onSortbuttonClick={handleSortbuttonClick}
