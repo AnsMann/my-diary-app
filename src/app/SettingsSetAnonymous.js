@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 
 const SettingsBox = styled.section`
+  align-items: center;
   display: flex;
   justify-content: space-between;
-  align-items: center;
 `
 
 const StyledLabel = styled.label`
@@ -13,24 +13,23 @@ const StyledLabel = styled.label`
 `
 
 const Switch = styled.label`
-  color: #007fbf;
-  position: relative;
   display: inline-block;
-  width: 60px;
   height: 34px;
+  position: relative;
+  width: 60px;
   input {
+    height: 0;
     opacity: 0;
     width: 0;
-    height: 0;
   }
 `
 
 const Checkbox = styled.input.attrs(() => ({ type: 'checkbox' }))`
   &:checked + span {
-    background-color: #2196f3;
+    background-color: #007fbf;
   }
   &:focus + span {
-    box-shadow: 0 0 1px #2196f3;
+    box-shadow: 0 0 1px #007fbf;
   }
   &:checked + span:before {
     transform: translateX(26px);
@@ -38,24 +37,24 @@ const Checkbox = styled.input.attrs(() => ({ type: 'checkbox' }))`
 `
 
 const StyledSpan = styled.span`
-  border-radius: 34px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   background-color: #ccc;
+  bottom: 0;
+  border-radius: 34px;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
   transition: 0.4s;
   &:before {
+    background-color: white;
     border-radius: 50%;
-    position: absolute;
+    bottom: 4px;
     content: '';
     height: 26px;
-    width: 26px;
     left: 4px;
-    bottom: 4px;
-    background-color: white;
+    position: absolute;
     transition: 0.4s;
+    width: 26px;
   }
 `
 
