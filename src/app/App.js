@@ -30,9 +30,8 @@ export default function App() {
 
   useEffect(() => setLocalStorage('my diary', diaryEntries), [diaryEntries])
 
-  async function handleFormSubmit(newDiaryEntry, history) {
-    const entry = await fetchEntries(newDiaryEntry, 'POST')
-    setDiaryEntries([entry, ...diaryEntries])
+  function handleFormSubmit(newDiaryEntries, history) {
+    setDiaryEntries(newDiaryEntries)
     history.push('/')
   }
 
@@ -57,11 +56,16 @@ export default function App() {
     history.push('/')
   }
 
-  function handleEditOnDetailsPage(diaryEntryToChange) {
-    const index = findIndex(diaryEntryToChange.id, diaryEntries)
+  async function handleEditOnDetailsPage(diaryEntryToChange) {
+    const entry = await fetchEntries(
+      diaryEntryToChange,
+      'PATCH',
+      diaryEntryToChange._id
+    )
+    const index = findIndex(diaryEntryToChange._id, diaryEntries)
     setDiaryEntries([
       ...diaryEntries.slice(0, index),
-      diaryEntryToChange,
+      entry,
       ...diaryEntries.slice(index + 1),
     ])
   }
@@ -89,6 +93,7 @@ export default function App() {
             <CreateDiaryEntryForm
               onFormSubmit={handleFormSubmit}
               history={props.history}
+              diaryEntries={diaryEntries}
             />
           )}
         />

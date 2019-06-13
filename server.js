@@ -15,3 +15,10 @@ app.post('/diaryentries', (req, res) => {
     .then(entry => res.json(entry))
     .catch(err => res.json(err))
 })
+
+app.patch('/diaryentries/:id', (req, res) => {
+  const { id } = req.params
+  DiaryEntry.findByIdAndUpdate(id, req.body, { new: true })
+    .then(entry => res.json(entry))
+    .catch(err => res.json(err))
+})

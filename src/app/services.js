@@ -14,7 +14,7 @@ export function getLocalStorage(name) {
 }
 
 export function fetchEntries(data, method, id = '') {
-  return fetch('/diaryentries' + id, {
+  return fetch('/diaryentries/' + id, {
     method,
     headers: {
       'Content-Type': 'application/json',

@@ -5,11 +5,12 @@ import 'moment/locale/de'
 
 import { Header } from './Header'
 import { DiaryEntryForm } from './DiaryEntryForm'
+import { fetchEntries } from './services'
 
 moment.locale('de')
 
-export function CreateDiaryEntryForm({ onFormSubmit, history }) {
-  function handleSubmitNewEntry(form, date) {
+export function CreateDiaryEntryForm({ onFormSubmit, history, diaryEntries }) {
+  async function handleSubmitNewEntry(form, date) {
     const newDiaryEntry = {
       title: form.topic.value,
       date: date,
@@ -23,7 +24,9 @@ export function CreateDiaryEntryForm({ onFormSubmit, history }) {
       edit: { status: false, editOn: '' },
       createDate: moment()._d,
     }
-    onFormSubmit(newDiaryEntry, history)
+    const entry = await fetchEntries(newDiaryEntry, 'POST')
+    const newDiaryEntries = [entry, ...diaryEntries]
+    onFormSubmit(newDiaryEntries, history)
   }
 
   return (
