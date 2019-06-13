@@ -86,23 +86,18 @@ const DiaryEntryCard = styled.section`
 
 export function DiaryEntry({ entry, history, onDeleteClick }) {
   const [isMenuVisible, setIsMenuVisible] = useState(false)
-  const [isDeleteEntryModalVisible, setIsDeleteEntryModalVisible] = useState({
-    showModal: false,
-    confirmation: true,
-  })
+  const [isDeleteEntryModalVisible, setIsDeleteEntryModalVisible] = useState(
+    false
+  )
+  const [deleteConfirmation, setDeleteConfirmation] = useState(true)
 
   function handleDeleteEntryMenuClick() {
-    setIsDeleteEntryModalVisible({
-      ...isDeleteEntryModalVisible,
-      showModal: true,
-    })
+    setIsDeleteEntryModalVisible(true)
   }
 
   function resetDeleteEntryModal() {
-    setIsDeleteEntryModalVisible({
-      showModal: false,
-      confirmation: true,
-    })
+    setIsDeleteEntryModalVisible(false)
+    setDeleteConfirmation(true)
   }
   function handleDeleteEntryConfirmation() {
     deleteEntryInMongoDB(entry._id).then(res => {
@@ -110,22 +105,19 @@ export function DiaryEntry({ entry, history, onDeleteClick }) {
         onDeleteClick(entry._id, history)
         resetDeleteEntryModal()
       } else {
-        setIsDeleteEntryModalVisible({
-          showModal: true,
-          confirmation: false,
-        })
+        setDeleteConfirmation(false)
       }
     })
   }
 
   return (
     <OutsideClickHandler onOutsideClick={() => setIsMenuVisible(false)}>
-      {isDeleteEntryModalVisible.showModal && (
+      {isDeleteEntryModalVisible && (
         <DeleteEntryModalDialogue
           entryDate={entry.date}
           onDeleteConfirmation={handleDeleteEntryConfirmation}
           resetDeleteEntryModal={resetDeleteEntryModal}
-          deleteConfirmation={isDeleteEntryModalVisible.confirmation}
+          deleteConfirmation={deleteConfirmation}
         />
       )}
       <DiaryEntryCard>
