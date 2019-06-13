@@ -10,6 +10,13 @@ app.get('/diaryentries', (req, res) => {
     .catch(err => res.json(err))
 })
 
+app.get('/diaryentries/:id', (req, res) => {
+  const { id } = req.params
+  DiaryEntry.findById(id)
+    .then(entry => res.json(entry))
+    .catch(err => res.json(err))
+})
+
 app.post('/diaryentries', (req, res) => {
   DiaryEntry.create(req.body)
     .then(entry => res.json(entry))

@@ -9,7 +9,7 @@ import ScrollMemory from 'react-router-scroll-memory'
 import { Footer } from './Footer'
 import { DiaryEntriesList } from './DiaryEntriesList'
 import { CreateDiaryEntryForm } from './CreateDiaryEntry'
-import { setLocalStorage, getLocalStorage } from './services'
+import { getEntriesFromMongoDB } from './services'
 import { DiaryEntryDetails } from './DiaryEntryDetails'
 import { ShareDiaryEntry } from './ShareDiaryEntry'
 import { findIndex } from './utils'
@@ -24,11 +24,15 @@ const Grid = styled.div`
 `
 
 export default function App() {
-  const [diaryEntries, setDiaryEntries] = useState(
-    getLocalStorage('my diary') || []
-  )
+  const [diaryEntries, setDiaryEntries] = useState([])
 
-  useEffect(() => setLocalStorage('my diary', diaryEntries), [diaryEntries])
+  useEffect(() => {
+    async function fetchDiaryEntries() {
+      const entries = await getEntriesFromMongoDB()
+      setDiaryEntries(entries)
+    }
+    fetchDiaryEntries()
+  }, [])
 
   function handleFormSubmit(newDiaryEntries, history) {
     setDiaryEntries(newDiaryEntries)
