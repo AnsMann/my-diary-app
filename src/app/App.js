@@ -9,7 +9,7 @@ import ScrollMemory from 'react-router-scroll-memory'
 import { Footer } from './Footer'
 import { DiaryEntriesList } from './DiaryEntriesList'
 import { CreateDiaryEntryForm } from './CreateDiaryEntry'
-import { setLocalStorage, getLocalStorage, fetchEntries } from './services'
+import { setLocalStorage, getLocalStorage } from './services'
 import { DiaryEntryDetails } from './DiaryEntryDetails'
 import { ShareDiaryEntry } from './ShareDiaryEntry'
 import { findIndex } from './utils'
@@ -39,12 +39,8 @@ export default function App() {
     history.goBack()
   }
 
-  function handleSharedDiaryEntry(sharedDiaryEntry, index) {
-    setDiaryEntries([
-      ...diaryEntries.slice(0, index),
-      sharedDiaryEntry,
-      ...diaryEntries.slice(index + 1),
-    ])
+  function handleSharedDiaryEntry(newDiaryEntries) {
+    setDiaryEntries(newDiaryEntries)
   }
 
   function handleDeleteClick(id, history) {
@@ -56,18 +52,8 @@ export default function App() {
     history.push('/')
   }
 
-  async function handleEditOnDetailsPage(diaryEntryToChange) {
-    const entry = await fetchEntries(
-      diaryEntryToChange,
-      'PATCH',
-      diaryEntryToChange._id
-    )
-    const index = findIndex(diaryEntryToChange._id, diaryEntries)
-    setDiaryEntries([
-      ...diaryEntries.slice(0, index),
-      entry,
-      ...diaryEntries.slice(index + 1),
-    ])
+  function handleEditOnDetailsPage(newDiaryEntries) {
+    setDiaryEntries(newDiaryEntries)
   }
 
   return (

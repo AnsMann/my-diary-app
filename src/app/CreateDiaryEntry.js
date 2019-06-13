@@ -1,5 +1,4 @@
 import React from 'react'
-import uid from 'uid'
 import moment from 'moment'
 import 'moment/locale/de'
 
