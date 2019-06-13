@@ -5,30 +5,25 @@ import 'moment/locale/de'
 
 import { Header } from './Header'
 import { DiaryEntryForm } from './DiaryEntryForm'
-import { DiaryLogo } from './DiaryLogo'
 
 moment.locale('de')
 
-export function CreateDiaryEntryForm({ onFormSubmit, history, diaryEntries }) {
+export function CreateDiaryEntryForm({ onFormSubmit, history }) {
   function handleSubmitNewEntry(form, date) {
-    const newDiaryEntries = [
-      {
-        title: form.topic.value,
-        date: date,
-        rating: form.dayrating.value,
-        content: form['content in own words'].value,
-        positive: form['remember positive'].value,
-        negative: form['remember negative'].value,
-        coachFeedback: form['coach feedback'].value,
-        additional: form['anything else'].value,
-        id: uid(),
-        shared: { status: false, sharedOn: '', sharedWith: '' },
-        edit: { status: false, editOn: '' },
-        createDate: moment(),
-      },
-      ...diaryEntries,
-    ]
-    onFormSubmit(newDiaryEntries, history)
+    const newDiaryEntry = {
+      title: form.topic.value,
+      date: date,
+      rating: form.dayrating.value,
+      content: form['content in own words'].value,
+      positive: form['remember positive'].value,
+      negative: form['remember negative'].value,
+      coachFeedback: form['coach feedback'].value,
+      additional: form['anything else'].value,
+      shared: { status: false, sharedOn: '', sharedWith: '' },
+      edit: { status: false, editOn: '' },
+      createDate: moment()._d,
+    }
+    onFormSubmit(newDiaryEntry, history)
   }
 
   return (

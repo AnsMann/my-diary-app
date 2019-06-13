@@ -36,11 +36,11 @@ const MenuOption = styled.li`
 export function DiaryEntryMenu({ history, entryId, onDeleteMenuClick }) {
   return (
     <Menu>
-      <MenuOption onClick={() => history.push(`/cards/${entryId}/share`)}>
+      <MenuOption onClick={() => history.push(`/entries/${entryId}/share`)}>
         Share via slack
       </MenuOption>
       <MenuOption onClick={() => onDeleteMenuClick()}>Delete</MenuOption>
-      <MenuOption onClick={() => history.push(`/cards/${entryId}/edit`)}>
+      <MenuOption onClick={() => history.push(`/entries/${entryId}/edit`)}>
         Edit
       </MenuOption>
     </Menu>

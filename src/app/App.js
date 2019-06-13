@@ -9,7 +9,7 @@ import ScrollMemory from 'react-router-scroll-memory'
 import { Footer } from './Footer'
 import { DiaryEntriesList } from './DiaryEntriesList'
 import { CreateDiaryEntryForm } from './CreateDiaryEntry'
-import { setLocalStorage, getLocalStorage } from './services'
+import { setLocalStorage, getLocalStorage, fetchEntries } from './services'
 import { DiaryEntryDetails } from './DiaryEntryDetails'
 import { ShareDiaryEntry } from './ShareDiaryEntry'
 import { findIndex } from './utils'
@@ -30,8 +30,9 @@ export default function App() {
 
   useEffect(() => setLocalStorage('my diary', diaryEntries), [diaryEntries])
 
-  function handleFormSubmit(newDiaryEntries, history) {
-    setDiaryEntries(newDiaryEntries)
+  async function handleFormSubmit(newDiaryEntry, history) {
+    const entry = await fetchEntries(newDiaryEntry, 'POST')
+    setDiaryEntries([entry, ...diaryEntries])
     history.push('/')
   }
 
@@ -88,13 +89,12 @@ export default function App() {
             <CreateDiaryEntryForm
               onFormSubmit={handleFormSubmit}
               history={props.history}
-              diaryEntries={diaryEntries}
             />
           )}
         />
         <Route
           exact
-          path="/cards/:id"
+          path="/entries/:id"
           render={props => (
             <DiaryEntryDetails
               diaryEntries={diaryEntries}
@@ -106,7 +106,7 @@ export default function App() {
         />
         <Route
           exact
-          path="/cards/:id/share"
+          path="/entries/:id/share"
           render={props => (
             <ShareDiaryEntry
               diaryEntries={diaryEntries}
@@ -119,7 +119,7 @@ export default function App() {
         />
         <Route
           exact
-          path="/cards/:id/edit"
+          path="/entries/:id/edit"
           render={props => (
             <EditDiaryEntry
               diaryEntries={diaryEntries}

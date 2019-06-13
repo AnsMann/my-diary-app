@@ -48,7 +48,7 @@ export function DiaryEntryForm({ onFormSubmit, diaryEntryToEdit = '' }) {
     <StyledForm
       onSubmit={event => {
         event.preventDefault()
-        onFormSubmit(event.target, date)
+        onFormSubmit(event.target, date._d)
       }}
     >
       <label>

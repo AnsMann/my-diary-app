@@ -9,3 +9,9 @@ app.get('/diaryentries', (req, res) => {
     .then(entry => res.json(entry))
     .catch(err => res.json(err))
 })
+
+app.post('/diaryentries', (req, res) => {
+  DiaryEntry.create(req.body)
+    .then(entry => res.json(entry))
+    .catch(err => res.json(err))
+})

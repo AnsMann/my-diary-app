@@ -97,7 +97,7 @@ export function DiaryEntry({ entry, history, onDeleteClick }) {
     setIsDeleteEntryModalVisible(false)
   }
   function handleDeleteEntryConfirmation() {
-    onDeleteClick(entry.id, history)
+    onDeleteClick(entry._id, history)
     resetDeleteEntryModal()
   }
 
@@ -111,7 +111,7 @@ export function DiaryEntry({ entry, history, onDeleteClick }) {
         />
       )}
       <DiaryEntryCard>
-        <CardLink to={`/cards/${entry.id}`}>
+        <CardLink to={`/entries/${entry._id}`}>
           <DiaryEntryContent>
             <img src="./icons/diary-entry.png" alt="diary entry book icon" />
             <h2>Diary Entry from {moment(entry.date).format('L')}</h2>
@@ -126,7 +126,7 @@ export function DiaryEntry({ entry, history, onDeleteClick }) {
           {isMenuVisible && (
             <DiaryEntryMenu
               history={history}
-              entryId={entry.id}
+              entryId={entry._id}
               onDeleteMenuClick={handleDeleteEntryMenuClick}
             />
           )}

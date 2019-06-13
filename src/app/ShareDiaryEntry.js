@@ -139,7 +139,7 @@ export function ShareDiaryEntry({
         shared: {
           status: true,
           sharedWith: contactName,
-          sharedOn: moment(),
+          sharedOn: moment()._d,
         },
       }
       onShare(sharedDiaryEntry, entryIndex)

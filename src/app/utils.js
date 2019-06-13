@@ -3,7 +3,7 @@ import 'moment/locale/de'
 moment.locale('de')
 
 export function findIndex(id, diaryEntries) {
-  const index = diaryEntries.map(entry => entry.id).indexOf(id)
+  const index = diaryEntries.map(entry => entry._id).indexOf(id)
   return index
 }
 
