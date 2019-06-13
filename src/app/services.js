@@ -24,6 +24,13 @@ export function fetchEntries(data, method, id = '') {
     .then(res => res.json())
     .catch(err => console.log(err))
 }
+export function deleteEntryInMongoDB(id) {
+  return fetch('/diaryentries/' + id, {
+    method: 'DELETE',
+  })
+    .then(res => res.json())
+    .catch(err => console.log(err))
+}
 
 export function getContacts() {
   return fetch(

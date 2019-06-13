@@ -10,7 +10,7 @@ import { DiaryEntryMenu } from './DiaryEntryMenu'
 import { DeleteEntryModalDialogue } from './DeleteEntryModalDialogue'
 import moment from 'moment'
 import 'moment/locale/de'
-import { fetchEntries } from './services'
+import { deleteEntryInMongoDB } from './services'
 moment.locale('de')
 
 library.add(faEllipsisH)
@@ -86,30 +86,46 @@ const DiaryEntryCard = styled.section`
 
 export function DiaryEntry({ entry, history, onDeleteClick }) {
   const [isMenuVisible, setIsMenuVisible] = useState(false)
-  const [isDeleteEntryModalVisible, setIsDeleteEntryModalVisible] = useState(
-    false
-  )
+  const [isDeleteEntryModalVisible, setIsDeleteEntryModalVisible] = useState({
+    showModal: false,
+    confirmation: true,
+  })
 
   function handleDeleteEntryMenuClick() {
-    setIsDeleteEntryModalVisible(true)
+    setIsDeleteEntryModalVisible({
+      ...isDeleteEntryModalVisible,
+      showModal: true,
+    })
   }
 
   function resetDeleteEntryModal() {
-    setIsDeleteEntryModalVisible(false)
+    setIsDeleteEntryModalVisible({
+      showModal: false,
+      confirmation: true,
+    })
   }
   function handleDeleteEntryConfirmation() {
-    fetchEntries()
-    onDeleteClick(entry._id, history)
-    resetDeleteEntryModal()
+    deleteEntryInMongoDB(entry._id).then(res => {
+      if (res._id) {
+        onDeleteClick(entry._id, history)
+        resetDeleteEntryModal()
+      } else {
+        setIsDeleteEntryModalVisible({
+          showModal: true,
+          confirmation: false,
+        })
+      }
+    })
   }
 
   return (
     <OutsideClickHandler onOutsideClick={() => setIsMenuVisible(false)}>
-      {isDeleteEntryModalVisible && (
+      {isDeleteEntryModalVisible.showModal && (
         <DeleteEntryModalDialogue
           entryDate={entry.date}
           onDeleteConfirmation={handleDeleteEntryConfirmation}
           resetDeleteEntryModal={resetDeleteEntryModal}
+          deleteConfirmation={isDeleteEntryModalVisible.confirmation}
         />
       )}
       <DiaryEntryCard>
