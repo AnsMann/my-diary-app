@@ -10,6 +10,7 @@ import { DiaryEntryMenu } from './DiaryEntryMenu'
 import { DeleteEntryModalDialogue } from './DeleteEntryModalDialogue'
 import moment from 'moment'
 import 'moment/locale/de'
+import { fetchEntries } from './services'
 moment.locale('de')
 
 library.add(faEllipsisH)
@@ -97,6 +98,7 @@ export function DiaryEntry({ entry, history, onDeleteClick }) {
     setIsDeleteEntryModalVisible(false)
   }
   function handleDeleteEntryConfirmation() {
+    fetchEntries()
     onDeleteClick(entry._id, history)
     resetDeleteEntryModal()
   }

@@ -22,3 +22,10 @@ app.patch('/diaryentries/:id', (req, res) => {
     .then(entry => res.json(entry))
     .catch(err => res.json(err))
 })
+
+app.delete('/diaryentries/:id', (req, res) => {
+  const { id } = req.params
+  DiaryEntry.findByIdAndDelete(id)
+    .then(entry => res.json(entry))
+    .catch(err => res.json(err))
+})
