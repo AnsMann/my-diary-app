@@ -4,7 +4,7 @@ import { fetchEntries } from './services'
 moment.locale('de')
 
 export function findIndex(id, diaryEntries) {
-  const index = diaryEntries.map(entry => entry._id).indexOf(id)
+  const index = diaryEntries.map(entry => entry._id || entry.id).indexOf(id)
   return index
 }
 

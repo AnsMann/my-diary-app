@@ -7,12 +7,23 @@ const SettingsContainer = styled.ul`
   overflow: scroll;
   padding: 20px;
 `
+const SyncButton = styled.button`
+  background: #007fbf;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 1.5rem;
+  height: 40px;
+  width: 100%;
+  &:disabled {
+    background: grey;
+  }
+`
 
 export function Settings({
   anonymousCheckboxStatus,
   onAnonymousCheckboxClick,
-  onLocalStorageCheckboxClick,
-  LocalStorageCheckboxStatus,
+  onworkOfflineCheckboxClick,
+  workOfflineCheckboxStatus,
 }) {
   return (
     <>
@@ -25,11 +36,17 @@ export function Settings({
           settingTitle={'Share as anonymous'}
         />
         <SettingsSetAnonymous
-          status={LocalStorageCheckboxStatus}
-          onCheck={onLocalStorageCheckboxClick}
+          status={workOfflineCheckboxStatus}
+          onCheck={onworkOfflineCheckboxClick}
           settingFor={'localStorageCheckbox'}
-          settingTitle={'Use local storage'}
+          settingTitle={'Work offline'}
         />
+        <SyncButton
+          onClick={() => console.log('click')}
+          disabled={!workOfflineCheckboxStatus}
+        >
+          Sync with database
+        </SyncButton>
       </SettingsContainer>
     </>
   )

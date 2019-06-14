@@ -8,7 +8,7 @@ import ScrollMemory from 'react-router-scroll-memory'
 
 import { Footer } from './Footer'
 import { DiaryEntriesList } from './DiaryEntriesList'
-import { CreateDiaryEntryForm } from './CreateDiaryEntry'
+import { CreateDiaryEntry } from './CreateDiaryEntry'
 import {
   getEntriesFromMongoDB,
   setLocalStorage,
@@ -33,8 +33,8 @@ export default function App() {
   const [sendAnonymous, setSendAnonymous] = useState(
     getLocalStorage('sendAnonymous') || false
   )
-  const [useLocalStorage, setUseLocalStorage] = useState(
-    getLocalStorage('useLocalStorage') || false
+  const [workOffline, setWorkOffline] = useState(
+    getLocalStorage('workOffline') || false
   )
 
   useEffect(() => {
@@ -49,12 +49,14 @@ export default function App() {
     sendAnonymous,
   ])
 
-  useEffect(() => setLocalStorage('useLocalStorage', useLocalStorage), [
-    useLocalStorage,
-  ])
+  useEffect(() => setLocalStorage('workOffline', workOffline), [workOffline])
 
-  function handleUseLocalStorageCheckbox() {
-    setUseLocalStorage(!useLocalStorage)
+  useEffect(() => {
+    workOffline && setLocalStorage('myDiary', diaryEntries)
+  }, [diaryEntries])
+
+  function handleWorkOfflineCheckbox() {
+    setWorkOffline(!workOffline)
   }
 
   function handleAnonymousCheckbox() {
@@ -100,6 +102,7 @@ export default function App() {
               diaryEntries={diaryEntries}
               history={props.history}
               onDeleteClick={handleDeleteClick}
+              workOfflineStatus={workOffline}
             />
           )}
         />
@@ -107,10 +110,11 @@ export default function App() {
           exact
           path="/create"
           render={props => (
-            <CreateDiaryEntryForm
+            <CreateDiaryEntry
               onFormSubmit={handleFormSubmit}
               history={props.history}
               diaryEntries={diaryEntries}
+              workOfflineStatus={workOffline}
             />
           )}
         />
@@ -159,8 +163,8 @@ export default function App() {
             <Settings
               anonymousCheckboxStatus={sendAnonymous}
               onAnonymousCheckboxClick={handleAnonymousCheckbox}
-              onLocalStorageCheckboxClick={handleUseLocalStorageCheckbox}
-              LocalStorageCheckboxStatus={useLocalStorage}
+              onworkOfflineCheckboxClick={handleWorkOfflineCheckbox}
+              workOfflineCheckboxStatus={workOffline}
             />
           )}
         />

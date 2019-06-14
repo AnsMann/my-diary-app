@@ -37,6 +37,7 @@ const diaryEntrySchema = new mongoose.Schema({
     editOn: { type: String, required: false },
   },
   createDate: { type: Date, required: true },
+  inDatabase: { type: Boolean, required: true },
 })
 
 module.exports = mongoose.model('DiaryEntry', diaryEntrySchema)

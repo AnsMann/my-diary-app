@@ -62,7 +62,12 @@ const FilterArea = styled.section`
   justify-self: start;
 `
 
-export function DiaryEntriesList({ diaryEntries, history, onDeleteClick }) {
+export function DiaryEntriesList({
+  diaryEntries,
+  history,
+  onDeleteClick,
+  workOfflineStatus,
+}) {
   const [filter, setFilter] = useState({ filter: 'all', sortBy: 'all' })
   const [isFilterMenuVisible, setIsFilterMenuVisible] = useState(false)
   const [isSortMenuVisible, setIsSortMenuVisible] = useState(false)
@@ -133,6 +138,7 @@ export function DiaryEntriesList({ diaryEntries, history, onDeleteClick }) {
             entry={entry}
             history={history}
             onDeleteClick={onDeleteClick}
+            workOfflineStatus={workOfflineStatus}
           />
         ))}
       </DiaryEntriesContainer>

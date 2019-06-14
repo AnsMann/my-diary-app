@@ -1,14 +1,19 @@
 import React from 'react'
 import moment from 'moment'
 import 'moment/locale/de'
-
+import uid from 'uid'
 import { Header } from './Header'
 import { DiaryEntryForm } from './DiaryEntryForm'
 import { fetchEntries } from './services'
 
 moment.locale('de')
 
-export function CreateDiaryEntryForm({ onFormSubmit, history, diaryEntries }) {
+export function CreateDiaryEntry({
+  onFormSubmit,
+  history,
+  diaryEntries,
+  workOfflineStatus,
+}) {
   async function handleSubmitNewEntry(form, date) {
     const newDiaryEntry = {
       title: form.topic.value,
@@ -22,10 +27,17 @@ export function CreateDiaryEntryForm({ onFormSubmit, history, diaryEntries }) {
       shared: { status: false, sharedOn: '', sharedWith: '' },
       edit: { status: false, editOn: '' },
       createDate: moment()._d,
+      inDatabase: !workOfflineStatus,
+      ...(workOfflineStatus && { id: uid() }),
     }
-    const entry = await fetchEntries(newDiaryEntry, 'POST')
-    const newDiaryEntries = [entry, ...diaryEntries]
-    onFormSubmit(newDiaryEntries, history)
+    if (workOfflineStatus) {
+      const newDiaryEntries = [newDiaryEntry, ...diaryEntries]
+      onFormSubmit(newDiaryEntries, history)
+    } else {
+      const entry = await fetchEntries(newDiaryEntry, 'POST')
+      const newDiaryEntries = [{ ...entry, inDatabase: true }, ...diaryEntries]
+      onFormSubmit(newDiaryEntries, history)
+    }
   }
 
   return (

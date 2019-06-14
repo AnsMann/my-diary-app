@@ -5,7 +5,11 @@ import { Link } from 'react-router-dom'
 import { ShowDayRating } from './ShowDayRating'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
+import {
+  faEllipsisH,
+  faCheck,
+  faDatabase,
+} from '@fortawesome/free-solid-svg-icons'
 import { DiaryEntryMenu } from './DiaryEntryMenu'
 import { DeleteEntryModalDialogue } from './DeleteEntryModalDialogue'
 import moment from 'moment'
@@ -78,13 +82,25 @@ const SlackLogo = styled.img`
   top: -25px;
   left: 0px;
 `
+const DatabaseIcon = styled.div`
+  color: #002f47;
+  left: 50px;
+  position: absolute;
+  top: -10px;
+  width: 15%;
+`
 
 const DiaryEntryCard = styled.section`
   position: relative;
   margin-bottom: 30px;
 `
 
-export function DiaryEntry({ entry, history, onDeleteClick }) {
+export function DiaryEntry({
+  entry,
+  history,
+  onDeleteClick,
+  workOfflineStatus,
+}) {
   const [isMenuVisible, setIsMenuVisible] = useState(false)
   const [isDeleteEntryModalVisible, setIsDeleteEntryModalVisible] = useState(
     false
@@ -100,14 +116,19 @@ export function DiaryEntry({ entry, history, onDeleteClick }) {
     setDeleteConfirmation(true)
   }
   function handleDeleteEntryConfirmation() {
-    deleteEntryInMongoDB(entry._id).then(res => {
-      if (res._id) {
-        onDeleteClick(entry._id, history)
-        resetDeleteEntryModal()
-      } else {
-        setDeleteConfirmation(false)
-      }
-    })
+    if (workOfflineStatus) {
+      onDeleteClick(entry.id, history)
+      resetDeleteEntryModal()
+    } else {
+      deleteEntryInMongoDB(entry._id).then(res => {
+        if (res._id) {
+          onDeleteClick(entry._id, history)
+          resetDeleteEntryModal()
+        } else {
+          setDeleteConfirmation(false)
+        }
+      })
+    }
   }
 
   return (
@@ -131,6 +152,11 @@ export function DiaryEntry({ entry, history, onDeleteClick }) {
           </DiaryEntryContent>
         </CardLink>
         {entry.shared.status && <SlackLogo src="/icons/Slack_Mark_Web.png" />}
+        {entry.inDatabase && (
+          <DatabaseIcon>
+            <FontAwesomeIcon icon={faDatabase} />
+          </DatabaseIcon>
+        )}
         <MenueIcon onClick={() => setIsMenuVisible(!isMenuVisible)}>
           <FontAwesomeIcon icon={faEllipsisH} />
           {isMenuVisible && (
