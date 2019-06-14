@@ -9,7 +9,7 @@ import ScrollMemory from 'react-router-scroll-memory'
 import { Footer } from './Footer'
 import { DiaryEntriesList } from './DiaryEntriesList'
 import { CreateDiaryEntryForm } from './CreateDiaryEntry'
-import { setLocalStorage, getLocalStorage } from './services'
+import { getEntriesFromMongoDB } from './services'
 import { DiaryEntryDetails } from './DiaryEntryDetails'
 import { ShareDiaryEntry } from './ShareDiaryEntry'
 import { findIndex } from './utils'
@@ -24,11 +24,15 @@ const Grid = styled.div`
 `
 
 export default function App() {
-  const [diaryEntries, setDiaryEntries] = useState(
-    getLocalStorage('my diary') || []
-  )
+  const [diaryEntries, setDiaryEntries] = useState([])
 
-  useEffect(() => setLocalStorage('my diary', diaryEntries), [diaryEntries])
+  useEffect(() => {
+    async function fetchDiaryEntries() {
+      const entries = await getEntriesFromMongoDB()
+      setDiaryEntries(entries)
+    }
+    fetchDiaryEntries()
+  }, [])
 
   function handleFormSubmit(newDiaryEntries, history) {
     setDiaryEntries(newDiaryEntries)
@@ -39,12 +43,8 @@ export default function App() {
     history.goBack()
   }
 
-  function handleSharedDiaryEntry(sharedDiaryEntry, index) {
-    setDiaryEntries([
-      ...diaryEntries.slice(0, index),
-      sharedDiaryEntry,
-      ...diaryEntries.slice(index + 1),
-    ])
+  function handleSharedDiaryEntry(newDiaryEntries) {
+    setDiaryEntries(newDiaryEntries)
   }
 
   function handleDeleteClick(id, history) {
@@ -56,13 +56,8 @@ export default function App() {
     history.push('/')
   }
 
-  function handleEditOnDetailsPage(diaryEntryToChange) {
-    const index = findIndex(diaryEntryToChange.id, diaryEntries)
-    setDiaryEntries([
-      ...diaryEntries.slice(0, index),
-      diaryEntryToChange,
-      ...diaryEntries.slice(index + 1),
-    ])
+  function handleEditOnDetailsPage(newDiaryEntries) {
+    setDiaryEntries(newDiaryEntries)
   }
 
   return (
@@ -94,7 +89,7 @@ export default function App() {
         />
         <Route
           exact
-          path="/cards/:id"
+          path="/entries/:id"
           render={props => (
             <DiaryEntryDetails
               diaryEntries={diaryEntries}
@@ -106,7 +101,7 @@ export default function App() {
         />
         <Route
           exact
-          path="/cards/:id/share"
+          path="/entries/:id/share"
           render={props => (
             <ShareDiaryEntry
               diaryEntries={diaryEntries}
@@ -119,7 +114,7 @@ export default function App() {
         />
         <Route
           exact
-          path="/cards/:id/edit"
+          path="/entries/:id/edit"
           render={props => (
             <EditDiaryEntry
               diaryEntries={diaryEntries}

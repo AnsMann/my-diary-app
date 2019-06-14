@@ -48,15 +48,15 @@ const StyledRatingInput = styled.div`
 export function DayRatingInput({ defaultValue = 0 }) {
   const ratingOptions = [
     {
-      rating: '3',
+      rating: 3,
       output: '😃',
     },
     {
-      rating: '2',
+      rating: 2,
       output: '😶',
     },
     {
-      rating: '1',
+      rating: 1,
       output: '😔',
     },
   ]

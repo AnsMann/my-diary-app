@@ -10,6 +10,7 @@ import { DiaryEntryMenu } from './DiaryEntryMenu'
 import { DeleteEntryModalDialogue } from './DeleteEntryModalDialogue'
 import moment from 'moment'
 import 'moment/locale/de'
+import { deleteEntryInMongoDB } from './services'
 moment.locale('de')
 
 library.add(faEllipsisH)
@@ -88,6 +89,7 @@ export function DiaryEntry({ entry, history, onDeleteClick }) {
   const [isDeleteEntryModalVisible, setIsDeleteEntryModalVisible] = useState(
     false
   )
+  const [deleteConfirmation, setDeleteConfirmation] = useState(true)
 
   function handleDeleteEntryMenuClick() {
     setIsDeleteEntryModalVisible(true)
@@ -95,10 +97,17 @@ export function DiaryEntry({ entry, history, onDeleteClick }) {
 
   function resetDeleteEntryModal() {
     setIsDeleteEntryModalVisible(false)
+    setDeleteConfirmation(true)
   }
   function handleDeleteEntryConfirmation() {
-    onDeleteClick(entry.id, history)
-    resetDeleteEntryModal()
+    deleteEntryInMongoDB(entry._id).then(res => {
+      if (res._id) {
+        onDeleteClick(entry._id, history)
+        resetDeleteEntryModal()
+      } else {
+        setDeleteConfirmation(false)
+      }
+    })
   }
 
   return (
@@ -108,10 +117,11 @@ export function DiaryEntry({ entry, history, onDeleteClick }) {
           entryDate={entry.date}
           onDeleteConfirmation={handleDeleteEntryConfirmation}
           resetDeleteEntryModal={resetDeleteEntryModal}
+          deleteConfirmation={deleteConfirmation}
         />
       )}
       <DiaryEntryCard>
-        <CardLink to={`/cards/${entry.id}`}>
+        <CardLink to={`/entries/${entry._id}`}>
           <DiaryEntryContent>
             <img src="./icons/diary-entry.png" alt="diary entry book icon" />
             <h2>Diary Entry from {moment(entry.date).format('L')}</h2>
@@ -126,7 +136,7 @@ export function DiaryEntry({ entry, history, onDeleteClick }) {
           {isMenuVisible && (
             <DiaryEntryMenu
               history={history}
-              entryId={entry.id}
+              entryId={entry._id}
               onDeleteMenuClick={handleDeleteEntryMenuClick}
             />
           )}

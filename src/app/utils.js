@@ -1,9 +1,10 @@
 import moment from 'moment'
 import 'moment/locale/de'
+import { fetchEntries } from './services'
 moment.locale('de')
 
 export function findIndex(id, diaryEntries) {
-  const index = diaryEntries.map(entry => entry.id).indexOf(id)
+  const index = diaryEntries.map(entry => entry._id).indexOf(id)
   return index
 }
 
@@ -83,4 +84,14 @@ export function filterEntries(allEntries, filter) {
       const Entries = sortEntries(allEntries, filter.sortby)
       return Entries
   }
+}
+
+export async function editEntriesInMongoDB(diaryEntries, editedEntry, index) {
+  const entry = await fetchEntries(editedEntry, 'PATCH', editedEntry._id)
+  const newDiaryEntries = [
+    ...diaryEntries.slice(0, index),
+    entry,
+    ...diaryEntries.slice(index + 1),
+  ]
+  return newDiaryEntries
 }

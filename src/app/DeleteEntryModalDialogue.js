@@ -2,12 +2,15 @@ import React from 'react'
 import styled from 'styled-components'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import {
+  faTrashAlt,
+  faExclamationTriangle,
+} from '@fortawesome/free-solid-svg-icons'
 import moment from 'moment'
 import 'moment/locale/de'
 moment.locale('de')
 
-library.add(faTrashAlt)
+library.add(faTrashAlt, faExclamationTriangle)
 
 const Dialogue = styled.div`
   align-items: center;
@@ -63,24 +66,37 @@ export function DeleteEntryModalDialogue({
   entryDate,
   onDeleteConfirmation,
   resetDeleteEntryModal,
+  deleteConfirmation,
 }) {
   return (
     <>
       <ModalBackground />
-      <Dialogue>
-        <span>
-          Delete entry from
-          <br />
-          <strong>{moment(entryDate).format('L')}</strong>
-        </span>
-        <StyledIcon>
-          <FontAwesomeIcon icon={faTrashAlt} />
-        </StyledIcon>
-        <StyledButton onClick={() => onDeleteConfirmation()}>Ok</StyledButton>
-        <StyledButton onClick={() => resetDeleteEntryModal()}>
-          Abort
-        </StyledButton>
-      </Dialogue>
+      {deleteConfirmation ? (
+        <Dialogue>
+          <span>
+            Delete entry from
+            <br />
+            <strong>{moment(entryDate).format('L')}</strong>
+          </span>
+          <StyledIcon>
+            <FontAwesomeIcon icon={faTrashAlt} />
+          </StyledIcon>
+          <StyledButton onClick={() => onDeleteConfirmation()}>Ok</StyledButton>
+          <StyledButton onClick={() => resetDeleteEntryModal()}>
+            Abort
+          </StyledButton>
+        </Dialogue>
+      ) : (
+        <Dialogue>
+          <strong>Failed to Delete</strong>
+          <StyledIcon>
+            <FontAwesomeIcon icon={faExclamationTriangle} />
+          </StyledIcon>
+          <StyledButton onClick={() => resetDeleteEntryModal()}>
+            Ok
+          </StyledButton>
+        </Dialogue>
+      )}
     </>
   )
 }

@@ -13,6 +13,34 @@ export function getLocalStorage(name) {
   return JSON.parse(localStorage.getItem(name))
 }
 
+export function fetchEntries(data, method, id = '') {
+  return fetch('/diaryentries/' + id, {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+    .then(res => res.json())
+    .catch(err => console.log(err))
+}
+
+export function deleteEntryInMongoDB(id) {
+  return fetch('/diaryentries/' + id, {
+    method: 'DELETE',
+  })
+    .then(res => res.json())
+    .catch(err => console.log(err))
+}
+
+export function getEntriesFromMongoDB(id = '') {
+  return fetch('/diaryentries/' + id, {
+    method: 'GET',
+  })
+    .then(res => res.json())
+    .catch(err => console.log(err))
+}
+
 export function getContacts() {
   return fetch(
     `https://slack.com/api/users.list?token=${process.env.REACT_APP_API_KEY}`,
