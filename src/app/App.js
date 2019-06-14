@@ -33,6 +33,9 @@ export default function App() {
   const [sendAnonymous, setSendAnonymous] = useState(
     getLocalStorage('sendAnonymous') || false
   )
+  const [useLocalStorage, setUseLocalStorage] = useState(
+    getLocalStorage('useLocalStorage') || false
+  )
 
   useEffect(() => {
     async function fetchDiaryEntries() {
@@ -45,9 +48,19 @@ export default function App() {
   useEffect(() => setLocalStorage('sendAnonymous', sendAnonymous), [
     sendAnonymous,
   ])
+
+  useEffect(() => setLocalStorage('useLocalStorage', useLocalStorage), [
+    useLocalStorage,
+  ])
+
+  function handleUseLocalStorageCheckbox() {
+    setUseLocalStorage(!useLocalStorage)
+  }
+
   function handleAnonymousCheckbox() {
     setSendAnonymous(!sendAnonymous)
   }
+
   function handleFormSubmit(newDiaryEntries, history) {
     setDiaryEntries(newDiaryEntries)
     history.push('/')
@@ -146,6 +159,8 @@ export default function App() {
             <Settings
               anonymousCheckboxStatus={sendAnonymous}
               onAnonymousCheckboxClick={handleAnonymousCheckbox}
+              onLocalStorageCheckboxClick={handleUseLocalStorageCheckbox}
+              LocalStorageCheckboxStatus={useLocalStorage}
             />
           )}
         />

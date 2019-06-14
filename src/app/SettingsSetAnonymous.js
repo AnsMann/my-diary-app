@@ -5,6 +5,7 @@ const SettingsBox = styled.section`
   align-items: center;
   display: flex;
   justify-content: space-between;
+  margin: 50px 0;
 `
 
 const StyledLabel = styled.label`
@@ -102,16 +103,17 @@ const Checkbox = styled.input.attrs(() => ({ type: 'checkbox' }))`
 `
 */
 
-export function SettingsSetAnonymous({ anonymousCheckboxStatus, onCheck }) {
+export function SettingsSetAnonymous({
+  status,
+  onCheck,
+  settingFor,
+  settingTitle,
+}) {
   return (
     <SettingsBox>
-      <StyledLabel htmlFor="anymousCheckbox">Share as anonymous</StyledLabel>
+      <StyledLabel htmlFor={settingFor}>{settingTitle}</StyledLabel>
       <Switch>
-        <Checkbox
-          id="anymousCheckbox"
-          onChange={() => onCheck()}
-          checked={anonymousCheckboxStatus}
-        />
+        <Checkbox id={settingFor} onChange={() => onCheck()} checked={status} />
         <StyledSpan />
       </Switch>
     </SettingsBox>
