@@ -28,6 +28,7 @@ export function CreateDiaryEntry({
       edit: { status: false, editOn: '' },
       createDate: moment()._d,
       inDatabase: !workOfflineStatus,
+      toDelete: false,
       ...(workOfflineStatus && { id: uid() }),
     }
     if (workOfflineStatus) {

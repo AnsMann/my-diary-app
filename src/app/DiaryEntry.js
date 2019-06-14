@@ -7,7 +7,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faEllipsisH,
-  faCheck,
+  faTrashAlt,
   faDatabase,
 } from '@fortawesome/free-solid-svg-icons'
 import { DiaryEntryMenu } from './DiaryEntryMenu'
@@ -17,7 +17,7 @@ import 'moment/locale/de'
 import { deleteEntryInMongoDB } from './services'
 moment.locale('de')
 
-library.add(faEllipsisH)
+library.add(faEllipsisH, faTrashAlt)
 
 const CardLink = styled(Link)`
   text-decoration: none;
@@ -89,6 +89,13 @@ const DatabaseIcon = styled.div`
   top: -10px;
   width: 15%;
 `
+const ToDeleteIcon = styled.div`
+  color: red;
+  left: 80px;
+  position: absolute;
+  top: -10px;
+  width: 15%;
+`
 
 const DiaryEntryCard = styled.section`
   position: relative;
@@ -117,8 +124,14 @@ export function DiaryEntry({
   }
   function handleDeleteEntryConfirmation() {
     if (workOfflineStatus) {
-      onDeleteClick(entry.id, history)
-      resetDeleteEntryModal()
+      if (entry.id) {
+        onDeleteClick(entry.id, history)
+        resetDeleteEntryModal()
+      } else {
+        const entryToDelete = { ...entry, toDelete: true }
+        onDeleteClick(entry._id, history, entryToDelete)
+        resetDeleteEntryModal()
+      }
     } else {
       deleteEntryInMongoDB(entry._id).then(res => {
         if (res._id) {
@@ -156,6 +169,11 @@ export function DiaryEntry({
           <DatabaseIcon>
             <FontAwesomeIcon icon={faDatabase} />
           </DatabaseIcon>
+        )}
+        {entry.toDelete && (
+          <ToDeleteIcon>
+            <FontAwesomeIcon icon={faTrashAlt} />
+          </ToDeleteIcon>
         )}
         <MenueIcon onClick={() => setIsMenuVisible(!isMenuVisible)}>
           <FontAwesomeIcon icon={faEllipsisH} />

@@ -24,6 +24,7 @@ export function Settings({
   onAnonymousCheckboxClick,
   onworkOfflineCheckboxClick,
   workOfflineCheckboxStatus,
+  onSyncButtonClick,
 }) {
   return (
     <>
@@ -42,7 +43,7 @@ export function Settings({
           settingTitle={'Work offline'}
         />
         <SyncButton
-          onClick={() => console.log('click')}
+          onClick={() => onSyncButtonClick()}
           disabled={!workOfflineCheckboxStatus}
         >
           Sync with database

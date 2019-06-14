@@ -13,6 +13,7 @@ import {
   getEntriesFromMongoDB,
   setLocalStorage,
   getLocalStorage,
+  deleteEntryInMongoDB,
 } from './services'
 import { DiaryEntryDetails } from './DiaryEntryDetails'
 import { ShareDiaryEntry } from './ShareDiaryEntry'
@@ -76,17 +77,30 @@ export default function App() {
     setDiaryEntries(newDiaryEntries)
   }
 
-  function handleDeleteClick(id, history) {
+  function handleDeleteClick(id, history, entryToDeleteInDB = null) {
     const index = findIndex(id, diaryEntries)
-    setDiaryEntries([
-      ...diaryEntries.slice(0, index),
-      ...diaryEntries.slice(index + 1),
-    ])
+    entryToDeleteInDB
+      ? setDiaryEntries([
+          ...diaryEntries.slice(0, index),
+          entryToDeleteInDB,
+          ...diaryEntries.slice(index + 1),
+        ])
+      : setDiaryEntries([
+          ...diaryEntries.slice(0, index),
+          ...diaryEntries.slice(index + 1),
+        ])
     history.push('/')
   }
 
   function handleEditOnDetailsPage(newDiaryEntries) {
     setDiaryEntries(newDiaryEntries)
+  }
+
+  async function handleSyncButtonClick() {
+    const entriesToDelete = diaryEntries.filter(entry => entry.toDelete)
+    entriesToDelete.forEach(entry => deleteEntryInMongoDB(entry._id))
+    const updatedEntries = await getEntriesFromMongoDB()
+    setDiaryEntries(updatedEntries)
   }
 
   return (
@@ -165,6 +179,7 @@ export default function App() {
               onAnonymousCheckboxClick={handleAnonymousCheckbox}
               onworkOfflineCheckboxClick={handleWorkOfflineCheckbox}
               workOfflineCheckboxStatus={workOffline}
+              onSyncButtonClick={handleSyncButtonClick}
             />
           )}
         />
