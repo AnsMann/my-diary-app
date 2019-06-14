@@ -9,7 +9,11 @@ import ScrollMemory from 'react-router-scroll-memory'
 import { Footer } from './Footer'
 import { DiaryEntriesList } from './DiaryEntriesList'
 import { CreateDiaryEntryForm } from './CreateDiaryEntry'
-import { getEntriesFromMongoDB } from './services'
+import {
+  getEntriesFromMongoDB,
+  setLocalStorage,
+  getLocalStorage,
+} from './services'
 import { DiaryEntryDetails } from './DiaryEntryDetails'
 import { ShareDiaryEntry } from './ShareDiaryEntry'
 import { findIndex } from './utils'
@@ -26,6 +30,9 @@ const Grid = styled.div`
 
 export default function App() {
   const [diaryEntries, setDiaryEntries] = useState([])
+  const [sendAnonymous, setSendAnonymous] = useState(
+    getLocalStorage('sendAnonymous') || false
+  )
 
   useEffect(() => {
     async function fetchDiaryEntries() {
@@ -39,7 +46,6 @@ export default function App() {
     sendAnonymous,
   ])
   function handleAnonymousCheckbox() {
-    console.log('klappt')
     setSendAnonymous(!sendAnonymous)
   }
   function handleFormSubmit(newDiaryEntries, history) {
