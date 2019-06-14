@@ -5,8 +5,8 @@ const diaryEntrySchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  date: { type: Object, required: false },
-  rating: { type: String, required: false },
+  date: { type: Date, required: true },
+  rating: { type: Number, required: false },
   content: {
     type: String,
     required: false,
@@ -28,15 +28,15 @@ const diaryEntrySchema = new mongoose.Schema({
     required: false,
   },
   shared: {
-    status: { type: Boolean, required: false },
-    sharedOn: { type: Object, required: false },
+    status: { type: Boolean, required: true },
+    sharedOn: { type: Date, required: false },
     sharedWith: { type: String, required: false },
   },
   edit: {
-    status: { type: Boolean, required: false },
+    status: { type: Boolean, required: true },
     editOn: { type: String, required: false },
   },
-  createDate: { type: Object, required: false },
+  createDate: { type: Date, required: true },
 })
 
 module.exports = mongoose.model('DiaryEntry', diaryEntrySchema)
