@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import OutsideClickHandler from 'react-outside-click-handler'
 import { ShowDayRating } from './ShowDayRating'
-import { findIndex } from './utils'
+import { findIndex, editEntriesInMongoDB } from './utils'
 import { Header } from './Header'
 import { ArrowBack } from './ArrowBack'
 import { ShareViaSlackButton } from './ShareViaSlackButton'
@@ -81,7 +81,7 @@ export function DiaryEntryDetails({
   const entryIndex = findIndex(match.params.id, diaryEntries)
   const diaryEntry = diaryEntries[entryIndex]
   const {
-    id,
+    _id,
     title,
     date,
     rating,
@@ -129,24 +129,34 @@ export function DiaryEntryDetails({
   ]
   const [isRatingEditable, setIsRatingEditable] = useState(false)
 
-  function handleEditDetails(detailType, input) {
+  async function handleEditDetails(detailType, input) {
     const diaryEntryToChange = {
       ...diaryEntry,
       [detailType]: input,
-      edit: { status: true, editOn: moment() },
+      edit: { status: true, editOn: moment()._d },
     }
-    onEditDetails(diaryEntryToChange)
+    const newDiaryEntries = await editEntriesInMongoDB(
+      diaryEntries,
+      diaryEntryToChange,
+      entryIndex
+    )
+    onEditDetails(newDiaryEntries)
   }
 
-  function handleEditRating(event) {
+  async function handleEditRating(event) {
     event.preventDefault()
     setIsRatingEditable(false)
     const diaryEntryToChange = {
       ...diaryEntry,
       rating: event.target.dayrating.value,
-      edit: { status: true, editOn: moment() },
+      edit: { status: true, editOn: moment()._d },
     }
-    onEditDetails(diaryEntryToChange)
+    const newDiaryEntries = await editEntriesInMongoDB(
+      diaryEntries,
+      diaryEntryToChange,
+      entryIndex
+    )
+    onEditDetails(newDiaryEntries)
   }
 
   return (
@@ -202,7 +212,7 @@ export function DiaryEntryDetails({
           </StyledDiv>
         )}
         <Share>
-          <ShareViaSlackButton idForURL={id} />
+          <ShareViaSlackButton idForURL={_id} />
         </Share>
       </EntryDetails>
     </>

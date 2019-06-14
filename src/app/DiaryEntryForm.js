@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { DayRatingInput } from './DayRatingInput'
 import 'react-dates/initialize'
 import { SingleDatePicker } from 'react-dates'
-import 'react-dates/lib/css/_datepicker.css'
+import '../misc/_datepicker.css'
 import moment from 'moment'
 import 'moment/locale/de'
 import { QuestionCatalogue } from './QuestionCatalogue'
@@ -48,7 +48,7 @@ export function DiaryEntryForm({ onFormSubmit, diaryEntryToEdit = '' }) {
     <StyledForm
       onSubmit={event => {
         event.preventDefault()
-        onFormSubmit(event.target, date)
+        onFormSubmit(event.target, date._d)
       }}
     >
       <label>

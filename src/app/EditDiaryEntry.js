@@ -4,7 +4,7 @@ import 'moment/locale/de'
 
 import { Header } from './Header'
 import { DiaryEntryForm } from './DiaryEntryForm'
-import { findIndex } from './utils'
+import { findIndex, editEntriesInMongoDB } from './utils'
 
 moment.locale('de')
 
@@ -16,7 +16,7 @@ export function EditDiaryEntry({
 }) {
   const entryIndex = findIndex(diaryID, diaryEntries)
 
-  function handleSubmitEditEntry(target, date) {
+  async function handleSubmitEditEntry(target, date) {
     const diaryEntrytoChange = diaryEntries[entryIndex]
     const changedDiaryEntry = {
       ...diaryEntrytoChange,
@@ -28,15 +28,14 @@ export function EditDiaryEntry({
       negative: target['remember negative'].value,
       coachFeedback: target['coach feedback'].value,
       additional: target['anything else'].value,
-      edit: { status: true, editOn: moment() },
+      edit: { status: true, editOn: moment()._d },
     }
-    const newEntries = [
-      ...diaryEntries.slice(0, entryIndex),
+    const newDiaryEntries = await editEntriesInMongoDB(
+      diaryEntries,
       changedDiaryEntry,
-      ...diaryEntries.slice(entryIndex + 1),
-    ]
-
-    onFormSubmit(newEntries, history)
+      entryIndex
+    )
+    onFormSubmit(newDiaryEntries, history)
   }
 
   return (

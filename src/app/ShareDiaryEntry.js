@@ -7,6 +7,7 @@ import {
   findIndex,
   handleSlackContactData,
   handleSlackChannelData,
+  editEntriesInMongoDB,
 } from './utils'
 import {
   getContacts,
@@ -133,17 +134,22 @@ export function ShareDiaryEntry({
     })
   }
 
-  function handleModalButtonClick(history, success, contactName) {
+  async function handleModalButtonClick(history, success, contactName) {
     if (success) {
       const sharedDiaryEntry = {
         ...diaryEntryToShare,
         shared: {
           status: true,
           sharedWith: contactName,
-          sharedOn: moment(),
+          sharedOn: moment()._d,
         },
       }
-      onShare(sharedDiaryEntry, entryIndex)
+      const newDiaryEntries = await editEntriesInMongoDB(
+        diaryEntries,
+        sharedDiaryEntry,
+        entryIndex
+      )
+      onShare(newDiaryEntries)
     } else {
       setModalStatus({ showModal: false, shareWith: '' })
     }
