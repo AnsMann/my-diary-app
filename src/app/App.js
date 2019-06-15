@@ -162,6 +162,7 @@ export default function App() {
               onBackClick={handleBackClick}
               onShare={handleSharedDiaryEntry}
               sendAnonymous={sendAnonymous}
+              workOfflineStatus={workOffline}
             />
           )}
         />

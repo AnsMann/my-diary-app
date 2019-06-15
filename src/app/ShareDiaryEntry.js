@@ -90,6 +90,7 @@ export function ShareDiaryEntry({
   onBackClick,
   onShare,
   sendAnonymous,
+  workOfflineStatus,
 }) {
   const [searchInput, setSearchInput] = useState('')
   const [slackContacts, setSlackContacts] = useState(
@@ -191,6 +192,7 @@ export function ShareDiaryEntry({
               searchInput={searchInput}
               onContactClick={handleContactClick}
               sendAnonymous={sendAnonymous}
+              workOfflineStatus={workOfflineStatus}
             />
           </ResultArea>
         </StyledDiv>

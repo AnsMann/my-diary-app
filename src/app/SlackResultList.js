@@ -23,9 +23,19 @@ export function SlackResultList({
   searchInput,
   onContactClick,
   sendAnonymous,
+  workOfflineStatus,
 }) {
   const filteredResult = filterData(userContacts, channels, searchInput)
-  if (channels.length === 0 && userContacts.length === 0) {
+  if (workOfflineStatus) {
+    return (
+      <>
+        <p>
+          <strong>Sorry, you work offline.</strong>
+        </p>
+        <p>See settings to go online and share your entry with everybody</p>
+      </>
+    )
+  } else if (channels.length === 0 && userContacts.length === 0) {
     return <p>No connection to slack</p>
   } else if (filteredResult.length !== 0) {
     return filteredResult.map(contact => (
