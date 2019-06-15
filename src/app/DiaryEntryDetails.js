@@ -177,7 +177,9 @@ export function DiaryEntryDetails({
           >
             <form
               onSubmit={event => {
-                handleEditDetails('rating', event.target.value)
+                event.preventDefault()
+                handleEditDetails('rating', event.target.dayrating.value)
+                setIsRatingEditable(false)
               }}
             >
               <label>
