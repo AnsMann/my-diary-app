@@ -155,7 +155,7 @@ export function DiaryEntry({
         />
       )}
       <DiaryEntryCard>
-        <CardLink to={`/entries/${entry._id}`}>
+        <CardLink to={`/entries/${entry._id || entry.id}`}>
           <DiaryEntryContent>
             <img src="./icons/diary-entry.png" alt="diary entry book icon" />
             <h2>Diary Entry from {moment(entry.date).format('L')}</h2>
@@ -180,7 +180,7 @@ export function DiaryEntry({
           {isMenuVisible && (
             <DiaryEntryMenu
               history={history}
-              entryId={entry._id}
+              entryId={entry._id || entry.id}
               onDeleteMenuClick={handleDeleteEntryMenuClick}
             />
           )}

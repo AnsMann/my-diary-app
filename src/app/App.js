@@ -13,8 +13,9 @@ import {
   getEntriesFromMongoDB,
   setLocalStorage,
   getLocalStorage,
-  deleteEntryInMongoDB,
-  fetchEntries,
+  deleteOnSync,
+  patchOnSync,
+  postOnSync,
 } from './services'
 import { DiaryEntryDetails } from './DiaryEntryDetails'
 import { ShareDiaryEntry } from './ShareDiaryEntry'
@@ -100,17 +101,11 @@ export default function App() {
   }
 
   async function handleSyncButtonClick() {
-    const entriesToDelete = diaryEntries.slice().filter(entry => entry.toDelete)
-    entriesToDelete.forEach(entry => deleteEntryInMongoDB(entry._id))
-    const entriesToPatch = diaryEntries.slice().filter(entry => entry._id)
-    entriesToPatch.forEach(entry => fetchEntries(entry, 'PATCH', entry._id))
-    const entriesToPost = diaryEntries.slice().filter(entry => entry.id)
-    entriesToPost.forEach(entry => {
-      delete entry['id']
-      const entryToPost = { ...entry, inDatabase: true }
-      fetchEntries(entryToPost, 'POST')
-    })
+    deleteOnSync(diaryEntries)
+    patchOnSync(diaryEntries)
+    postOnSync(diaryEntries)
     const updatedEntries = await getEntriesFromMongoDB()
+    setLocalStorage('myDiary', updatedEntries)
     setDiaryEntries(updatedEntries)
   }
 
@@ -152,6 +147,7 @@ export default function App() {
               onBackClick={handleBackClick}
               {...props}
               onEditDetails={handleEditOnDetailsPage}
+              workOfflineStatus={workOffline}
             />
           )}
         />

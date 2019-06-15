@@ -30,12 +30,23 @@ export function EditDiaryEntry({
       additional: target['anything else'].value,
       edit: { status: true, editOn: moment()._d },
     }
-    const newDiaryEntries = await editEntriesInMongoDB(
-      diaryEntries,
-      changedDiaryEntry,
-      entryIndex
-    )
-    onFormSubmit(newDiaryEntries, history)
+    if (changedDiaryEntry._id) {
+      const newDiaryEntries = await editEntriesInMongoDB(
+        diaryEntries,
+        changedDiaryEntry,
+        entryIndex
+      )
+      onFormSubmit(newDiaryEntries, history)
+    } else {
+      onFormSubmit(
+        [
+          ...diaryEntries.slice(0, entryIndex),
+          changedDiaryEntry,
+          ...diaryEntries.slice(entryIndex + 1),
+        ],
+        history
+      )
+    }
   }
 
   return (

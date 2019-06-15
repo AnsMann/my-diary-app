@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Header } from './Header'
-import { SettingsSetAnonymous } from './SettingsSetAnonymous'
+import { SingleSetting } from './SingleSetting'
+import { SettingsModalDialogue } from './SettingsModalDialogue'
 
 const SettingsContainer = styled.ul`
   overflow: scroll;
@@ -26,21 +27,37 @@ export function Settings({
   workOfflineCheckboxStatus,
   onSyncButtonClick,
 }) {
+  const [isSettingsModalVisible, setIsSettingsModalVisible] = useState(false)
+
+  function activateModal() {
+    setIsSettingsModalVisible(true)
+  }
+  function resetModal() {
+    setIsSettingsModalVisible(false)
+  }
   return (
     <>
       <Header title={'Settings'} />
+      {isSettingsModalVisible && (
+        <SettingsModalDialogue
+          onConfirmationClick={onSyncButtonClick}
+          resetModal={resetModal}
+        />
+      )}
       <SettingsContainer>
-        <SettingsSetAnonymous
+        <SingleSetting
           status={anonymousCheckboxStatus}
           onCheck={onAnonymousCheckboxClick}
           settingFor={'anymousCheckbox'}
           settingTitle={'Share as anonymous'}
+          activateModal={resetModal}
         />
-        <SettingsSetAnonymous
+        <SingleSetting
           status={workOfflineCheckboxStatus}
           onCheck={onworkOfflineCheckboxClick}
-          settingFor={'localStorageCheckbox'}
+          settingFor={'workOfflineCheckbox'}
           settingTitle={'Work offline'}
+          activateModal={activateModal}
         />
         <SyncButton
           onClick={() => onSyncButtonClick()}

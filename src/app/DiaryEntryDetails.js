@@ -77,11 +77,12 @@ export function DiaryEntryDetails({
   onBackClick,
   history,
   onEditDetails,
+  workOfflineStatus,
 }) {
-  const entryIndex = findIndex(match.params.id, diaryEntries)
+  const { id } = match.params
+  const entryIndex = findIndex(id, diaryEntries)
   const diaryEntry = diaryEntries[entryIndex]
   const {
-    _id,
     title,
     date,
     rating,
@@ -135,28 +136,24 @@ export function DiaryEntryDetails({
       [detailType]: input,
       edit: { status: true, editOn: moment()._d },
     }
-    const newDiaryEntries = await editEntriesInMongoDB(
-      diaryEntries,
-      diaryEntryToChange,
-      entryIndex
-    )
-    onEditDetails(newDiaryEntries)
-  }
-
-  async function handleEditRating(event) {
-    event.preventDefault()
-    setIsRatingEditable(false)
-    const diaryEntryToChange = {
-      ...diaryEntry,
-      rating: event.target.dayrating.value,
-      edit: { status: true, editOn: moment()._d },
+    if (workOfflineStatus) {
+      const offlineChangedEntry = {
+        ...diaryEntryToChange,
+        inDatabase: false,
+      }
+      onEditDetails([
+        ...diaryEntries.slice(0, entryIndex),
+        offlineChangedEntry,
+        ...diaryEntries.slice(entryIndex + 1),
+      ])
+    } else {
+      const newDiaryEntries = await editEntriesInMongoDB(
+        diaryEntries,
+        diaryEntryToChange,
+        entryIndex
+      )
+      onEditDetails(newDiaryEntries)
     }
-    const newDiaryEntries = await editEntriesInMongoDB(
-      diaryEntries,
-      diaryEntryToChange,
-      entryIndex
-    )
-    onEditDetails(newDiaryEntries)
   }
 
   return (
@@ -180,7 +177,7 @@ export function DiaryEntryDetails({
           >
             <form
               onSubmit={event => {
-                handleEditRating(event)
+                handleEditDetails('rating', event.target.value)
               }}
             >
               <label>
@@ -212,7 +209,7 @@ export function DiaryEntryDetails({
           </StyledDiv>
         )}
         <Share>
-          <ShareViaSlackButton idForURL={_id} />
+          <ShareViaSlackButton idForURL={id} />
         </Share>
       </EntryDetails>
     </>

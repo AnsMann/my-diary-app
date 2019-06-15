@@ -160,3 +160,23 @@ function evaluateRatingForSlack(rating) {
   }
   return ratingMap[rating]
 }
+
+export function deleteOnSync(diaryEntries) {
+  const entriesToDelete = diaryEntries.slice().filter(entry => entry.toDelete)
+  entriesToDelete.forEach(entry => deleteEntryInMongoDB(entry._id))
+}
+export function patchOnSync(diaryEntries) {
+  const entriesToPatch = diaryEntries.slice().filter(entry => entry._id)
+  entriesToPatch.forEach(entry => {
+    const entryToPatch = { ...entry, inDatabase: true }
+    fetchEntries(entryToPatch, 'PATCH', entry._id)
+  })
+}
+export function postOnSync(diaryEntries) {
+  const entriesToPost = diaryEntries.slice().filter(entry => entry.id)
+  entriesToPost.forEach(entry => {
+    delete entry['id']
+    const entryToPost = { ...entry, inDatabase: true }
+    fetchEntries(entryToPost, 'POST')
+  })
+}
