@@ -134,7 +134,7 @@ export function DiaryEntriesList({
         </FilterBox>
         {sortedAndFilteredEntries.map(entry => (
           <DiaryEntry
-            key={entry._id}
+            key={entry._id || entry.id}
             entry={entry}
             history={history}
             onDeleteClick={onDeleteClick}

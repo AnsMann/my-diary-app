@@ -14,6 +14,7 @@ import {
   setLocalStorage,
   getLocalStorage,
   deleteEntryInMongoDB,
+  fetchEntries,
 } from './services'
 import { DiaryEntryDetails } from './DiaryEntryDetails'
 import { ShareDiaryEntry } from './ShareDiaryEntry'
@@ -30,7 +31,9 @@ const Grid = styled.div`
 `
 
 export default function App() {
-  const [diaryEntries, setDiaryEntries] = useState([])
+  const [diaryEntries, setDiaryEntries] = useState(
+    getLocalStorage('myDiary') || []
+  )
   const [sendAnonymous, setSendAnonymous] = useState(
     getLocalStorage('sendAnonymous') || false
   )
@@ -43,7 +46,7 @@ export default function App() {
       const entries = await getEntriesFromMongoDB()
       setDiaryEntries(entries)
     }
-    fetchDiaryEntries()
+    workOffline || fetchDiaryEntries()
   }, [])
 
   useEffect(() => setLocalStorage('sendAnonymous', sendAnonymous), [
@@ -54,7 +57,7 @@ export default function App() {
 
   useEffect(() => {
     workOffline && setLocalStorage('myDiary', diaryEntries)
-  }, [diaryEntries])
+  }, [diaryEntries, workOffline])
 
   function handleWorkOfflineCheckbox() {
     setWorkOffline(!workOffline)
@@ -97,8 +100,16 @@ export default function App() {
   }
 
   async function handleSyncButtonClick() {
-    const entriesToDelete = diaryEntries.filter(entry => entry.toDelete)
+    const entriesToDelete = diaryEntries.slice().filter(entry => entry.toDelete)
     entriesToDelete.forEach(entry => deleteEntryInMongoDB(entry._id))
+    const entriesToPatch = diaryEntries.slice().filter(entry => entry._id)
+    entriesToPatch.forEach(entry => fetchEntries(entry, 'PATCH', entry._id))
+    const entriesToPost = diaryEntries.slice().filter(entry => entry.id)
+    entriesToPost.forEach(entry => {
+      delete entry['id']
+      const entryToPost = { ...entry, inDatabase: true }
+      fetchEntries(entryToPost, 'POST')
+    })
     const updatedEntries = await getEntriesFromMongoDB()
     setDiaryEntries(updatedEntries)
   }
