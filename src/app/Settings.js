@@ -3,6 +3,14 @@ import styled from 'styled-components'
 import { Header } from './Header'
 import { SingleSetting } from './SingleSetting'
 import { SettingsModalDialogue } from './SettingsModalDialogue'
+import {
+  deleteOnSync,
+  patchOnSync,
+  postOnSync,
+  getEntriesFromMongoDB,
+} from './services'
+import { SyncConfirmationModalDialogue } from './SyncConfirmationModalDialogue'
+import { SyncFailedModalDialogue } from './SyncFailedModalDialogue'
 
 const SettingsContainer = styled.ul`
   overflow: scroll;
@@ -21,13 +29,19 @@ const SyncButton = styled.button`
 `
 
 export function Settings({
+  history,
   anonymousCheckboxStatus,
   onAnonymousCheckboxClick,
   onworkOfflineCheckboxClick,
   workOfflineCheckboxStatus,
   onSyncButtonClick,
+  diaryEntries,
 }) {
   const [isSettingsModalVisible, setIsSettingsModalVisible] = useState(false)
+  const [isSyncConfirmationVisible, setIsSyncConfirmationVisible] = useState(
+    false
+  )
+  const [isSyncFailedVisible, setIsSyncFailedVisible] = useState(false)
 
   function activateModal() {
     setIsSettingsModalVisible(true)
@@ -35,15 +49,32 @@ export function Settings({
   function resetModal() {
     setIsSettingsModalVisible(false)
   }
+  async function SyncWithDatabase() {
+    await deleteOnSync(diaryEntries)
+    await patchOnSync(diaryEntries)
+    await postOnSync(diaryEntries)
+    const updatedEntries = await getEntriesFromMongoDB()
+    if (updatedEntries.name) {
+      setIsSyncFailedVisible(true)
+      workOfflineCheckboxStatus || onworkOfflineCheckboxClick()
+    } else {
+      onSyncButtonClick(updatedEntries)
+    }
+  }
+
   return (
     <>
       <Header title={'Settings'} />
       {isSettingsModalVisible && (
         <SettingsModalDialogue
-          onConfirmationClick={onSyncButtonClick}
+          SyncWithDatabase={SyncWithDatabase}
           resetModal={resetModal}
         />
       )}
+      {isSyncConfirmationVisible && (
+        <SyncConfirmationModalDialogue history={history} />
+      )}
+      {isSyncFailedVisible && <SyncFailedModalDialogue history={history} />}
       <SettingsContainer>
         <SingleSetting
           status={anonymousCheckboxStatus}
@@ -60,7 +91,10 @@ export function Settings({
           activateModal={activateModal}
         />
         <SyncButton
-          onClick={() => onSyncButtonClick()}
+          onClick={() => {
+            SyncWithDatabase()
+            setIsSyncConfirmationVisible(true)
+          }}
           disabled={!workOfflineCheckboxStatus}
         >
           Sync with database

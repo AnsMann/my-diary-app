@@ -13,15 +13,13 @@ import {
   getEntriesFromMongoDB,
   setLocalStorage,
   getLocalStorage,
-  deleteOnSync,
-  patchOnSync,
-  postOnSync,
 } from './services'
 import { DiaryEntryDetails } from './DiaryEntryDetails'
 import { ShareDiaryEntry } from './ShareDiaryEntry'
 import { findIndex } from './utils'
 import { EditDiaryEntry } from './EditDiaryEntry'
 import { Settings } from './Settings'
+import { NoConnectionModal } from './NoConnectionModal'
 
 moment.locale('de')
 
@@ -41,11 +39,16 @@ export default function App() {
   const [workOffline, setWorkOffline] = useState(
     getLocalStorage('workOffline') || false
   )
+  const [isNoConnectionModalVisible, setIsNoConnectionModalVisible] = useState(
+    false
+  )
 
   useEffect(() => {
     async function fetchDiaryEntries() {
       const entries = await getEntriesFromMongoDB()
-      setDiaryEntries(entries)
+      entries.name
+        ? setIsNoConnectionModalVisible(true)
+        : setDiaryEntries(entries)
     }
     workOffline || fetchDiaryEntries()
   }, [])
@@ -100,18 +103,20 @@ export default function App() {
     setDiaryEntries(newDiaryEntries)
   }
 
-  async function handleSyncButtonClick() {
-    deleteOnSync(diaryEntries)
-    patchOnSync(diaryEntries)
-    postOnSync(diaryEntries)
-    const updatedEntries = await getEntriesFromMongoDB()
+  function handleSyncButtonClick(updatedEntries) {
     setLocalStorage('myDiary', updatedEntries)
     setDiaryEntries(updatedEntries)
+  }
+  function resetNoConnectionModal() {
+    setIsNoConnectionModalVisible(false)
   }
 
   return (
     <Router>
       <GlobalStyles />
+      {isNoConnectionModalVisible && (
+        <NoConnectionModal resetModal={resetNoConnectionModal} />
+      )}
       <Grid>
         <ScrollMemory elementID="diary" />
         <Route
@@ -181,13 +186,15 @@ export default function App() {
         <Route
           exact
           path="/settings"
-          render={() => (
+          render={props => (
             <Settings
+              history={props.history}
               anonymousCheckboxStatus={sendAnonymous}
               onAnonymousCheckboxClick={handleAnonymousCheckbox}
               onworkOfflineCheckboxClick={handleWorkOfflineCheckbox}
               workOfflineCheckboxStatus={workOffline}
               onSyncButtonClick={handleSyncButtonClick}
+              diaryEntries={diaryEntries}
             />
           )}
         />

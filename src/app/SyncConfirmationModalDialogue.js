@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSync } from '@fortawesome/free-solid-svg-icons'
+import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-icons'
 
-library.add(faSync)
+library.add(farCheckCircle)
 
 const Dialogue = styled.div`
   align-items: center;
@@ -16,13 +16,10 @@ const Dialogue = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 1.3rem;
-  font-weight: bold;
   height: 60vw;
   justify-content: center;
-  line-height: 3rem;
   left: 13vw;
   position: absolute;
-  text-align: center;
   top: 50vw;
   width: 75vw;
   z-index: 200;
@@ -43,20 +40,17 @@ const ModalBackground = styled.div`
   z-index: 100;
 `
 
-export function SettingsModalDialogue({ SyncWithDatabase, resetModal }) {
+export function SyncConfirmationModalDialogue({ history }) {
   useEffect(() => {
-    SyncWithDatabase()
-    window.setTimeout(resetModal, 2500)
+    window.setTimeout(() => history.push('/'), 2000)
   }, [])
   return (
     <>
       <ModalBackground />
       <Dialogue>
-        You work online now
-        <br />
-        Sync with database
+        Sync completed
         <StyledIcon>
-          <FontAwesomeIcon icon={faSync} />
+          <FontAwesomeIcon icon={farCheckCircle} />
         </StyledIcon>
       </Dialogue>
     </>
