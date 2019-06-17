@@ -32,16 +32,18 @@ const DiaryEntryContent = styled.li`
   border-radius: 10px;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
   display: grid;
-  grid-template-columns: 0.8fr auto;
+  grid-template-columns: 0.3fr 0.8fr auto;
   grid-template-rows: repeat(4, 30px);
   height: 130px;
   list-style: none;
+  padding: 5px 5px 5px 8px;
 
   h2,
   h3,
   h4 {
     color: #007fbf;
     font-size: 1rem;
+    grid-column: 3;
     justify-self: left;
     margin: 0;
     padding: 5px;
@@ -52,13 +54,6 @@ const DiaryEntryContent = styled.li`
   h4 {
     color: #002f47;
     font-size: 0.8rem;
-  }
-  img {
-    align-self: center;
-    grid-row: span 4;
-    justify-self: center;
-    margin: 0 5px;
-    padding: 5px;
   }
   span {
     font-size: 1.3rem;
@@ -75,25 +70,39 @@ const MenueIcon = styled.button`
     font-size: 1.2rem;
   }
 `
+const StyledImage = styled.img`
+  align-self: center;
+  grid-column: 2 / 3;
+  grid-row: span 4;
+  justify-self: center;
+  padding: 5px;
+`
 
 const SlackLogo = styled.img`
-  width: 15%;
-  position: absolute;
-  top: -25px;
-  left: 0px;
+  width: 80%;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  left: -3px;
 `
 const DatabaseIcon = styled.div`
   color: #002f47;
-  left: 50px;
-  position: absolute;
-  top: -10px;
   width: 15%;
+  grid-column: 1;
+  grid-row: 2;
 `
+const DatabaseIconLight = styled.div`
+  color: #002f47;
+  opacity: 0.3;
+  width: 15%;
+  grid-column: 1;
+  grid-row: 2;
+`
+
 const ToDeleteIcon = styled.div`
+  grid-column: 1;
+  grid-row: 3;
   color: red;
-  left: 80px;
-  position: absolute;
-  top: -10px;
   width: 15%;
 `
 
@@ -157,24 +166,33 @@ export function DiaryEntry({
       <DiaryEntryCard>
         <CardLink to={`/entries/${entry._id || entry.id}`}>
           <DiaryEntryContent>
-            <img src="./icons/diary-entry.png" alt="diary entry book icon" />
+            {entry.shared.status && (
+              <SlackLogo src="/icons/slacklogo-klein.png" />
+            )}
+            {entry.inDatabase ? (
+              <DatabaseIcon>
+                <FontAwesomeIcon icon={faDatabase} />
+              </DatabaseIcon>
+            ) : (
+              <DatabaseIconLight>
+                <FontAwesomeIcon icon={faDatabase} />
+              </DatabaseIconLight>
+            )}
+            {entry.toDelete && (
+              <ToDeleteIcon>
+                <FontAwesomeIcon icon={faTrashAlt} />
+              </ToDeleteIcon>
+            )}
+            <StyledImage
+              src="./icons/diary-entry.png"
+              alt="diary entry book icon"
+            />
             <h2>Diary Entry from {moment(entry.date).format('L')}</h2>
             <h3>Topic of the day</h3>
             <h4>{entry.title || 'No Topic'}</h4>
             <ShowDayRating entryRating={entry.rating} />
           </DiaryEntryContent>
         </CardLink>
-        {entry.shared.status && <SlackLogo src="/icons/Slack_Mark_Web.png" />}
-        {entry.inDatabase && (
-          <DatabaseIcon>
-            <FontAwesomeIcon icon={faDatabase} />
-          </DatabaseIcon>
-        )}
-        {entry.toDelete && (
-          <ToDeleteIcon>
-            <FontAwesomeIcon icon={faTrashAlt} />
-          </ToDeleteIcon>
-        )}
         <MenueIcon onClick={() => setIsMenuVisible(!isMenuVisible)}>
           <FontAwesomeIcon icon={faEllipsisH} />
           {isMenuVisible && (
