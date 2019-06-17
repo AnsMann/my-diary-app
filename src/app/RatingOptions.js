@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 export function RatingOptions({ options, isChecked }) {
   return (
@@ -13,4 +14,9 @@ export function RatingOptions({ options, isChecked }) {
       {options.output}
     </label>
   )
+}
+
+RatingOptions.propTypes = {
+  options: PropTypes.object.isRequired,
+  isChecked: PropTypes.bool.isRequired,
 }

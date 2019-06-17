@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { RatingOptions } from './RatingOptions'
+import PropTypes from 'prop-types'
 
 const StyledRatingInput = styled.div`
   display: flex;
@@ -80,4 +81,8 @@ export function DayRatingInput({ defaultValue = 0 }) {
       )}
     </StyledRatingInput>
   )
+}
+
+DayRatingInput.propTypes = {
+  defaultValue: PropTypes.number,
 }

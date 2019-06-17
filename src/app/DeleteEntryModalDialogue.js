@@ -8,6 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import moment from 'moment'
 import 'moment/locale/de'
+import PropTypes from 'prop-types'
 moment.locale('de')
 
 library.add(faTrashAlt, faExclamationTriangle)
@@ -99,4 +100,11 @@ export function DeleteEntryModalDialogue({
       )}
     </>
   )
+}
+
+DeleteEntryModalDialogue.propTypes = {
+  entryDate: PropTypes.object.isRequired,
+  onDeleteConfirmation: PropTypes.func.isRequired,
+  resetDeleteEntryModal: PropTypes.func.isRequired,
+  deleteConfirmation: PropTypes.bool.isRequired,
 }

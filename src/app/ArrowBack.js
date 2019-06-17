@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faLongArrowAltLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import PropTypes from 'prop-types'
 
 library.add(faLongArrowAltLeft)
 
@@ -29,4 +30,9 @@ export function ArrowBack({ onBackClick, history }) {
       <FontAwesomeIcon icon={faLongArrowAltLeft} />
     </Back>
   )
+}
+
+ArrowBack.propTypes = {
+  onBackClick: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 const Answer = styled.textarea`
   border: 1px solid #007fbf;
@@ -25,4 +26,11 @@ export function AnswerTextArea({
       defaultValue={defaultValue}
     />
   )
+}
+
+AnswerTextArea.propTypes = {
+  rows: PropTypes.number,
+  placeholder: PropTypes.string,
+  name: PropTypes.string,
+  defaultValue: PropTypes.string,
 }
