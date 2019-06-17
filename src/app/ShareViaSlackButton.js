@@ -26,7 +26,7 @@ const SlackLogo = styled.img`
 
 export function ShareViaSlackButton({ idForURL }) {
   return (
-    <ShareButton to={`/cards/${idForURL}/share`}>
+    <ShareButton to={`/entries/${idForURL}/share`}>
       <button>
         Share via <SlackLogo src="/icons/Slack_Mark_Web.png" />
       </button>

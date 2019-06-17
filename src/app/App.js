@@ -4,16 +4,22 @@ import styled from 'styled-components'
 import GlobalStyles from '../misc/GlobalStyles'
 import moment from 'moment'
 import 'moment/locale/de'
-import uid from 'uid'
 import ScrollMemory from 'react-router-scroll-memory'
 
 import { Footer } from './Footer'
 import { DiaryEntriesList } from './DiaryEntriesList'
-import { CreateDiaryEntryForm } from './CreateDiaryEntry'
-import { setLocalStorage, getLocalStorage } from './services'
+import { CreateDiaryEntry } from './CreateDiaryEntry'
+import {
+  getEntriesFromMongoDB,
+  setLocalStorage,
+  getLocalStorage,
+} from './services'
 import { DiaryEntryDetails } from './DiaryEntryDetails'
 import { ShareDiaryEntry } from './ShareDiaryEntry'
 import { findIndex } from './utils'
+import { EditDiaryEntry } from './EditDiaryEntry'
+import { Settings } from './Settings'
+import { NoConnectionModal } from './NoConnectionModal'
 
 moment.locale('de')
 
@@ -25,32 +31,48 @@ const Grid = styled.div`
 
 export default function App() {
   const [diaryEntries, setDiaryEntries] = useState(
-    getLocalStorage('my diary') || []
+    getLocalStorage('myDiary') || []
+  )
+  const [sendAnonymous, setSendAnonymous] = useState(
+    getLocalStorage('sendAnonymous') || false
+  )
+  const [workOffline, setWorkOffline] = useState(
+    getLocalStorage('workOffline') || false
+  )
+  const [isNoConnectionModalVisible, setIsNoConnectionModalVisible] = useState(
+    false
   )
 
-  useEffect(() => setLocalStorage('my diary', diaryEntries), [diaryEntries])
+  useEffect(() => {
+    async function fetchDiaryEntries() {
+      const entries = await getEntriesFromMongoDB()
+      entries.name
+        ? setIsNoConnectionModalVisible(true)
+        : setDiaryEntries(entries)
+    }
+    workOffline || fetchDiaryEntries()
+  }, [workOffline])
 
-  function handleSubmit(event, date, history) {
-    const { target } = event
+  useEffect(() => setLocalStorage('sendAnonymous', sendAnonymous), [
+    sendAnonymous,
+  ])
 
-    const pickedDate = moment(date).format('L')
-    event.preventDefault()
-    setDiaryEntries([
-      {
-        title: target.topic.value,
-        date: pickedDate,
-        rating: target.dayrating.value,
-        content: target['content in own words'].value,
-        positive: target['remember positive'].value,
-        negative: target['remember negative'].value,
-        coachFeedback: target['coach feedback'].value,
-        additional: target['anything else'].value,
-        id: uid(),
-        shared: { status: false, sharedOn: '', sharedWith: '' },
-      },
-      ...diaryEntries,
-    ])
+  useEffect(() => setLocalStorage('workOffline', workOffline), [workOffline])
 
+  useEffect(() => {
+    workOffline && setLocalStorage('myDiary', diaryEntries)
+  }, [diaryEntries, workOffline])
+
+  function handleWorkOfflineCheckbox() {
+    setWorkOffline(!workOffline)
+  }
+
+  function handleAnonymousCheckbox() {
+    setSendAnonymous(!sendAnonymous)
+  }
+
+  function handleFormSubmit(newDiaryEntries, history) {
+    setDiaryEntries(newDiaryEntries)
     history.push('/')
   }
 
@@ -58,52 +80,43 @@ export default function App() {
     history.goBack()
   }
 
-  function handleSharedDiaryEntry(id, contact, date) {
-    const index = findIndex(id, diaryEntries)
-    const diaryEntry = diaryEntries[index]
-    const sharedDiaryEntry = {
-      ...diaryEntry,
-      shared: {
-        status: true,
-        sharedWith: contact,
-        sharedOn: date,
-      },
-    }
-    setDiaryEntries([
-      ...diaryEntries.slice(0, index),
-      sharedDiaryEntry,
-      ...diaryEntries.slice(index + 1),
-    ])
+  function handleSharedDiaryEntry(newDiaryEntries) {
+    setDiaryEntries(newDiaryEntries)
   }
 
-  function handleDeleteClick(id, history) {
+  function handleDeleteClick(id, history, entryToDeleteInDB = null) {
     const index = findIndex(id, diaryEntries)
-    setDiaryEntries([
-      ...diaryEntries.slice(0, index),
-      ...diaryEntries.slice(index + 1),
-    ])
+    entryToDeleteInDB
+      ? setDiaryEntries([
+          ...diaryEntries.slice(0, index),
+          entryToDeleteInDB,
+          ...diaryEntries.slice(index + 1),
+        ])
+      : setDiaryEntries([
+          ...diaryEntries.slice(0, index),
+          ...diaryEntries.slice(index + 1),
+        ])
     history.push('/')
   }
 
-  function handleEditOnDetailsPage(entryId, changedKey, changedInput) {
-    const index = findIndex(entryId, diaryEntries)
-    const diaryEntry = diaryEntries[index]
-    const diaryEntryToChange = {
-      ...diaryEntry,
-      [changedKey]: changedInput,
-    }
-    setDiaryEntries([
-      ...diaryEntries.slice(0, index),
-      diaryEntryToChange,
-      ...diaryEntries.slice(index + 1),
-    ])
+  function handleEditOnDetailsPage(newDiaryEntries) {
+    setDiaryEntries(newDiaryEntries)
   }
 
-  function handleEditDayRatingOnDetailsPage() {}
+  function handleSyncButtonClick(updatedEntries) {
+    setLocalStorage('myDiary', updatedEntries)
+    setDiaryEntries(updatedEntries)
+  }
+  function resetNoConnectionModal() {
+    setIsNoConnectionModalVisible(false)
+  }
 
   return (
     <Router>
       <GlobalStyles />
+      {isNoConnectionModalVisible && (
+        <NoConnectionModal resetModal={resetNoConnectionModal} />
+      )}
       <Grid>
         <ScrollMemory elementID="diary" />
         <Route
@@ -114,6 +127,7 @@ export default function App() {
               diaryEntries={diaryEntries}
               history={props.history}
               onDeleteClick={handleDeleteClick}
+              workOfflineStatus={workOffline}
             />
           )}
         />
@@ -121,27 +135,30 @@ export default function App() {
           exact
           path="/create"
           render={props => (
-            <CreateDiaryEntryForm
-              handleSubmit={handleSubmit}
+            <CreateDiaryEntry
+              onFormSubmit={handleFormSubmit}
               history={props.history}
+              diaryEntries={diaryEntries}
+              workOfflineStatus={workOffline}
             />
           )}
         />
         <Route
           exact
-          path="/cards/:id"
+          path="/entries/:id"
           render={props => (
             <DiaryEntryDetails
               diaryEntries={diaryEntries}
               onBackClick={handleBackClick}
               {...props}
               onEditDetails={handleEditOnDetailsPage}
+              workOfflineStatus={workOffline}
             />
           )}
         />
         <Route
           exact
-          path="/cards/:id/share"
+          path="/entries/:id/share"
           render={props => (
             <ShareDiaryEntry
               diaryEntries={diaryEntries}
@@ -149,6 +166,36 @@ export default function App() {
               history={props.history}
               onBackClick={handleBackClick}
               onShare={handleSharedDiaryEntry}
+              sendAnonymous={sendAnonymous}
+              workOfflineStatus={workOffline}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/entries/:id/edit"
+          render={props => (
+            <EditDiaryEntry
+              diaryEntries={diaryEntries}
+              diaryID={props.match.params.id}
+              history={props.history}
+              onFormSubmit={handleFormSubmit}
+              workOfflineStatus={workOffline}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/settings"
+          render={props => (
+            <Settings
+              history={props.history}
+              anonymousCheckboxStatus={sendAnonymous}
+              onAnonymousCheckboxClick={handleAnonymousCheckbox}
+              onworkOfflineCheckboxClick={handleWorkOfflineCheckbox}
+              workOfflineCheckboxStatus={workOffline}
+              onSyncButtonClick={handleSyncButtonClick}
+              diaryEntries={diaryEntries}
             />
           )}
         />

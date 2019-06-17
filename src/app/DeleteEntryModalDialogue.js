@@ -2,9 +2,15 @@ import React from 'react'
 import styled from 'styled-components'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import {
+  faTrashAlt,
+  faExclamationTriangle,
+} from '@fortawesome/free-solid-svg-icons'
+import moment from 'moment'
+import 'moment/locale/de'
+moment.locale('de')
 
-library.add(faTrashAlt)
+library.add(faTrashAlt, faExclamationTriangle)
 
 const Dialogue = styled.div`
   align-items: center;
@@ -20,7 +26,7 @@ const Dialogue = styled.div`
   justify-content: center;
   left: 15vw;
   position: absolute;
-  top: 70vw;
+  top: 50vw;
   width: 70vw;
   z-index: 200;
   span {
@@ -56,35 +62,41 @@ export const StyledButton = styled.button`
   width: 80%;
 `
 
-export function DeleteModalDialogue({
-  entryId,
+export function DeleteEntryModalDialogue({
   entryDate,
-  history,
   onDeleteConfirmation,
-  onDeleteAbort,
+  resetDeleteEntryModal,
+  deleteConfirmation,
 }) {
   return (
     <>
       <ModalBackground />
-      <Dialogue>
-        <span>
-          Delete entry from
-          <br />
-          <strong>{entryDate}</strong>
-        </span>
-        <StyledIcon>
-          <FontAwesomeIcon icon={faTrashAlt} />
-        </StyledIcon>
-        <StyledButton
-          onClick={() => {
-            onDeleteAbort()
-            onDeleteConfirmation(entryId, history)
-          }}
-        >
-          Ok
-        </StyledButton>
-        <StyledButton onClick={() => onDeleteAbort()}>Abort</StyledButton>
-      </Dialogue>
+      {deleteConfirmation ? (
+        <Dialogue>
+          <span>
+            Delete entry from
+            <br />
+            <strong>{moment(entryDate).format('L')}</strong>
+          </span>
+          <StyledIcon>
+            <FontAwesomeIcon icon={faTrashAlt} />
+          </StyledIcon>
+          <StyledButton onClick={() => onDeleteConfirmation()}>Ok</StyledButton>
+          <StyledButton onClick={() => resetDeleteEntryModal()}>
+            Abort
+          </StyledButton>
+        </Dialogue>
+      ) : (
+        <Dialogue>
+          <strong>Failed to Delete</strong>
+          <StyledIcon>
+            <FontAwesomeIcon icon={faExclamationTriangle} />
+          </StyledIcon>
+          <StyledButton onClick={() => resetDeleteEntryModal()}>
+            Ok
+          </StyledButton>
+        </Dialogue>
+      )}
     </>
   )
 }

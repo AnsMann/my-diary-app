@@ -3,9 +3,9 @@ import styled from 'styled-components'
 import { NavLink as RouterLink } from 'react-router-dom'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBook, faPenFancy } from '@fortawesome/free-solid-svg-icons'
+import { faBook, faPenFancy, faCogs } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faBook, faPenFancy)
+library.add(faBook, faPenFancy, faCogs)
 
 const NavBar = styled.nav`
   align-items: center;
@@ -29,6 +29,7 @@ const NavLink = styled(RouterLink)`
   justify-content: center;
   text-decoration: none;
   width: 65px;
+  z-index: 50;
 
   &.active {
     background-color: white;
@@ -48,6 +49,9 @@ export function Footer() {
       </NavLink>
       <NavLink to="/create">
         <FontAwesomeIcon icon="pen-fancy" />
+      </NavLink>
+      <NavLink to="/settings">
+        <FontAwesomeIcon icon="cogs" />
       </NavLink>
     </NavBar>
   )

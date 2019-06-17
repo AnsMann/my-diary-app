@@ -45,27 +45,39 @@ const StyledRatingInput = styled.div`
   }
 `
 
-export function DayRatingInput() {
+export function DayRatingInput({ defaultValue = 0 }) {
   const ratingOptions = [
     {
-      rating: '3',
+      rating: 3,
       output: '😃',
     },
     {
-      rating: '2',
+      rating: 2,
       output: '😶',
     },
     {
-      rating: '1',
+      rating: 1,
       output: '😔',
     },
   ]
 
   return (
     <StyledRatingInput>
-      {ratingOptions.map(option => (
-        <RatingOptions key={option.rating} options={option} />
-      ))}
+      {ratingOptions.map(option =>
+        defaultValue === option.rating ? (
+          <RatingOptions
+            key={option.rating}
+            options={option}
+            isChecked={true}
+          />
+        ) : (
+          <RatingOptions
+            key={option.rating}
+            options={option}
+            isChecked={false}
+          />
+        )
+      )}
     </StyledRatingInput>
   )
 }

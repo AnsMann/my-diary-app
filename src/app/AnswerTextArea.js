@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 const Answer = styled.textarea`
@@ -14,21 +14,15 @@ const Answer = styled.textarea`
 export function AnswerTextArea({
   name,
   placeholder = 'Type here',
-  value,
+  defaultValue,
   rows = '5',
-  onEditText = false,
 }) {
-  const [inputValue, setInputValue] = useState(value || '')
   return (
     <Answer
-      onChange={event => {
-        setInputValue(event.target.value)
-        onEditText && onEditText(name, event.target.value)
-      }}
       rows={rows}
       placeholder={placeholder}
       name={name}
-      value={inputValue}
+      defaultValue={defaultValue}
     />
   )
 }

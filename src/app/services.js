@@ -1,5 +1,9 @@
+import moment from 'moment'
+import 'moment/locale/de'
+
 import dotenv from 'dotenv'
 dotenv.config()
+moment.locale('de')
 
 export function setLocalStorage(name, data) {
   localStorage.setItem(name, JSON.stringify(data))
@@ -7,6 +11,34 @@ export function setLocalStorage(name, data) {
 
 export function getLocalStorage(name) {
   return JSON.parse(localStorage.getItem(name))
+}
+
+export function fetchEntries(data, method, id = '') {
+  return fetch('/diaryentries/' + id, {
+    method,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+    .then(res => res.json())
+    .catch(err => console.log(err))
+}
+
+export function deleteEntryInMongoDB(id) {
+  return fetch('/diaryentries/' + id, {
+    method: 'DELETE',
+  })
+    .then(res => res.json())
+    .catch(err => console.log(err))
+}
+
+export function getEntriesFromMongoDB(id = '') {
+  return fetch('/diaryentries/' + id, {
+    method: 'GET',
+  })
+    .then(res => res.json())
+    .catch(err => console.log(err))
 }
 
 export function getContacts() {
@@ -21,6 +53,7 @@ export function getContacts() {
   )
     .then(res => res.json())
     .then(data => data.members)
+    .catch(err => console.log(err))
 }
 
 export function getChannels() {
@@ -37,21 +70,26 @@ export function getChannels() {
   )
     .then(res => res.json())
     .then(data => data.channels)
+    .catch(err => console.log(err))
 }
 
-export function sendMessage(content, id) {
+export function sendMessage(content, id, sendAsAnonymous) {
   const messageObject = buildMessageObject(content)
   return fetch(
     `https://slack.com/api/chat.postMessage?token=${
       process.env.REACT_APP_API_KEY
-    }&blocks=${JSON.stringify(messageObject)}&channel=${id}&as_user=true`,
+    }&blocks=${JSON.stringify(
+      messageObject
+    )}&channel=${id}&as_user=${!sendAsAnonymous}`,
     {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     }
-  ).then(res => res.json())
+  )
+    .then(res => res.json())
+    .catch(err => console.log(err))
 }
 
 function buildMessageObject(content) {
@@ -60,7 +98,7 @@ function buildMessageObject(content) {
       type: 'section',
       text: {
         type: 'mrkdwn',
-        text: `*New diary entry from ${content.date}*`,
+        text: `*New diary entry from ${moment(content.date).format('L')}*`,
       },
     },
     {
@@ -116,9 +154,29 @@ function buildMessageObject(content) {
 
 function evaluateRatingForSlack(rating) {
   const ratingMap = {
-    1: ':gedankenvoll:',
-    2: ':kein_mund:',
+    1: ':pensive:',
+    2: ':no_mouth:',
     3: ':smiley:',
   }
   return ratingMap[rating]
+}
+
+export function deleteOnSync(diaryEntries) {
+  const entriesToDelete = diaryEntries.slice().filter(entry => entry.toDelete)
+  entriesToDelete.forEach(entry => deleteEntryInMongoDB(entry._id))
+}
+export function patchOnSync(diaryEntries) {
+  const entriesToPatch = diaryEntries.slice().filter(entry => entry._id)
+  entriesToPatch.forEach(entry => {
+    const entryToPatch = { ...entry, inDatabase: true }
+    fetchEntries(entryToPatch, 'PATCH', entry._id)
+  })
+}
+export function postOnSync(diaryEntries) {
+  const entriesToPost = diaryEntries.slice().filter(entry => entry.id)
+  entriesToPost.forEach(entry => {
+    delete entry['id']
+    const entryToPost = { ...entry, inDatabase: true }
+    fetchEntries(entryToPost, 'POST')
+  })
 }

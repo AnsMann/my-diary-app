@@ -3,8 +3,9 @@ import styled from 'styled-components'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-icons'
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
 
-library.add(farCheckCircle)
+library.add(farCheckCircle, faExclamationTriangle)
 
 const Dialogue = styled.div`
   align-items: center;
@@ -20,7 +21,7 @@ const Dialogue = styled.div`
   justify-content: center;
   left: 20vw;
   position: absolute;
-  top: 70vw;
+  top: 50vw;
   width: 60vw;
   z-index: 200;
 `
@@ -35,8 +36,13 @@ const ModalBackground = styled.div`
   z-index: 100;
 `
 
-const StyledIcon = styled.span`
+const StyledIconSuccess = styled.span`
   color: green;
+  font-size: 2rem;
+  margin-top: 10px;
+`
+const StyledIconFail = styled.span`
+  color: red;
   font-size: 2rem;
   margin-top: 10px;
 `
@@ -55,16 +61,32 @@ export function ShareModalDialogue({ onModalButtonClick, shareWith, history }) {
   return (
     <>
       <ModalBackground />
-      <Dialogue>
-        Entry shared with
-        <strong>{shareWith}</strong>
-        <StyledIcon>
-          <FontAwesomeIcon icon={farCheckCircle} />
-        </StyledIcon>
-        <StyledButton onClick={() => onModalButtonClick(history)}>
-          Ok
-        </StyledButton>
-      </Dialogue>
+      {shareWith ? (
+        <Dialogue>
+          Entry shared with
+          <strong>{shareWith}</strong>
+          <StyledIconSuccess>
+            <FontAwesomeIcon icon={farCheckCircle} />
+          </StyledIconSuccess>
+          <StyledButton
+            onClick={() => onModalButtonClick(history, true, shareWith)}
+          >
+            Ok
+          </StyledButton>
+        </Dialogue>
+      ) : (
+        <Dialogue>
+          <strong>Entry not shared</strong>
+          <StyledIconFail>
+            <FontAwesomeIcon icon={faExclamationTriangle} />
+          </StyledIconFail>
+          <StyledButton
+            onClick={() => onModalButtonClick(history, false, shareWith)}
+          >
+            Ok
+          </StyledButton>
+        </Dialogue>
+      )}
     </>
   )
 }
