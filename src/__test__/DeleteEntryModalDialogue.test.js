@@ -3,13 +3,16 @@ import renderer from 'react-test-renderer'
 import Enzyme from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { mount } from 'enzyme'
-import { DeleteModalDialogue, StyledButton } from '../app/DeleteModalDialogue'
+import {
+  DeleteEntryModalDialogue,
+  StyledButton,
+} from '../app/DeleteEntryModalDialogue'
 
 Enzyme.configure({ adapter: new Adapter() })
 
 describe('Modaldialogue to confirm or abort deletion', () => {
   it('renders a modal', () => {
-    const component = renderer.create(<DeleteModalDialogue />)
+    const component = renderer.create(<DeleteEntryModalDialogue />)
     const tree = component.toJSON()
     expect(tree).toMatchSnapshot()
   })

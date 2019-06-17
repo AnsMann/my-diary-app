@@ -1,26 +1,53 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Arrowicon as backbutton renders an element 1`] = `
-<div
-  className="ArrowBack__Back-sc-1gs5it7-0 gBwvDt"
-  onClick={[Function]}
->
-  <svg
-    aria-hidden="true"
-    className="svg-inline--fa fa-long-arrow-alt-left fa-w-14 "
-    data-icon="long-arrow-alt-left"
-    data-prefix="fas"
-    focusable="false"
-    role="img"
-    style={Object {}}
-    viewBox="0 0 448 512"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z"
-      fill="currentColor"
-      style={Object {}}
-    />
-  </svg>
-</div>
+exports[`AnswerTextArea for form with default values for rows and placeholder renders an element 1`] = `
+<textarea
+  className="AnswerTextArea__Answer-vbx0re-0 fjcCiU"
+  placeholder="Type here"
+  rows="5"
+/>
+`;
+
+exports[`AnswerTextArea for form with default values for rows and placeholder renders an element with all props 1`] = `
+<textarea
+  className="AnswerTextArea__Answer-vbx0re-0 fjcCiU"
+  defaultValue="default value"
+  name="name"
+  placeholder="placeholder"
+  rows="3"
+/>
+`;
+
+exports[`AnswerTextArea for form with default values for rows and placeholder renders an element with props defaultvalue 1`] = `
+<textarea
+  className="AnswerTextArea__Answer-vbx0re-0 fjcCiU"
+  defaultValue="default value"
+  placeholder="Type here"
+  rows="5"
+/>
+`;
+
+exports[`AnswerTextArea for form with default values for rows and placeholder renders an element with props name 1`] = `
+<textarea
+  className="AnswerTextArea__Answer-vbx0re-0 fjcCiU"
+  name="name"
+  placeholder="Type here"
+  rows="5"
+/>
+`;
+
+exports[`AnswerTextArea for form with default values for rows and placeholder renders an element with props placeholder 1`] = `
+<textarea
+  className="AnswerTextArea__Answer-vbx0re-0 fjcCiU"
+  placeholder="placeholder"
+  rows="5"
+/>
+`;
+
+exports[`AnswerTextArea for form with default values for rows and placeholder renders an element with props sizes 1`] = `
+<textarea
+  className="AnswerTextArea__Answer-vbx0re-0 fjcCiU"
+  placeholder="Type here"
+  rows="3"
+/>
 `;
