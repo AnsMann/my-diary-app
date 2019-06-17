@@ -14,7 +14,8 @@ const SlackResult = styled.li`
   padding: 10px;
 `
 const SlackLogo = styled.img`
-  width: 20%;
+  width: 10%;
+  margin-right: 10px;
 `
 
 export function SlackResultList({
@@ -43,7 +44,7 @@ export function SlackResultList({
         onClick={() => onContactClick(contact.id, contact.name, sendAnonymous)}
         key={contact.id}
       >
-        <SlackLogo src="/icons/Slack_Mark_Web.png" />
+        <SlackLogo src="/icons/slacklogo-klein.png" />
         {contact.name}
       </SlackResult>
     ))

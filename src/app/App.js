@@ -51,7 +51,7 @@ export default function App() {
         : setDiaryEntries(entries)
     }
     workOffline || fetchDiaryEntries()
-  }, [])
+  }, [workOffline])
 
   useEffect(() => setLocalStorage('sendAnonymous', sendAnonymous), [
     sendAnonymous,

@@ -64,13 +64,19 @@ export function FilterMenu({ onFilterbuttonClick, filter }) {
         </MenuOption>
         <MenuOption>Dayrating</MenuOption>
         <EmojiOption onClick={() => onFilterbuttonClick('😃')}>
-          <span>😃</span>
+          <span role="img" aria-label="good day">
+            😃
+          </span>
         </EmojiOption>
         <EmojiOption onClick={() => onFilterbuttonClick('😶')}>
-          <span>😶</span>
+          <span role="img" aria-label="average day">
+            😶
+          </span>
         </EmojiOption>
         <EmojiOption onClick={() => onFilterbuttonClick('😔')}>
-          <span>😔</span>
+          <span role="img" aria-label="bad day">
+            😔
+          </span>
         </EmojiOption>
       </ul>
     </Menu>

@@ -43,7 +43,7 @@ const ModalBackground = styled.div`
 export function SyncFailedModalDialogue({ history }) {
   useEffect(() => {
     window.setTimeout(() => history.push('/'), 2000)
-  }, [])
+  })
   return (
     <>
       <ModalBackground />
