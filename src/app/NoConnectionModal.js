@@ -48,7 +48,7 @@ const ModalBackground = styled.div`
 export function NoConnectionModal({ resetModal }) {
   useEffect(() => {
     window.setTimeout(() => resetModal(), 3500)
-  }, [])
+  })
   return (
     <>
       <ModalBackground />

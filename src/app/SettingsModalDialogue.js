@@ -47,7 +47,7 @@ export function SettingsModalDialogue({ SyncWithDatabase, resetModal }) {
   useEffect(() => {
     SyncWithDatabase()
     window.setTimeout(resetModal, 2500)
-  }, [])
+  })
   return (
     <>
       <ModalBackground />
