@@ -8,8 +8,8 @@ const Menu = styled.section`
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
   height: 150px;
   position: absolute;
-  right: 55px;
-  top: -23px;
+  right: 50px;
+  top: -26px;
   width: 200px;
   z-index: 10;
   &:after {

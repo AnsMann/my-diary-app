@@ -22,7 +22,6 @@ library.add(faEllipsisH, faTrashAlt)
 const CardLink = styled(Link)`
   text-decoration: none;
   overflow: hidden;
-  height: 150px;
 `
 
 const DiaryEntryContent = styled.li`
@@ -36,6 +35,7 @@ const DiaryEntryContent = styled.li`
   grid-template-rows: repeat(4, 30px);
   height: 130px;
   list-style: none;
+  padding: 5px;
 
   h2,
   h3,
@@ -60,10 +60,10 @@ const DiaryEntryContent = styled.li`
   }
 `
 const MenueIcon = styled.button`
-  bottom: 10%;
+  bottom: 1%;
   color: #002f47;
-  font-size: 2rem;
-  left: 80%;
+  font-size: 1.5rem;
+  left: 85%;
   position: absolute;
   section {
     font-size: 1.2rem;
@@ -110,7 +110,6 @@ const Iconbox = styled.div`
   grid-row: span 4;
   align-self: center;
   justify-self: center;
-  padding-left: 5px;
 `
 
 export function DiaryEntry({
