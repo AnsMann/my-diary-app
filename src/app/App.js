@@ -180,6 +180,7 @@ export default function App() {
               diaryID={props.match.params.id}
               history={props.history}
               onFormSubmit={handleFormSubmit}
+              workOfflineStatus={workOffline}
             />
           )}
         />
