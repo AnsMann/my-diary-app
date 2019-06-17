@@ -32,11 +32,10 @@ const DiaryEntryContent = styled.li`
   border-radius: 10px;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
   display: grid;
-  grid-template-columns: 0.3fr 0.8fr auto;
+  grid-template-columns: 0.5fr 0.8fr auto;
   grid-template-rows: repeat(4, 30px);
   height: 130px;
   list-style: none;
-  padding: 5px 5px 5px 8px;
 
   h2,
   h3,
@@ -75,33 +74,29 @@ const StyledImage = styled.img`
   grid-column: 2 / 3;
   grid-row: span 4;
   justify-self: center;
+  margin: 0 5px;
   padding: 5px;
 `
 
 const SlackLogo = styled.img`
-  width: 80%;
-  padding: 0;
-  margin: 0;
+  width: 21px;
   position: relative;
-  left: -3px;
+  left: -2px;
+  margin-bottom: 3px;
 `
 const DatabaseIcon = styled.div`
   color: #002f47;
   width: 15%;
-  grid-column: 1;
-  grid-row: 2;
+  margin-bottom: 5px;
 `
 const DatabaseIconLight = styled.div`
   color: #002f47;
   opacity: 0.3;
   width: 15%;
-  grid-column: 1;
-  grid-row: 2;
+  margin-bottom: 5px;
 `
 
 const ToDeleteIcon = styled.div`
-  grid-column: 1;
-  grid-row: 3;
   color: red;
   width: 15%;
 `
@@ -109,6 +104,13 @@ const ToDeleteIcon = styled.div`
 const DiaryEntryCard = styled.section`
   position: relative;
   margin-bottom: 30px;
+`
+
+const Iconbox = styled.div`
+  grid-row: span 4;
+  align-self: center;
+  justify-self: center;
+  padding-left: 5px;
 `
 
 export function DiaryEntry({
@@ -166,23 +168,25 @@ export function DiaryEntry({
       <DiaryEntryCard>
         <CardLink to={`/entries/${entry._id || entry.id}`}>
           <DiaryEntryContent>
-            {entry.shared.status && (
-              <SlackLogo src="/icons/slacklogo-klein.png" />
-            )}
-            {entry.inDatabase ? (
-              <DatabaseIcon>
-                <FontAwesomeIcon icon={faDatabase} />
-              </DatabaseIcon>
-            ) : (
-              <DatabaseIconLight>
-                <FontAwesomeIcon icon={faDatabase} />
-              </DatabaseIconLight>
-            )}
-            {entry.toDelete && (
-              <ToDeleteIcon>
-                <FontAwesomeIcon icon={faTrashAlt} />
-              </ToDeleteIcon>
-            )}
+            <Iconbox>
+              {entry.shared.status && (
+                <SlackLogo src="/icons/slacklogo-klein.png" />
+              )}
+              {entry.inDatabase ? (
+                <DatabaseIcon>
+                  <FontAwesomeIcon icon={faDatabase} />
+                </DatabaseIcon>
+              ) : (
+                <DatabaseIconLight>
+                  <FontAwesomeIcon icon={faDatabase} />
+                </DatabaseIconLight>
+              )}
+              {entry.toDelete && (
+                <ToDeleteIcon>
+                  <FontAwesomeIcon icon={faTrashAlt} />
+                </ToDeleteIcon>
+              )}
+            </Iconbox>
             <StyledImage
               src="./icons/diary-entry.png"
               alt="diary entry book icon"
