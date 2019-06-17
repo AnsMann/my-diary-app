@@ -13,6 +13,7 @@ export function EditDiaryEntry({
   diaryID,
   history,
   onFormSubmit,
+  workOfflineStatus,
 }) {
   const entryIndex = findIndex(diaryID, diaryEntries)
 
@@ -30,22 +31,26 @@ export function EditDiaryEntry({
       additional: target['anything else'].value,
       edit: { status: true, editOn: moment()._d },
     }
-    if (changedDiaryEntry._id) {
+    if (workOfflineStatus) {
+      const offlineChangedEntry = {
+        ...changedDiaryEntry,
+        inDatabase: false,
+      }
+      onFormSubmit(
+        [
+          ...diaryEntries.slice(0, entryIndex),
+          offlineChangedEntry,
+          ...diaryEntries.slice(entryIndex + 1),
+        ],
+        history
+      )
+    } else {
       const newDiaryEntries = await editEntriesInMongoDB(
         diaryEntries,
         changedDiaryEntry,
         entryIndex
       )
       onFormSubmit(newDiaryEntries, history)
-    } else {
-      onFormSubmit(
-        [
-          ...diaryEntries.slice(0, entryIndex),
-          changedDiaryEntry,
-          ...diaryEntries.slice(entryIndex + 1),
-        ],
-        history
-      )
     }
   }
 
