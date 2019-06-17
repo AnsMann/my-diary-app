@@ -8,12 +8,18 @@ import ScrollMemory from 'react-router-scroll-memory'
 
 import { Footer } from './Footer'
 import { DiaryEntriesList } from './DiaryEntriesList'
-import { CreateDiaryEntryForm } from './CreateDiaryEntry'
-import { getEntriesFromMongoDB } from './services'
+import { CreateDiaryEntry } from './CreateDiaryEntry'
+import {
+  getEntriesFromMongoDB,
+  setLocalStorage,
+  getLocalStorage,
+} from './services'
 import { DiaryEntryDetails } from './DiaryEntryDetails'
 import { ShareDiaryEntry } from './ShareDiaryEntry'
 import { findIndex } from './utils'
 import { EditDiaryEntry } from './EditDiaryEntry'
+import { Settings } from './Settings'
+import { NoConnectionModal } from './NoConnectionModal'
 
 moment.locale('de')
 
@@ -24,15 +30,46 @@ const Grid = styled.div`
 `
 
 export default function App() {
-  const [diaryEntries, setDiaryEntries] = useState([])
+  const [diaryEntries, setDiaryEntries] = useState(
+    getLocalStorage('myDiary') || []
+  )
+  const [sendAnonymous, setSendAnonymous] = useState(
+    getLocalStorage('sendAnonymous') || false
+  )
+  const [workOffline, setWorkOffline] = useState(
+    getLocalStorage('workOffline') || false
+  )
+  const [isNoConnectionModalVisible, setIsNoConnectionModalVisible] = useState(
+    false
+  )
 
   useEffect(() => {
     async function fetchDiaryEntries() {
       const entries = await getEntriesFromMongoDB()
-      setDiaryEntries(entries)
+      entries.name
+        ? setIsNoConnectionModalVisible(true)
+        : setDiaryEntries(entries)
     }
-    fetchDiaryEntries()
+    workOffline || fetchDiaryEntries()
   }, [])
+
+  useEffect(() => setLocalStorage('sendAnonymous', sendAnonymous), [
+    sendAnonymous,
+  ])
+
+  useEffect(() => setLocalStorage('workOffline', workOffline), [workOffline])
+
+  useEffect(() => {
+    workOffline && setLocalStorage('myDiary', diaryEntries)
+  }, [diaryEntries, workOffline])
+
+  function handleWorkOfflineCheckbox() {
+    setWorkOffline(!workOffline)
+  }
+
+  function handleAnonymousCheckbox() {
+    setSendAnonymous(!sendAnonymous)
+  }
 
   function handleFormSubmit(newDiaryEntries, history) {
     setDiaryEntries(newDiaryEntries)
@@ -47,12 +84,18 @@ export default function App() {
     setDiaryEntries(newDiaryEntries)
   }
 
-  function handleDeleteClick(id, history) {
+  function handleDeleteClick(id, history, entryToDeleteInDB = null) {
     const index = findIndex(id, diaryEntries)
-    setDiaryEntries([
-      ...diaryEntries.slice(0, index),
-      ...diaryEntries.slice(index + 1),
-    ])
+    entryToDeleteInDB
+      ? setDiaryEntries([
+          ...diaryEntries.slice(0, index),
+          entryToDeleteInDB,
+          ...diaryEntries.slice(index + 1),
+        ])
+      : setDiaryEntries([
+          ...diaryEntries.slice(0, index),
+          ...diaryEntries.slice(index + 1),
+        ])
     history.push('/')
   }
 
@@ -60,9 +103,20 @@ export default function App() {
     setDiaryEntries(newDiaryEntries)
   }
 
+  function handleSyncButtonClick(updatedEntries) {
+    setLocalStorage('myDiary', updatedEntries)
+    setDiaryEntries(updatedEntries)
+  }
+  function resetNoConnectionModal() {
+    setIsNoConnectionModalVisible(false)
+  }
+
   return (
     <Router>
       <GlobalStyles />
+      {isNoConnectionModalVisible && (
+        <NoConnectionModal resetModal={resetNoConnectionModal} />
+      )}
       <Grid>
         <ScrollMemory elementID="diary" />
         <Route
@@ -73,6 +127,7 @@ export default function App() {
               diaryEntries={diaryEntries}
               history={props.history}
               onDeleteClick={handleDeleteClick}
+              workOfflineStatus={workOffline}
             />
           )}
         />
@@ -80,10 +135,11 @@ export default function App() {
           exact
           path="/create"
           render={props => (
-            <CreateDiaryEntryForm
+            <CreateDiaryEntry
               onFormSubmit={handleFormSubmit}
               history={props.history}
               diaryEntries={diaryEntries}
+              workOfflineStatus={workOffline}
             />
           )}
         />
@@ -96,6 +152,7 @@ export default function App() {
               onBackClick={handleBackClick}
               {...props}
               onEditDetails={handleEditOnDetailsPage}
+              workOfflineStatus={workOffline}
             />
           )}
         />
@@ -109,6 +166,8 @@ export default function App() {
               history={props.history}
               onBackClick={handleBackClick}
               onShare={handleSharedDiaryEntry}
+              sendAnonymous={sendAnonymous}
+              workOfflineStatus={workOffline}
             />
           )}
         />
@@ -121,6 +180,21 @@ export default function App() {
               diaryID={props.match.params.id}
               history={props.history}
               onFormSubmit={handleFormSubmit}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/settings"
+          render={props => (
+            <Settings
+              history={props.history}
+              anonymousCheckboxStatus={sendAnonymous}
+              onAnonymousCheckboxClick={handleAnonymousCheckbox}
+              onworkOfflineCheckboxClick={handleWorkOfflineCheckbox}
+              workOfflineCheckboxStatus={workOffline}
+              onSyncButtonClick={handleSyncButtonClick}
+              diaryEntries={diaryEntries}
             />
           )}
         />

@@ -73,12 +73,14 @@ export function getChannels() {
     .catch(err => console.log(err))
 }
 
-export function sendMessage(content, id) {
+export function sendMessage(content, id, sendAsAnonymous) {
   const messageObject = buildMessageObject(content)
   return fetch(
     `https://slack.com/api/chat.postMessage?token=${
       process.env.REACT_APP_API_KEY
-    }&blocks=${JSON.stringify(messageObject)}&channel=${id}&as_user=true`,
+    }&blocks=${JSON.stringify(
+      messageObject
+    )}&channel=${id}&as_user=${!sendAsAnonymous}`,
     {
       method: 'POST',
       headers: {
@@ -157,4 +159,24 @@ function evaluateRatingForSlack(rating) {
     3: ':smiley:',
   }
   return ratingMap[rating]
+}
+
+export function deleteOnSync(diaryEntries) {
+  const entriesToDelete = diaryEntries.slice().filter(entry => entry.toDelete)
+  entriesToDelete.forEach(entry => deleteEntryInMongoDB(entry._id))
+}
+export function patchOnSync(diaryEntries) {
+  const entriesToPatch = diaryEntries.slice().filter(entry => entry._id)
+  entriesToPatch.forEach(entry => {
+    const entryToPatch = { ...entry, inDatabase: true }
+    fetchEntries(entryToPatch, 'PATCH', entry._id)
+  })
+}
+export function postOnSync(diaryEntries) {
+  const entriesToPost = diaryEntries.slice().filter(entry => entry.id)
+  entriesToPost.forEach(entry => {
+    delete entry['id']
+    const entryToPost = { ...entry, inDatabase: true }
+    fetchEntries(entryToPost, 'POST')
+  })
 }

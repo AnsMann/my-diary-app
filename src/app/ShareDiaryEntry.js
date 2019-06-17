@@ -89,6 +89,8 @@ export function ShareDiaryEntry({
   history,
   onBackClick,
   onShare,
+  sendAnonymous,
+  workOfflineStatus,
 }) {
   const [searchInput, setSearchInput] = useState('')
   const [slackContacts, setSlackContacts] = useState(
@@ -125,8 +127,8 @@ export function ShareDiaryEntry({
     fetchChannels()
   }, [])
 
-  function handleContactClick(contactId, contactName) {
-    sendMessage(diaryEntryToShare, contactId).then(res => {
+  function handleContactClick(contactId, contactName, AnonymousStatus) {
+    sendMessage(diaryEntryToShare, contactId, AnonymousStatus).then(res => {
       res.ok
         ? setModalStatus({ showModal: true, shareWith: contactName })
         : setModalStatus({ showModal: true, shareWith: '' })
@@ -189,6 +191,8 @@ export function ShareDiaryEntry({
               channels={slackChannels}
               searchInput={searchInput}
               onContactClick={handleContactClick}
+              sendAnonymous={sendAnonymous}
+              workOfflineStatus={workOfflineStatus}
             />
           </ResultArea>
         </StyledDiv>
