@@ -7,17 +7,8 @@ import PropTypes from 'prop-types'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { FormSubmitButton } from './FormSubmitButton'
 library.add(faPencilAlt)
-
-const SaveButton = styled.button`
-  background: #007fbf;
-  border-radius: 10px;
-  color: #ffffff;
-  font-size: 1rem;
-  height: 30px;
-  margin: 5px 0;
-  width: 100%;
-`
 
 const EditIcon = styled.div`
   color: #007fbf;
@@ -43,7 +34,7 @@ export function ShowRating({ rating, onEditDetail }) {
         <label>
           <DayRatingInput defaultValue={rating} />
         </label>
-        <SaveButton>Change rating</SaveButton>
+        <FormSubmitButton title={'Change rating'} />
       </form>
     </OutsideClickHandler>
   ) : (
@@ -56,6 +47,6 @@ export function ShowRating({ rating, onEditDetail }) {
   )
 }
 ShowRating.propTypes = {
-  rating: PropTypes.number,
+  rating: PropTypes.string,
   onEditDetail: PropTypes.func.isRequired,
 }

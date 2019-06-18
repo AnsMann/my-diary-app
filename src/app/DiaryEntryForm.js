@@ -7,6 +7,7 @@ import '../misc/_datepicker.css'
 import moment from 'moment'
 import 'moment/locale/de'
 import { QuestionCatalogue } from './QuestionCatalogue'
+import { FormSubmitButton } from './FormSubmitButton'
 
 moment.locale('de')
 
@@ -31,13 +32,6 @@ const StyledInput = styled.input`
   height: 50px;
   padding-left: 20px;
   width: 100%;
-`
-const SaveButton = styled.button`
-  background: #007fbf;
-  border-radius: 10px;
-  color: #ffffff;
-  font-size: 1.5rem;
-  height: 60px;
 `
 
 export function DiaryEntryForm({ onFormSubmit, diaryEntryToEdit = '' }) {
@@ -82,7 +76,7 @@ export function DiaryEntryForm({ onFormSubmit, diaryEntryToEdit = '' }) {
         <h3>Todays rating</h3>
         <DayRatingInput defaultValue={diaryEntryToEdit.rating} />
       </label>
-      <SaveButton>Save</SaveButton>
+      <FormSubmitButton title={'Save'} />
     </StyledForm>
   )
 }

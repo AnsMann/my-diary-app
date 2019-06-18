@@ -5,6 +5,7 @@ import uid from 'uid'
 import { Header } from './Header'
 import { DiaryEntryForm } from './DiaryEntryForm'
 import { fetchEntries } from './services'
+import PropTypes from 'prop-types'
 
 moment.locale('de')
 
@@ -47,4 +48,11 @@ export function CreateDiaryEntry({
       <DiaryEntryForm onFormSubmit={handleSubmitNewEntry} />
     </>
   )
+}
+
+CreateDiaryEntry.propTypes = {
+  onFormSubmit: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
+  diaryEntries: PropTypes.array,
+  workOfflineStatus: PropTypes.bool.isRequired,
 }

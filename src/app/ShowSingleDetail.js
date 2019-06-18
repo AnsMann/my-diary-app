@@ -6,6 +6,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from 'prop-types'
+import { FormSubmitButton } from './FormSubmitButton'
 
 library.add(faPencilAlt)
 
@@ -31,15 +32,6 @@ const EditIcon = styled.i`
   bottom: 0;
   right: 0;
 `
-const SaveButton = styled.button`
-  background: #007fbf;
-  border-radius: 10px;
-  color: #ffffff;
-  font-size: 1rem;
-  height: 30px;
-  margin: 5px 0;
-  width: 100%;
-`
 
 export function ShowSingleDetail({ detail, onEditDetail }) {
   const { headline, content, type } = detail
@@ -57,7 +49,7 @@ export function ShowSingleDetail({ detail, onEditDetail }) {
         }}
       >
         <AnswerTextArea defaultValue={content} name={type} />
-        <SaveButton>Change text</SaveButton>
+        <FormSubmitButton title={'Change text'} />
       </form>
     </OutsideClickHandler>
   ) : (
