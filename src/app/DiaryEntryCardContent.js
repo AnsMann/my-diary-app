@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { EntryStatusIcons } from './EntryStatusIcons'
 import { ShowDayRating } from './ShowDayRating'
+import PropTypes from 'prop-types'
 import moment from 'moment'
 import 'moment/locale/de'
 moment.locale('de')
@@ -68,4 +69,8 @@ export function DiaryEntryCardContent({ entry }) {
       <ShowDayRating entryRating={entry.rating} />
     </DiaryEntryContent>
   )
+}
+
+DiaryEntryCardContent.propTypes = {
+  entry: PropTypes.object,
 }

@@ -95,3 +95,45 @@ export async function editEntriesInMongoDB(diaryEntries, editedEntry, index) {
   ]
   return newDiaryEntries
 }
+
+export function createDetailsObject({
+  title,
+  content,
+  positive,
+  negative,
+  coachFeedback,
+  additional,
+}) {
+  return [
+    {
+      headline: 'Todays topic was',
+      content: title,
+      type: 'title',
+    },
+    {
+      headline: 'Die wichtigsten Inhalte heute waren',
+      content: content,
+      type: 'content',
+    },
+    {
+      headline: 'Besonders positiv erinnere ich',
+      content: positive,
+      type: 'positive',
+    },
+    {
+      headline: 'Besonders negative erinnere ich',
+      content: negative,
+      type: 'negative',
+    },
+    {
+      headline: 'Meinem Coach würde ich sagen',
+      content: coachFeedback,
+      type: 'coachFeedback',
+    },
+    {
+      headline: 'Außerdem war mir heute noch wichtig',
+      content: additional,
+      type: 'additional',
+    },
+  ]
+}

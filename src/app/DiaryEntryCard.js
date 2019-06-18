@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons'
 import { DiaryEntryMenu } from './DiaryEntryMenu'
 import { DiaryEntryCardContent } from './DiaryEntryCardContent'
+import PropTypes from 'prop-types'
 library.add(faEllipsisH)
 
 const CardContainer = styled.section`
@@ -52,4 +53,10 @@ export function DiaryEntryCard({ DeleteMenuClick, history, entry }) {
       </CardContainer>
     </OutsideClickHandler>
   )
+}
+
+DiaryEntryCard.propTypes = {
+  entry: PropTypes.object,
+  history: PropTypes.object.isRequired,
+  DeleteMenuClick: PropTypes.func.isRequired,
 }

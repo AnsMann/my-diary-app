@@ -4,6 +4,7 @@ import { DeleteEntryModalDialogue } from './DeleteEntryModalDialogue'
 import { deleteEntryInMongoDB } from './services'
 import { ModalBackground } from './ModalBackground'
 import { DiaryEntryCard } from './DiaryEntryCard'
+import PropTypes from 'prop-types'
 
 const ModalContainer = styled.div`
   left: 15vw;
@@ -78,4 +79,11 @@ export function DiaryEntry({
       )}
     </>
   )
+}
+
+DiaryEntry.propTypes = {
+  entry: PropTypes.object,
+  history: PropTypes.object.isRequired,
+  onDeleteClick: PropTypes.func.isRequired,
+  workOfflineStatus: PropTypes.bool.isRequired,
 }

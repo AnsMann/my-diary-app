@@ -5,6 +5,7 @@ import OutsideClickHandler from 'react-outside-click-handler'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import PropTypes from 'prop-types'
 
 library.add(faPencilAlt)
 
@@ -40,29 +41,28 @@ const SaveButton = styled.button`
   width: 100%;
 `
 
-export function ShowSingleDetail({ title, content, onEditDetail, detailType }) {
+export function ShowSingleDetail({ detail, onEditDetail }) {
+  const { headline, content, type } = detail
+
   const [isEditable, setIsEditable] = useState(false)
+
   return isEditable ? (
     <OutsideClickHandler onOutsideClick={() => setIsEditable(false)}>
-      <h3>{title}</h3>
+      <h3>{headline}</h3>
       <form
         onSubmit={event => {
           event.preventDefault()
-          onEditDetail(detailType, event.target[detailType].value)
+          onEditDetail(type, event.target[type].value)
           setIsEditable(false)
         }}
       >
-        <AnswerTextArea
-          defaultValue={content}
-          name={detailType}
-          onEditText={onEditDetail}
-        />
+        <AnswerTextArea defaultValue={content} name={type} />
         <SaveButton>Change text</SaveButton>
       </form>
     </OutsideClickHandler>
   ) : (
     <SingleDetail>
-      <h3>{title}</h3>
+      <h3>{headline}</h3>
       <p onClick={() => setIsEditable(true)}>
         {content || 'Kein Eintrag'}
         <EditIcon>
@@ -71,4 +71,8 @@ export function ShowSingleDetail({ title, content, onEditDetail, detailType }) {
       </p>
     </SingleDetail>
   )
+}
+ShowSingleDetail.propTypes = {
+  detail: PropTypes.object.isRequired,
+  onEditDetail: PropTypes.func.isRequired,
 }
