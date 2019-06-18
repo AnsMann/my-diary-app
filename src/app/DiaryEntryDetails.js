@@ -70,6 +70,12 @@ const StyledDiv = styled.div`
   font-size: 0.8rem;
   margin-bottom: 10px;
 `
+const BackButton = styled.div`
+  left: 13px;
+  position: absolute;
+  top: 85px;
+  z-index: 50;
+`
 
 export function DiaryEntryDetails({
   match,
@@ -160,7 +166,9 @@ export function DiaryEntryDetails({
     <>
       <Header title={'My Diary Entries'} />
       <EntryDetails>
-        <ArrowBack onBackClick={onBackClick} history={history} />
+        <BackButton>
+          <ArrowBack onBackClick={onBackClick} history={history} />
+        </BackButton>
         <h2>Dear Diary from {moment(date).format('L')}</h2>
         {detailsToRender.map(detailObject => (
           <ShowSingleDetail

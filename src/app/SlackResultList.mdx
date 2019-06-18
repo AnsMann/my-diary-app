@@ -1,0 +1,46 @@
+---
+name: Slack Result
+menu: Display
+---
+
+import { Playground, Props } from 'docz'
+import { SlackResultList } from './SlackResultList.js'
+
+# Single slack result
+
+<Props of={SlackResultList} />
+
+**Shows slack contacts and/or slack channels.**
+
+First result with no user or channel from slack, third result with no match because of failed search.
+
+<Playground>
+  <SlackResultList
+    onContactClick={() => console.log('click on contact to send')}
+    channels={[]}
+    searchInput={''}
+    userContacts={[]}
+    sendAnonymous={false}
+    workOfflineStatus={false}
+  />
+
+<SlackResultList
+  onContactClick={() => console.log('click on contact to send')}
+  channels={[]}
+  searchInput={''}
+  userContacts={[{ name: 'Someones name' }]}
+  sendAnonymous={false}
+  workOfflineStatus={false}
+/>
+
+    <SlackResultList
+    onContactClick={() => console.log('click on contact to send')}
+    channels={[]}
+    searchInput={'ABC'}
+    userContacts={[{ name: 'Someones name' }]}
+    sendAnonymous={false}
+    workOfflineStatus={false}
+
+/>
+
+</Playground>

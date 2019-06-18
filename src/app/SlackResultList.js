@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { filterData } from './utils'
+import PropTypes from 'prop-types'
 
 const SlackResult = styled.li`
   align-items: center;
@@ -51,4 +52,13 @@ export function SlackResultList({
   } else {
     return <p>No match found</p>
   }
+}
+
+SlackResultList.propTypes = {
+  userContacts: PropTypes.array,
+  channels: PropTypes.array,
+  searchInput: PropTypes.string,
+  onContactClick: PropTypes.func.isRequired,
+  sendAnonymous: PropTypes.bool.isRequired,
+  workOfflineStatus: PropTypes.bool.isRequired,
 }

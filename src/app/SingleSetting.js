@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 const SettingsBox = styled.section`
   align-items: center;
@@ -82,4 +83,12 @@ export function SingleSetting({
       </Switch>
     </SettingsBox>
   )
+}
+
+SingleSetting.propTypes = {
+  status: PropTypes.bool.isRequired,
+  onCheck: PropTypes.func.isRequired,
+  settingFor: PropTypes.string.isRequired,
+  settingTitle: PropTypes.string.isRequired,
+  activateModal: PropTypes.func.isRequired,
 }

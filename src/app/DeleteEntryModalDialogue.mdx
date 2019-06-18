@@ -1,5 +1,6 @@
 ---
-name: Modal - Delete entry
+name: Delete entry
+menu: Modal dialogue
 ---
 
 import { Playground, Props } from 'docz'
@@ -18,6 +19,7 @@ import { DeleteEntryModalDialogue } from './DeleteEntryModalDialogue.js'
     resetDeleteEntryModal={() => console.log('modal reset')}
     deleteConfirmation={true}
   />
+  <br />
   <DeleteEntryModalDialogue
     entryDate={new Date()}
     onDeleteConfirmation={() => console.log('entry deleted')}

@@ -6,6 +6,7 @@ import {
   faLongArrowAltUp,
   faLongArrowAltDown,
 } from '@fortawesome/free-solid-svg-icons'
+import PropTypes from 'prop-types'
 
 library.add(faLongArrowAltUp, faLongArrowAltDown)
 
@@ -15,10 +16,8 @@ const Menu = styled.section`
   border-radius: 10px;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
   height: 200px;
-  right: 0;
-  position: absolute;
   padding: 5px 0;
-  top: 45px;
+  position: relative;
   width: 150px;
   z-index: 15;
   &:after {
@@ -74,4 +73,9 @@ export function SortMenu({ onSortbuttonClick, sortBy }) {
       </ul>
     </Menu>
   )
+}
+
+SortMenu.propTypes = {
+  onSortbuttonClick: PropTypes.func.isRequired,
+  sortBy: PropTypes.string.isRequired,
 }

@@ -1,0 +1,20 @@
+---
+name: Share via slack
+menu: Buttons
+---
+
+import { Playground, Props } from 'docz'
+import { ShareViaSlackButton } from './ShareViaSlackButton.js'
+import { BrowserRouter } from 'react-router-dom'
+
+# Share via slack button
+
+<Props of={ShareViaSlackButton} />
+
+**Button to link to share page.**
+
+<Playground>
+  <BrowserRouter>
+    <ShareViaSlackButton idForURL={'12345'} />
+  </BrowserRouter>
+</Playground>

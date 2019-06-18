@@ -83,6 +83,13 @@ const ResultArea = styled.section`
     text-align: center;
   }
 `
+const BackButton = styled.div`
+  left: 13px;
+  position: absolute;
+  top: 85px;
+  z-index: 50;
+`
+
 export function ShareDiaryEntry({
   diaryID,
   diaryEntries,
@@ -169,7 +176,9 @@ export function ShareDiaryEntry({
       )}
       <ShareContainer>
         <StyledDiv>
-          <ArrowBack onBackClick={onBackClick} history={history} />
+          <BackButton>
+            <ArrowBack onBackClick={onBackClick} history={history} />
+          </BackButton>
           <SearchArea>
             <h2>
               Diary Entry from {moment(diaryEntryToShare.date).format('L')}

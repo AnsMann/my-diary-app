@@ -15,6 +15,7 @@ import { DeleteEntryModalDialogue } from './DeleteEntryModalDialogue'
 import moment from 'moment'
 import 'moment/locale/de'
 import { deleteEntryInMongoDB } from './services'
+import { ModalBackground } from './ModalBackground'
 moment.locale('de')
 
 library.add(faEllipsisH, faTrashAlt)
@@ -111,6 +112,14 @@ const Iconbox = styled.div`
   align-self: center;
   justify-self: center;
 `
+const ModalContainer = styled.div`
+  left: 15vw;
+  position: absolute;
+  top: 50vw;
+  height: 70vw;
+  width: 70vw;
+  z-index: 200;
+`
 
 export function DiaryEntry({
   entry,
@@ -157,12 +166,17 @@ export function DiaryEntry({
   return (
     <OutsideClickHandler onOutsideClick={() => setIsMenuVisible(false)}>
       {isDeleteEntryModalVisible && (
-        <DeleteEntryModalDialogue
-          entryDate={entry.date}
-          onDeleteConfirmation={handleDeleteEntryConfirmation}
-          resetDeleteEntryModal={resetDeleteEntryModal}
-          deleteConfirmation={deleteConfirmation}
-        />
+        <>
+          <ModalBackground />
+          <ModalContainer>
+            <DeleteEntryModalDialogue
+              entryDate={entry.date}
+              onDeleteConfirmation={handleDeleteEntryConfirmation}
+              resetDeleteEntryModal={resetDeleteEntryModal}
+              deleteConfirmation={deleteConfirmation}
+            />
+          </ModalContainer>
+        </>
       )}
       <DiaryEntryCard>
         <CardLink to={`/entries/${entry._id || entry.id}`}>

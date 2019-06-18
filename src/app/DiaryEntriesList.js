@@ -61,6 +61,11 @@ const FilterArea = styled.section`
   grid-template-rows: 1fr 1fr;
   justify-self: start;
 `
+const MenuContainer = styled.section`
+  right: 0;
+  position: absolute;
+  top: 45px;
+`
 
 export function DiaryEntriesList({
   diaryEntries,
@@ -124,10 +129,12 @@ export function DiaryEntriesList({
             >
               <FontAwesomeIcon icon={faSortAmountUp} />
               {isSortMenuVisible && (
-                <SortMenu
-                  onSortbuttonClick={handleSortbuttonClick}
-                  sortBy={filter.sortBy}
-                />
+                <MenuContainer>
+                  <SortMenu
+                    onSortbuttonClick={handleSortbuttonClick}
+                    sortBy={filter.sortBy}
+                  />
+                </MenuContainer>
               )}
             </Sortbutton>
           </OutsideClickHandler>

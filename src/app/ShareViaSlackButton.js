@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 const ShareButton = styled(Link)`
   text-decoration: none;
@@ -19,17 +20,22 @@ const ShareButton = styled(Link)`
 `
 
 const SlackLogo = styled.img`
-  width: 30%;
+  bottom: 9px;
+  margin-left: 5px;
   position: absolute;
-  bottom: 3px;
+  width: 20%;
 `
 
 export function ShareViaSlackButton({ idForURL }) {
   return (
     <ShareButton to={`/entries/${idForURL}/share`}>
       <button>
-        Share via <SlackLogo src="/icons/Slack_Mark_Web.png" />
+        Share via <SlackLogo src="/icons/slacklogo-klein.png" />
       </button>
     </ShareButton>
   )
+}
+
+ShareViaSlackButton.propTypes = {
+  idForURL: PropTypes.string.isRequired,
 }

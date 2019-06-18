@@ -17,11 +17,7 @@ const Back = styled.div`
   font-size: 3.5rem;
   height: 60px;
   justify-content: center;
-  left: 13px;
-  position: absolute;
-  top: 85px;
   width: 80px;
-  z-index: 50;
 `
 
 export function ArrowBack({ onBackClick, history }) {
