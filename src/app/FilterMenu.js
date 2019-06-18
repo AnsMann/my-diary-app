@@ -7,12 +7,7 @@ const Menu = styled.section`
   border-radius: 10px;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
   height: 200px;
-  right: 0;
-  position: absolute;
   padding: 5px 0;
-  top: 45px;
-  width: 150px;
-  z-index: 15;
   &:after {
     border-color: transparent transparent #007fbf transparent;
     border-style: solid;

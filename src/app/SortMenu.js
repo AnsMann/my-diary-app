@@ -19,7 +19,6 @@ const Menu = styled.section`
   padding: 5px 0;
   position: relative;
   width: 150px;
-  z-index: 15;
   &:after {
     border-color: transparent transparent #007fbf transparent;
     border-style: solid;
