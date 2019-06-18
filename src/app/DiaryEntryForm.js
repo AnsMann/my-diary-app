@@ -68,10 +68,7 @@ export function DiaryEntryForm({ onFormSubmit, diaryEntryToEdit = '' }) {
           defaultValue={diaryEntryToEdit.title}
         />
       </label>
-      <QuestionCatalogue
-        diaryEntryToEdit={diaryEntryToEdit}
-        defaultValues={diaryEntryToEdit}
-      />
+      <QuestionCatalogue defaultValues={diaryEntryToEdit} />
       <label>
         <h3>Todays rating</h3>
         <DayRatingInput defaultValue={diaryEntryToEdit.rating} />

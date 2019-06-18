@@ -84,5 +84,5 @@ export function DayRatingInput({ defaultValue = 0 }) {
 }
 
 DayRatingInput.propTypes = {
-  defaultValue: PropTypes.number,
+  defaultValue: PropTypes.string,
 }
