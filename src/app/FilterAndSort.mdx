@@ -13,5 +13,9 @@ import { FilterAndSort } from './FilterAndSort.js'
 **Area to chose and display Filter and sort settings for diary entries.**
 
 <Playground>
-  <FilterAndSort filter={{ filter: 'shared', sortBy: 'Date' }} />
+  <FilterAndSort
+    filter={{ filter: 'shared', sortBy: 'Date' }}
+    onFilterbuttonClick={() => console.log('filter now')}
+    onSortbuttonClick={() => console.log('sort now')}
+  />
 </Playground>
