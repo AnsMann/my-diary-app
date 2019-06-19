@@ -60,6 +60,11 @@ export function Settings({
   function resetModal() {
     setIsSettingsModalVisible(false)
   }
+  function resetSyncModal() {
+    setIsSyncFailedVisible(false)
+    setIsSyncConfirmationVisible(false)
+    history.push('/')
+  }
   async function SyncWithDatabase() {
     await deleteOnSync(diaryEntries)
     await patchOnSync(diaryEntries)
@@ -91,7 +96,7 @@ export function Settings({
         <>
           <ModalBackground />
           <ModalContainer>
-            <SyncConfirmationModalDialogue history={history} />
+            <SyncConfirmationModalDialogue resetSyncModal={resetSyncModal} />
           </ModalContainer>
         </>
       )}
@@ -99,7 +104,7 @@ export function Settings({
         <>
           <ModalBackground />
           <ModalContainer>
-            <SyncFailedModalDialogue history={history} />
+            <SyncFailedModalDialogue resetSyncModal={resetSyncModal} />
           </ModalContainer>
         </>
       )}

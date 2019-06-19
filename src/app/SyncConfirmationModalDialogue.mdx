@@ -13,5 +13,7 @@ import { SyncConfirmationModalDialogue } from './SyncConfirmationModalDialogue.j
 **This modal confirms that sync has completed.**
 
 <Playground>
-  <SyncConfirmationModalDialogue history={window.history} />
+  <SyncConfirmationModalDialogue
+    resetSyncModal={() => console.log('modal reset')}
+  />
 </Playground>

@@ -13,5 +13,5 @@ import { SyncFailedModalDialogue } from './SyncFailedModalDialogue.js'
 **This modal confirms that sync has failed.**
 
 <Playground>
-  <SyncFailedModalDialogue history={window.history} />
+  <SyncFailedModalDialogue resetSyncModal={() => console.log('modal reset')} />
 </Playground>

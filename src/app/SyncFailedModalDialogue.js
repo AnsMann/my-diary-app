@@ -26,9 +26,9 @@ const StyledIcon = styled.span`
   margin-top: 10px;
 `
 
-export function SyncFailedModalDialogue({ history }) {
+export function SyncFailedModalDialogue({ resetSyncModal }) {
   useEffect(() => {
-    window.setTimeout(() => history.push('/'), 2000)
+    window.setTimeout(() => resetSyncModal(), 2000)
   })
   return (
     <Dialogue>
@@ -41,5 +41,5 @@ export function SyncFailedModalDialogue({ history }) {
 }
 
 SyncFailedModalDialogue.propTypes = {
-  history: PropTypes.object.isRequired,
+  resetSyncModal: PropTypes.func.isRequired,
 }
