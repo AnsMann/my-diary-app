@@ -48,5 +48,5 @@ export function QuestionCatalogue({ defaultValues = '' }) {
 }
 
 QuestionCatalogue.propTypes = {
-  defaultValues: PropTypes.object,
+  defaultValues: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 }

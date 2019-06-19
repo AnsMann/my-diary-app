@@ -1,0 +1,17 @@
+---
+name: Failed modal
+menu: Modal dialogue
+---
+
+import { Playground, Props } from 'docz'
+import { FailedToCreateModal } from './FailedToCreateModal.js'
+
+# Failed to create new entry modal
+
+<Props of={SettingsModalDialogue} />
+
+**This modal confirms that creating a new diary entry has failed.**
+
+<Playground>
+  <FailedToCreateModal resetCreateModal={() => console.log('close modal')} />
+</Playground>

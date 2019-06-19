@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header with different title renders an element 1`] = `
+<header
+  className="Header__StyledHeader-nkkade-0 kAdPcH"
+>
+  test title
+</header>
+`;
+
+exports[`Header with different title renders an element with props title 1`] = `
+<header
+  className="Header__StyledHeader-nkkade-0 kAdPcH"
+>
+  test title
+</header>
+`;

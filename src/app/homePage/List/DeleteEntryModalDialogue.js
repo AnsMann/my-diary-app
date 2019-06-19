@@ -37,7 +37,7 @@ const StyledIcon = styled.span`
   margin-top: 10px;
 `
 
-const StyledButton = styled.button`
+export const StyledButton = styled.button`
   background: #007fbf;
   border-radius: 10px;
   color: #ffffff;
