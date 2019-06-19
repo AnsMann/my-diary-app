@@ -1,0 +1,27 @@
+---
+name: Menu to sort entries
+menu: Menus
+---
+
+import { Playground, Props } from 'docz'
+import { SortMenu } from './SortMenu.js'
+
+# Menu to sort entries
+
+<Props of={SortMenu} />
+
+**Menu to sort diary entries. Second without reset because it is not sorted**
+
+<Playground>
+  <h3>Sort by 'date' so you have option 'Reset filter' on top</h3>
+  <SortMenu
+    onSortbuttonClick={() => console.log('sorty entries by...')}
+    sortBy={'date'}
+  />
+  <br />
+  <h3>No sort rule specified, so no 'Reset filter' option</h3>
+  <SortMenu
+    onSortbuttonClick={() => console.log('sorty entries by...')}
+    sortBy={'all'}
+  />
+</Playground>

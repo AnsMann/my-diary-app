@@ -1,0 +1,27 @@
+---
+name: Menu to filter entries
+menu: Menus
+---
+
+import { Playground, Props } from 'docz'
+import { FilterMenu } from './FilterMenu.js'
+
+# Menu to filter entries
+
+<Props of={FilterMenu} />
+
+**Menu to filter diary entries. Second without reset because it is not filtered**
+
+<Playground>
+  <h3>Filter is 'Not in Database' so you have option 'Reset filter' on top</h3>
+  <FilterMenu
+    onFilterbuttonClick={() => console.log('filter entries by...')}
+    filter={'Not in Database'}
+  />
+  <br />
+  <h3>No filter specified, so no 'Reset filter' option</h3>
+  <FilterMenu
+    onFilterbuttonClick={() => console.log('filter entries by...')}
+    filter={'all'}
+  />
+</Playground>

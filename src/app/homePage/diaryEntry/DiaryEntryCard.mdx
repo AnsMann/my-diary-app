@@ -1,0 +1,31 @@
+---
+name: Diary entry card
+menu: Display
+---
+
+import { Playground, Props } from 'docz'
+import { DiaryEntryCard } from './DiaryEntryCard.js'
+import { BrowserRouter } from 'react-router-dom'
+
+# Filter and sort area
+
+<Props of={DiaryEntryCard} />
+
+**Menu for every diary entry to share, edit or delete entry.**
+
+<Playground>
+  <BrowserRouter>
+    <DiaryEntryCard
+      history={window.history}
+      entry={{
+        date: new Date(),
+        rating: '3',
+        title: 'Entries for docz',
+        id: '12345',
+        inDatabase: false,
+        shared: { status: true },
+      }}
+      DeleteMenuClick={() => console.log('Delete entry')}
+    />
+  </BrowserRouter>
+</Playground>

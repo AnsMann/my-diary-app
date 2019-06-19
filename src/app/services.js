@@ -41,9 +41,9 @@ export function getEntriesFromMongoDB(id = '') {
     .catch(err => console.log(err))
 }
 
-export function getContacts() {
+export function getSlackInfo(info) {
   return fetch(
-    `https://slack.com/api/users.list?token=${process.env.REACT_APP_API_KEY}`,
+    `https://slack.com/api/${info}.list?token=${process.env.REACT_APP_API_KEY}`,
     {
       method: 'GET',
       headers: {
@@ -52,24 +52,6 @@ export function getContacts() {
     }
   )
     .then(res => res.json())
-    .then(data => data.members)
-    .catch(err => console.log(err))
-}
-
-export function getChannels() {
-  return fetch(
-    `https://slack.com/api/channels.list?token=${
-      process.env.REACT_APP_API_KEY
-    }`,
-    {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    }
-  )
-    .then(res => res.json())
-    .then(data => data.channels)
     .catch(err => console.log(err))
 }
 

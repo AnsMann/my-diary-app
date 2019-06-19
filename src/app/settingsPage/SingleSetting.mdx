@@ -1,0 +1,32 @@
+---
+name: Single Setting
+menu: Inputs
+---
+
+import { Playground, Props } from 'docz'
+import { SingleSetting } from './SingleSetting.js'
+
+# Single Setting
+
+<Props of={SingleSetting} />
+
+**Active and inactive setting with toggle button.**
+
+<Playground>
+  <h3>Single Setting that is active</h3>
+  <SingleSetting
+    onCheck={() => console.log('Settings checked/unchecked')}
+    status={true}
+    settingFor={'docz'}
+    settingTitle={'Active docz'}
+    activateModal={() => console.log('open modal')}
+  />
+  <h3>Single Setting that is not active</h3>
+  <SingleSetting
+    onCheck={() => console.log('Settings checked/unchecked')}
+    status={false}
+    settingFor={'no docz'}
+    settingTitle={'Inactive docz'}
+    activateModal={() => console.log('open modal')}
+  />
+</Playground>

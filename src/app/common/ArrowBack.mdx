@@ -1,0 +1,20 @@
+---
+name: ArrowBack Button
+menu: Buttons
+---
+
+import { Playground, Props } from 'docz'
+import { ArrowBack } from './ArrowBack.js'
+
+# Back Button
+
+<Props of={ArrowBack} />
+
+**Button that is shown to return to previous page.**
+
+<Playground>
+  <ArrowBack
+    onBackClick={() => window.history.back()}
+    history={window.history}
+  />
+</Playground>

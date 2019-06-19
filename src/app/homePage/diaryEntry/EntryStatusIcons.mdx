@@ -1,0 +1,25 @@
+---
+name: Status icons
+menu: Display
+---
+
+import { Playground, Props } from 'docz'
+import { EntryStatusIcons } from './EntryStatusIcons.js'
+
+# Status icons for diary entries
+
+<Props of={EntryStatusIcons} />
+
+**Status icons for every diary entry. Database dark means entry is in database. Database light means entry is only local. Trash icon means, entry will be deletetd next time user syncs with database**
+
+<Playground>
+  <h3>Entry in databse, shared and to delete on next sync</h3>
+  <EntryStatusIcons
+    entry={{ inDatabase: true, toDelete: true, shared: { status: true } }}
+  />
+  <br />
+  <h3>Entry not databse</h3>
+  <EntryStatusIcons
+    entry={{ inDatabase: false, toDelete: false, shared: { status: false } }}
+  />
+</Playground>

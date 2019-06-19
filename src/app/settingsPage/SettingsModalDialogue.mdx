@@ -1,0 +1,20 @@
+---
+name: Settings
+menu: Modal dialogue
+---
+
+import { Playground, Props } from 'docz'
+import { SettingsModalDialogue } from './SettingsModalDialogue.js'
+
+# Switch to online
+
+<Props of={SettingsModalDialogue} />
+
+**This modal confirms that working online is enabled and sync is initialized.**
+
+<Playground>
+  <SettingsModalDialogue
+    SyncWithDatabase={() => console.log('Sync started')}
+    resetModal={() => console.log('resetmodal')}
+  />
+</Playground>
