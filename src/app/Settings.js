@@ -11,6 +11,8 @@ import {
 } from './services'
 import { SyncConfirmationModalDialogue } from './SyncConfirmationModalDialogue'
 import { SyncFailedModalDialogue } from './SyncFailedModalDialogue'
+import PropTypes from 'prop-types'
+import { ModalBackground } from './ModalBackground'
 
 const SettingsContainer = styled.ul`
   overflow: scroll;
@@ -26,6 +28,15 @@ const SyncButton = styled.button`
   &:disabled {
     background: grey;
   }
+`
+
+const ModalContainer = styled.div`
+  top: 50vw;
+  width: 75vw;
+  z-index: 200;
+  left: 13vw;
+  position: absolute;
+  height: 60vw;
 `
 
 export function Settings({
@@ -66,15 +77,32 @@ export function Settings({
     <>
       <Header title={'Settings'} />
       {isSettingsModalVisible && (
-        <SettingsModalDialogue
-          SyncWithDatabase={SyncWithDatabase}
-          resetModal={resetModal}
-        />
+        <>
+          <ModalBackground />
+          <ModalContainer>
+            <SettingsModalDialogue
+              SyncWithDatabase={SyncWithDatabase}
+              resetModal={resetModal}
+            />
+          </ModalContainer>
+        </>
       )}
       {isSyncConfirmationVisible && (
-        <SyncConfirmationModalDialogue history={history} />
+        <>
+          <ModalBackground />
+          <ModalContainer>
+            <SyncConfirmationModalDialogue history={history} />
+          </ModalContainer>
+        </>
       )}
-      {isSyncFailedVisible && <SyncFailedModalDialogue history={history} />}
+      {isSyncFailedVisible && (
+        <>
+          <ModalBackground />
+          <ModalContainer>
+            <SyncFailedModalDialogue history={history} />
+          </ModalContainer>
+        </>
+      )}
       <SettingsContainer>
         <SingleSetting
           status={anonymousCheckboxStatus}
@@ -102,4 +130,14 @@ export function Settings({
       </SettingsContainer>
     </>
   )
+}
+
+Settings.propTypes = {
+  history: PropTypes.object.isRequired,
+  anonymousCheckboxStatus: PropTypes.bool.isRequired,
+  onAnonymousCheckboxClick: PropTypes.func.isRequired,
+  onworkOfflineCheckboxClick: PropTypes.func.isRequired,
+  workOfflineCheckboxStatus: PropTypes.bool.isRequired,
+  onSyncButtonClick: PropTypes.func.isRequired,
+  diaryEntries: PropTypes.array.isRequired,
 }

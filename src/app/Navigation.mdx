@@ -1,0 +1,21 @@
+---
+name: Navigation Links
+menu: Display
+---
+
+import { Playground, Props } from 'docz'
+import { Navigation } from './Navigation.js'
+import { BrowserRouter } from 'react-router-dom'
+import { faBook, faPenFancy, faCogs } from '@fortawesome/free-solid-svg-icons'
+
+# Navigation Links
+
+**Navigation Links for different pages. Click to toggle active state.**
+
+<Playground>
+  <BrowserRouter>
+    <Navigation linkTo={'/src-app-navigation'} icon={faBook} />
+    <br />
+    <Navigation linkTo={'/'} icon={faPenFancy} />
+  </BrowserRouter>
+</Playground>

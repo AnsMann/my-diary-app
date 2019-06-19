@@ -30,6 +30,12 @@ const MenueIcon = styled.button`
     font-size: 1.2rem;
   }
 `
+const MenuContainer = styled.div`
+  position: absolute;
+  right: 50px;
+  top: -26px;
+  z-index: 10;
+`
 
 export function DiaryEntryCard({ DeleteMenuClick, history, entry }) {
   const [isMenuVisible, setIsMenuVisible] = useState(false)
@@ -43,11 +49,13 @@ export function DiaryEntryCard({ DeleteMenuClick, history, entry }) {
         <MenueIcon onClick={() => setIsMenuVisible(!isMenuVisible)}>
           <FontAwesomeIcon icon={faEllipsisH} />
           {isMenuVisible && (
-            <DiaryEntryMenu
-              history={history}
-              entryId={entry._id || entry.id}
-              onDeleteMenuClick={DeleteMenuClick}
-            />
+            <MenuContainer>
+              <DiaryEntryMenu
+                history={history}
+                entryId={entry._id || entry.id}
+                onDeleteMenuClick={DeleteMenuClick}
+              />
+            </MenuContainer>
           )}
         </MenueIcon>
       </CardContainer>

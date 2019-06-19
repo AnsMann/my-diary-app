@@ -1,27 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import moment from 'moment'
 import 'moment/locale/de'
 
-import {
-  findIndex,
-  handleSlackContactData,
-  handleSlackChannelData,
-  editEntriesInMongoDB,
-} from './utils'
-import {
-  getContacts,
-  sendMessage,
-  setLocalStorage,
-  getLocalStorage,
-  getChannels,
-} from './services'
-import { SlackResultList } from './SlackResultList'
+import { findIndex, editEntriesInMongoDB } from './utils'
+import { sendMessage } from './services'
 import { Header } from './Header'
 import { ShareModalDialogue } from './ShareModalDialogue'
-import { ArrowBack } from './ArrowBack'
-
-moment.locale('de')
+import { ModalBackground } from './ModalBackground'
+import { ShareOverview } from './ShareOverview'
+import PropTypes from 'prop-types'
 
 const ShareContainer = styled.section`
   align-items: center;
@@ -32,62 +20,21 @@ const ShareContainer = styled.section`
   padding: 20px;
 
   h2 {
+    margin-top: 23px;
     font-size: 1.4rem;
   }
   p {
     margin-top: 0;
   }
 `
-const StyledDiv = styled.div`
-  border: solid 1px #007fbf;
-  border-radius: 10px;
-  height: 90%;
-`
 
-const SearchArea = styled.section`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  height: 40%;
-  justify-content: center;
-  margin-top: 20px;
-  padding: 15px;
-  position: relative;
-`
-const StyledSearch = styled.input`
-  border: solid 1px #007fbf;
-  border-radius: 10px;
-  font-size: 1.3rem;
-  height: 50px;
-  padding: 10px;
-  width: 75%;
-`
-const SearchHelp = styled.span`
-  font-size: 0.8rem;
-  margin: 10px;
-`
-
-const Line = styled.div`
-  border-bottom: solid 1px #007fbf;
-  left: 10%;
-  margin-bottom: 10px;
-  position: relative;
-  width: 80%;
-`
-
-const ResultArea = styled.section`
-  height: 35vh;
-  overflow: scroll;
-  padding: 15px;
-  p {
-    text-align: center;
-  }
-`
-const BackButton = styled.div`
-  left: 13px;
+const ModalContainer = styled.div`
+  left: 20vw;
   position: absolute;
-  top: 85px;
-  z-index: 50;
+  top: 50vw;
+  width: 60vw;
+  z-index: 200;
+  height: 60vw;
 `
 
 export function ShareDiaryEntry({
@@ -99,13 +46,6 @@ export function ShareDiaryEntry({
   sendAnonymous,
   workOfflineStatus,
 }) {
-  const [searchInput, setSearchInput] = useState('')
-  const [slackContacts, setSlackContacts] = useState(
-    getLocalStorage('contacts') || []
-  )
-  const [slackChannels, setSlackChannels] = useState(
-    getLocalStorage('channels') || []
-  )
   const [modalStatus, setModalStatus] = useState({
     showModal: false,
     shareWith: '',
@@ -113,26 +53,6 @@ export function ShareDiaryEntry({
 
   const entryIndex = findIndex(diaryID, diaryEntries)
   const diaryEntryToShare = diaryEntries[entryIndex]
-
-  useEffect(() => {
-    async function fetchContacts() {
-      const contacts = await getContacts()
-      const SlackContactList = handleSlackContactData(contacts || [])
-      setSlackContacts(SlackContactList)
-      setLocalStorage('contacts', SlackContactList)
-    }
-    fetchContacts()
-  }, [])
-
-  useEffect(() => {
-    async function fetchChannels() {
-      const channels = await getChannels()
-      const SlackChannelList = handleSlackChannelData(channels || [])
-      setSlackChannels(SlackChannelList)
-      setLocalStorage('channels', SlackChannelList)
-    }
-    fetchChannels()
-  }, [])
 
   function handleContactClick(contactId, contactName, AnonymousStatus) {
     sendMessage(diaryEntryToShare, contactId, AnonymousStatus).then(res => {
@@ -142,7 +62,7 @@ export function ShareDiaryEntry({
     })
   }
 
-  async function handleModalButtonClick(history, success, contactName) {
+  async function handleModalButtonClick(success, contactName) {
     if (success) {
       const sharedDiaryEntry = {
         ...diaryEntryToShare,
@@ -168,44 +88,36 @@ export function ShareDiaryEntry({
     <>
       <Header title={'Share via slack'} />
       {modalStatus.showModal && (
-        <ShareModalDialogue
-          onModalButtonClick={handleModalButtonClick}
-          shareWith={modalStatus.shareWith}
-          history={history}
-        />
+        <>
+          <ModalBackground />
+          <ModalContainer>
+            <ShareModalDialogue
+              onModalButtonClick={handleModalButtonClick}
+              shareWith={modalStatus.shareWith}
+            />
+          </ModalContainer>
+        </>
       )}
       <ShareContainer>
-        <StyledDiv>
-          <BackButton>
-            <ArrowBack onBackClick={onBackClick} history={history} />
-          </BackButton>
-          <SearchArea>
-            <h2>
-              Diary Entry from {moment(diaryEntryToShare.date).format('L')}
-            </h2>
-            <p>share with</p>
-            <StyledSearch
-              type="search"
-              placeholder="Search here"
-              onChange={event =>
-                setSearchInput(event.target.value.toLowerCase())
-              }
-            />
-            <SearchHelp>Search for channels with #</SearchHelp>
-          </SearchArea>
-          <Line />
-          <ResultArea>
-            <SlackResultList
-              userContacts={slackContacts}
-              channels={slackChannels}
-              searchInput={searchInput}
-              onContactClick={handleContactClick}
-              sendAnonymous={sendAnonymous}
-              workOfflineStatus={workOfflineStatus}
-            />
-          </ResultArea>
-        </StyledDiv>
+        <ShareOverview
+          onContactClick={handleContactClick}
+          onBackClick={onBackClick}
+          sendAnonymous={sendAnonymous}
+          workOfflineStatus={workOfflineStatus}
+          history={history}
+          diaryEntryToShare={diaryEntryToShare}
+        />
       </ShareContainer>
     </>
   )
+}
+
+ShareDiaryEntry.propTypes = {
+  diaryID: PropTypes.string.isRequired,
+  diaryEntries: PropTypes.array.isRequired,
+  history: PropTypes.object.isRequired,
+  onBackClick: PropTypes.func.isRequired,
+  onShare: PropTypes.func.isRequired,
+  sendAnonymous: PropTypes.bool.isRequired,
+  workOfflineStatus: PropTypes.bool.isRequired,
 }

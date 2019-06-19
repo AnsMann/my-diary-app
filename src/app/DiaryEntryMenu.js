@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 const Menu = styled.section`
   background: white;
@@ -7,11 +8,8 @@ const Menu = styled.section`
   border-radius: 10px;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
   height: 150px;
-  position: absolute;
-  right: 50px;
-  top: -26px;
   width: 200px;
-  z-index: 10;
+  position: relative;
   &:after {
     border-color: transparent transparent transparent #007fbf;
     border-style: solid;
@@ -45,4 +43,10 @@ export function DiaryEntryMenu({ history, entryId, onDeleteMenuClick }) {
       </MenuOption>
     </Menu>
   )
+}
+
+DiaryEntryMenu.propTypes = {
+  history: PropTypes.object.isRequired,
+  entryId: PropTypes.string.isRequired,
+  onDeleteMenuClick: PropTypes.func.isRequired,
 }

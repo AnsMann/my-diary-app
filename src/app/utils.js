@@ -70,7 +70,11 @@ export function sortEntries(Entries, sortBy) {
 
 export function filterEntries(allEntries, filter) {
   switch (filter) {
-    case 'shared':
+    case 'In database':
+      return allEntries.filter(entry => entry.inDatabase)
+    case 'Not in database':
+      return allEntries.filter(entry => !entry.inDatabase)
+    case 'Shared':
       return allEntries.filter(entry => entry.shared.status)
     case '😃':
       return allEntries.filter(entry => entry.rating === '3')
@@ -78,7 +82,7 @@ export function filterEntries(allEntries, filter) {
       return allEntries.filter(entry => entry.rating === '2')
     case '😔':
       return allEntries.filter(entry => entry.rating === '1')
-    case 'not shared':
+    case 'Not shared':
       return allEntries.filter(entry => !entry.shared.status)
     default:
       const Entries = sortEntries(allEntries, filter.sortby)

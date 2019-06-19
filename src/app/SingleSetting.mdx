@@ -13,6 +13,7 @@ import { SingleSetting } from './SingleSetting.js'
 **Active and inactive setting with toggle button.**
 
 <Playground>
+  <h3>Single Setting that is active</h3>
   <SingleSetting
     onCheck={() => console.log('Settings checked/unchecked')}
     status={true}
@@ -20,6 +21,7 @@ import { SingleSetting } from './SingleSetting.js'
     settingTitle={'Active docz'}
     activateModal={() => console.log('open modal')}
   />
+  <h3>Single Setting that is not active</h3>
   <SingleSetting
     onCheck={() => console.log('Settings checked/unchecked')}
     status={false}

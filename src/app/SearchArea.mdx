@@ -1,0 +1,20 @@
+---
+name: Search slack contacts
+menu: Inputs
+---
+
+import { Playground, Props } from 'docz'
+import { SearchArea } from './SearchArea.js'
+
+# Search slack contacts
+
+<Props of={SearchArea} />
+
+**Search to find usercontacts or channels from slack.**
+
+<Playground>
+  <SearchArea
+    onSeachInputChange={() => console.log('search input changed')}
+    diaryEntryDate={new Date()}
+  />
+</Playground>

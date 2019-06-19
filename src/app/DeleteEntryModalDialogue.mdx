@@ -6,13 +6,14 @@ menu: Modal dialogue
 import { Playground, Props } from 'docz'
 import { DeleteEntryModalDialogue } from './DeleteEntryModalDialogue.js'
 
-# Modal - Delete entry
+# Delete entry
 
 <Props of={DeleteEntryModalDialogue} />
 
 **This modal asks for confirmation to delete the chosen entry.**
 
 <Playground>
+  <h3>Modal asks for confirmation</h3>
   <DeleteEntryModalDialogue
     entryDate={new Date()}
     onDeleteConfirmation={() => console.log('entry deleted')}
@@ -20,6 +21,7 @@ import { DeleteEntryModalDialogue } from './DeleteEntryModalDialogue.js'
     deleteConfirmation={true}
   />
   <br />
+  <h3>Failed to delete after confirmation</h3>
   <DeleteEntryModalDialogue
     entryDate={new Date()}
     onDeleteConfirmation={() => console.log('entry deleted')}

@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 const Menu = styled.section`
   background: white;
@@ -8,6 +9,7 @@ const Menu = styled.section`
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
   height: 200px;
   padding: 5px 0;
+  position: relative;
   &:after {
     border-color: transparent transparent #007fbf transparent;
     border-style: solid;
@@ -43,6 +45,27 @@ const EmojiOption = styled.li`
 `
 
 export function FilterMenu({ onFilterbuttonClick, filter }) {
+  const dayrating = [
+    { emoji: '😃', label: 'good day' },
+    { emoji: '😶', label: 'average day' },
+    { emoji: '😔', label: 'bad day' },
+  ]
+
+  const allFilter = [
+    {
+      title: 'Shared',
+    },
+    {
+      title: 'Not shared',
+    },
+    {
+      title: 'In database',
+    },
+    {
+      title: 'Not in Database',
+    },
+  ]
+
   return (
     <Menu>
       <ul>
@@ -51,29 +74,31 @@ export function FilterMenu({ onFilterbuttonClick, filter }) {
             Reset filter
           </MenuOption>
         )}
-        <MenuOption onClick={() => onFilterbuttonClick('shared')}>
-          Shared
-        </MenuOption>
-        <MenuOption onClick={() => onFilterbuttonClick('not shared')}>
-          Not shared
-        </MenuOption>
+        {allFilter.map(filter => (
+          <MenuOption
+            key={filter.title}
+            onClick={() => onFilterbuttonClick(filter.title)}
+          >
+            {filter.title}
+          </MenuOption>
+        ))}
         <MenuOption>Dayrating</MenuOption>
-        <EmojiOption onClick={() => onFilterbuttonClick('😃')}>
-          <span role="img" aria-label="good day">
-            😃
-          </span>
-        </EmojiOption>
-        <EmojiOption onClick={() => onFilterbuttonClick('😶')}>
-          <span role="img" aria-label="average day">
-            😶
-          </span>
-        </EmojiOption>
-        <EmojiOption onClick={() => onFilterbuttonClick('😔')}>
-          <span role="img" aria-label="bad day">
-            😔
-          </span>
-        </EmojiOption>
+        {dayrating.map(rating => (
+          <EmojiOption
+            key={rating.label}
+            onClick={() => onFilterbuttonClick(rating.emoji)}
+          >
+            <span role="img" aria-label={rating.label}>
+              {rating.emoji}
+            </span>
+          </EmojiOption>
+        ))}
       </ul>
     </Menu>
   )
+}
+
+FilterMenu.propTypes = {
+  filter: PropTypes.string.isRequired,
+  onFilterbuttonClick: PropTypes.func.isRequired,
 }

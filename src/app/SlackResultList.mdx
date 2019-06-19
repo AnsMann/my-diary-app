@@ -15,6 +15,7 @@ import { SlackResultList } from './SlackResultList.js'
 First result with no user or channel from slack, third result with no match because of failed search.
 
 <Playground>
+  <h3>No Answer from slack</h3>
   <SlackResultList
     onContactClick={() => console.log('click on contact to send')}
     channels={[]}
@@ -23,7 +24,7 @@ First result with no user or channel from slack, third result with no match beca
     sendAnonymous={false}
     workOfflineStatus={false}
   />
-
+<h3>Normal result</h3>
 <SlackResultList
   onContactClick={() => console.log('click on contact to send')}
   channels={[]}
@@ -32,7 +33,7 @@ First result with no user or channel from slack, third result with no match beca
   sendAnonymous={false}
   workOfflineStatus={false}
 />
-
+<h3>No match with searchinput</h3>
     <SlackResultList
     onContactClick={() => console.log('click on contact to send')}
     channels={[]}

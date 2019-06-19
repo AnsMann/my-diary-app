@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 export function ShowDayRating({ entryRating }) {
   return entryRating ? (
@@ -17,4 +18,8 @@ function evaluateRating(rating) {
     3: '😃',
   }
   return ratingMap[rating]
+}
+
+ShowDayRating.propTypes = {
+  entryRating: PropTypes.string,
 }

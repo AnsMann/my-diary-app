@@ -1,8 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { NavLink as RouterLink } from 'react-router-dom'
+import { Navigation } from './Navigation'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBook, faPenFancy, faCogs } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faBook, faPenFancy, faCogs)
@@ -19,40 +18,26 @@ const NavBar = styled.nav`
   position: relative;
 `
 
-const NavLink = styled(RouterLink)`
-  align-items: center;
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 20px;
-  color: #ffffff;
-  display: flex;
-  height: 70px;
-  justify-content: center;
-  text-decoration: none;
-  width: 65px;
-  z-index: 50;
-
-  &.active {
-    background-color: white;
-    border: solid 1px #979797;
-    bottom: 20px;
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
-    color: #007fbf;
-    height: 95px;
-    position: relative;
-  }
-`
 export function Footer() {
+  const nav = [
+    {
+      linkTo: '/',
+      icon: 'book',
+    },
+    {
+      linkTo: '/create',
+      icon: 'pen-fancy',
+    },
+    {
+      linkTo: '/settings',
+      icon: 'cogs',
+    },
+  ]
   return (
     <NavBar>
-      <NavLink exact to="/">
-        <FontAwesomeIcon icon="book" />
-      </NavLink>
-      <NavLink to="/create">
-        <FontAwesomeIcon icon="pen-fancy" />
-      </NavLink>
-      <NavLink to="/settings">
-        <FontAwesomeIcon icon="cogs" />
-      </NavLink>
+      {nav.map(obj => (
+        <Navigation key={obj.icon} linkTo={obj.linkTo} icon={obj.icon} />
+      ))}
     </NavBar>
   )
 }

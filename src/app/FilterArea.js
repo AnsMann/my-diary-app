@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 const FilterGrid = styled.section`
   display: grid;
@@ -38,4 +39,8 @@ export function FilterArea({ filter }) {
       )}
     </FilterGrid>
   )
+}
+
+FilterArea.propTypes = {
+  filter: PropTypes.object.isRequired,
 }

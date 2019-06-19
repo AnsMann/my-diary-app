@@ -8,6 +8,7 @@ import moment from 'moment'
 import 'moment/locale/de'
 import { QuestionCatalogue } from './QuestionCatalogue'
 import { FormSubmitButton } from './FormSubmitButton'
+import PropTypes from 'prop-types'
 
 moment.locale('de')
 
@@ -76,4 +77,9 @@ export function DiaryEntryForm({ onFormSubmit, diaryEntryToEdit = '' }) {
       <FormSubmitButton title={'Save'} />
     </StyledForm>
   )
+}
+
+DiaryEntryForm.propTypes = {
+  onFormSubmit: PropTypes.func.isRequired,
+  diaryEntryToEdit: PropTypes.object,
 }

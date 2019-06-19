@@ -20,6 +20,7 @@ import { findIndex } from './utils'
 import { EditDiaryEntry } from './EditDiaryEntry'
 import { Settings } from './Settings'
 import { NoConnectionModal } from './NoConnectionModal'
+import { ModalBackground } from './ModalBackground'
 
 moment.locale('de')
 
@@ -27,6 +28,15 @@ const Grid = styled.div`
   display: grid;
   grid-template-rows: 80px 1fr 80px;
   height: 100vh;
+`
+const ModalContainer = styled.div`
+  height: 70vw;
+  position: absolute;
+  left: 13vw;
+  position: absolute;
+  top: 50vw;
+  width: 75vw;
+  z-index: 200;
 `
 
 export default function App() {
@@ -51,7 +61,7 @@ export default function App() {
         : setDiaryEntries(entries)
     }
     workOffline || fetchDiaryEntries()
-  }, [workOffline])
+  }, [])
 
   useEffect(() => setLocalStorage('sendAnonymous', sendAnonymous), [
     sendAnonymous,
@@ -115,7 +125,12 @@ export default function App() {
     <Router>
       <GlobalStyles />
       {isNoConnectionModalVisible && (
-        <NoConnectionModal resetModal={resetNoConnectionModal} />
+        <>
+          <ModalBackground />
+          <ModalContainer>
+            <NoConnectionModal resetModal={resetNoConnectionModal} />
+          </ModalContainer>
+        </>
       )}
       <Grid>
         <ScrollMemory elementID="diary" />

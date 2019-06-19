@@ -4,6 +4,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-icons'
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
+import PropTypes from 'prop-types'
 
 library.add(farCheckCircle, faExclamationTriangle)
 
@@ -17,23 +18,8 @@ const Dialogue = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 1.3rem;
-  height: 60vw;
   justify-content: center;
-  left: 20vw;
-  position: absolute;
-  top: 50vw;
-  width: 60vw;
-  z-index: 200;
-`
-
-const ModalBackground = styled.div`
-  background: white;
-  height: 100vh;
-  opacity: 0.5;
-  position: absolute;
-  top: 0px;
-  width: 100vw;
-  z-index: 100;
+  padding: 10px;
 `
 
 const StyledIconSuccess = styled.span`
@@ -57,36 +43,32 @@ const StyledButton = styled.button`
   width: 80%;
 `
 
-export function ShareModalDialogue({ onModalButtonClick, shareWith, history }) {
-  return (
-    <>
-      <ModalBackground />
-      {shareWith ? (
-        <Dialogue>
-          Entry shared with
-          <strong>{shareWith}</strong>
-          <StyledIconSuccess>
-            <FontAwesomeIcon icon={farCheckCircle} />
-          </StyledIconSuccess>
-          <StyledButton
-            onClick={() => onModalButtonClick(history, true, shareWith)}
-          >
-            Ok
-          </StyledButton>
-        </Dialogue>
-      ) : (
-        <Dialogue>
-          <strong>Entry not shared</strong>
-          <StyledIconFail>
-            <FontAwesomeIcon icon={faExclamationTriangle} />
-          </StyledIconFail>
-          <StyledButton
-            onClick={() => onModalButtonClick(history, false, shareWith)}
-          >
-            Ok
-          </StyledButton>
-        </Dialogue>
-      )}
-    </>
+export function ShareModalDialogue({ onModalButtonClick, shareWith }) {
+  return shareWith ? (
+    <Dialogue>
+      Entry shared with
+      <strong>{shareWith}</strong>
+      <StyledIconSuccess>
+        <FontAwesomeIcon icon={farCheckCircle} />
+      </StyledIconSuccess>
+      <StyledButton onClick={() => onModalButtonClick(true, shareWith)}>
+        Ok
+      </StyledButton>
+    </Dialogue>
+  ) : (
+    <Dialogue>
+      <strong>Entry not shared</strong>
+      <StyledIconFail>
+        <FontAwesomeIcon icon={faExclamationTriangle} />
+      </StyledIconFail>
+      <StyledButton onClick={() => onModalButtonClick(false, shareWith)}>
+        Ok
+      </StyledButton>
+    </Dialogue>
   )
+}
+
+ShareModalDialogue.propTypes = {
+  shareWith: PropTypes.string.isRequired,
+  onModalButtonClick: PropTypes.func.isRequired,
 }

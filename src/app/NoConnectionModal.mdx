@@ -1,0 +1,17 @@
+---
+name: No connection
+menu: Modal dialogue
+---
+
+import { Playground, Props } from 'docz'
+import { NoConnectionModal } from './NoConnectionModal.js'
+
+# No connection
+
+<Props of={NoConnectionModal} />
+
+**This modal informs that there is no connection to database.**
+
+<Playground>
+  <NoConnectionModal resetModal={() => console.log('reset modal')} />
+</Playground>
