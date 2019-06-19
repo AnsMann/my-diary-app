@@ -47,6 +47,6 @@ export function ShowRating({ rating, onEditDetail }) {
   )
 }
 ShowRating.propTypes = {
-  rating: PropTypes.string,
+  rating: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onEditDetail: PropTypes.func.isRequired,
 }

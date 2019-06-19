@@ -1,12 +1,12 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-icons'
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
 import PropTypes from 'prop-types'
 
-library.add(farCheckCircle)
+library.add(farCheckCircle, faExclamationTriangle)
 
 const Dialogue = styled.div`
   align-items: center;
@@ -27,20 +27,22 @@ const StyledIcon = styled.span`
   margin-top: 10px;
 `
 
-export function SyncConfirmationModalDialogue({ resetSyncModal }) {
+export function FailedToCreateModal({ resetCreateModal }) {
   useEffect(() => {
-    window.setTimeout(() => resetSyncModal(), 2000)
+    window.setTimeout(() => resetCreateModal(), 2000)
   })
   return (
     <Dialogue>
-      Sync completed
+      Failed to create entry
+      <br />
+      Choose working offline
       <StyledIcon>
-        <FontAwesomeIcon icon={farCheckCircle} />
+        <FontAwesomeIcon icon={faExclamationTriangle} color="red" />
       </StyledIcon>
     </Dialogue>
   )
 }
 
-SyncConfirmationModalDialogue.propTypes = {
-  resetSyncModal: PropTypes.func.isRequired,
+FailedToCreateModal.propTypes = {
+  resetCreateModal: PropTypes.func.isRequired,
 }

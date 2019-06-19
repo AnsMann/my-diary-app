@@ -21,5 +21,5 @@ function evaluateRating(rating) {
 }
 
 ShowDayRating.propTypes = {
-  entryRating: PropTypes.string,
+  entryRating: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }
