@@ -70,7 +70,11 @@ export function sortEntries(Entries, sortBy) {
 
 export function filterEntries(allEntries, filter) {
   switch (filter) {
-    case 'shared':
+    case 'In database':
+      return allEntries.filter(entry => entry.inDatabase)
+    case 'Not in database':
+      return allEntries.filter(entry => !entry.inDatabase)
+    case 'Shared':
       return allEntries.filter(entry => entry.shared.status)
     case '😃':
       return allEntries.filter(entry => entry.rating === '3')
@@ -78,7 +82,7 @@ export function filterEntries(allEntries, filter) {
       return allEntries.filter(entry => entry.rating === '2')
     case '😔':
       return allEntries.filter(entry => entry.rating === '1')
-    case 'not shared':
+    case 'Not shared':
       return allEntries.filter(entry => !entry.shared.status)
     default:
       const Entries = sortEntries(allEntries, filter.sortby)
@@ -94,4 +98,46 @@ export async function editEntriesInMongoDB(diaryEntries, editedEntry, index) {
     ...diaryEntries.slice(index + 1),
   ]
   return newDiaryEntries
+}
+
+export function createDetailsObject({
+  title,
+  content,
+  positive,
+  negative,
+  coachFeedback,
+  additional,
+}) {
+  return [
+    {
+      headline: 'Todays topic was',
+      content: title,
+      type: 'title',
+    },
+    {
+      headline: 'Die wichtigsten Inhalte heute waren',
+      content: content,
+      type: 'content',
+    },
+    {
+      headline: 'Besonders positiv erinnere ich',
+      content: positive,
+      type: 'positive',
+    },
+    {
+      headline: 'Besonders negative erinnere ich',
+      content: negative,
+      type: 'negative',
+    },
+    {
+      headline: 'Meinem Coach würde ich sagen',
+      content: coachFeedback,
+      type: 'coachFeedback',
+    },
+    {
+      headline: 'Außerdem war mir heute noch wichtig',
+      content: additional,
+      type: 'additional',
+    },
+  ]
 }

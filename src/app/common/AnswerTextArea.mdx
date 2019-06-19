@@ -1,0 +1,20 @@
+---
+name: Textarea
+menu: Inputs
+---
+
+import { Playground, Props } from 'docz'
+import { AnswerTextArea } from './AnswerTextArea.js'
+
+# Textarea
+
+<Props of={AnswerTextArea} />
+
+**This textarea is used to create or edit diary entries**
+
+<Playground>
+  <AnswerTextArea
+    name={'name'}
+    defaultValue={'defaultvalue instead of placeholder'}
+  />
+</Playground>

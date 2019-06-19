@@ -2,10 +2,10 @@ import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
+import { faSync } from '@fortawesome/free-solid-svg-icons'
 import PropTypes from 'prop-types'
 
-library.add(faExclamationTriangle)
+library.add(faSync)
 
 const Dialogue = styled.div`
   align-items: center;
@@ -17,35 +17,35 @@ const Dialogue = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 1.3rem;
+  font-weight: bold;
   justify-content: center;
-
-  p {
-    font-weight: bold;
-    padding: 5px;
-    text-align: center;
-  }
+  line-height: 3rem;
+  text-align: center;
 `
 const StyledIcon = styled.span`
-  color: red;
+  color: green;
   font-size: 2rem;
   margin-top: 10px;
 `
 
-export function NoConnectionModal({ resetModal }) {
+export function SettingsModalDialogue({ SyncWithDatabase, resetModal }) {
   useEffect(() => {
-    window.setTimeout(() => resetModal(), 3500)
+    SyncWithDatabase()
+    window.setTimeout(resetModal, 2500)
   })
   return (
     <Dialogue>
-      <p>No Connection to database</p>
+      You work online now
+      <br />
+      Sync with database
       <StyledIcon>
-        <FontAwesomeIcon icon={faExclamationTriangle} />
+        <FontAwesomeIcon icon={faSync} />
       </StyledIcon>
-      <p>Go to settings to work offline or try again later</p>
     </Dialogue>
   )
 }
 
-NoConnectionModal.propTypes = {
+SettingsModalDialogue.propTypes = {
+  SyncWithDatabase: PropTypes.func.isRequired,
   resetModal: PropTypes.func.isRequired,
 }

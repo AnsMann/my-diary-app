@@ -1,11 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
+import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-icons'
 import PropTypes from 'prop-types'
 
-library.add(faExclamationTriangle)
+library.add(farCheckCircle)
 
 const Dialogue = styled.div`
   align-items: center;
@@ -18,34 +19,28 @@ const Dialogue = styled.div`
   flex-direction: column;
   font-size: 1.3rem;
   justify-content: center;
-
-  p {
-    font-weight: bold;
-    padding: 5px;
-    text-align: center;
-  }
+  padding: 10px;
 `
 const StyledIcon = styled.span`
-  color: red;
+  color: green;
   font-size: 2rem;
   margin-top: 10px;
 `
 
-export function NoConnectionModal({ resetModal }) {
+export function SyncConfirmationModalDialogue({ resetSyncModal }) {
   useEffect(() => {
-    window.setTimeout(() => resetModal(), 3500)
-  })
+    window.setTimeout(() => resetSyncModal(), 2000)
+  }, [])
   return (
     <Dialogue>
-      <p>No Connection to database</p>
+      Sync completed
       <StyledIcon>
-        <FontAwesomeIcon icon={faExclamationTriangle} />
+        <FontAwesomeIcon icon={farCheckCircle} />
       </StyledIcon>
-      <p>Go to settings to work offline or try again later</p>
     </Dialogue>
   )
 }
 
-NoConnectionModal.propTypes = {
-  resetModal: PropTypes.func.isRequired,
+SyncConfirmationModalDialogue.propTypes = {
+  resetSyncModal: PropTypes.func.isRequired,
 }

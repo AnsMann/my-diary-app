@@ -1,0 +1,21 @@
+---
+name: Diary entry menu
+menu: Menus
+---
+
+import { Playground, Props } from 'docz'
+import { DiaryEntryMenu } from './DiaryEntryMenu.js'
+
+# Filter and sort area
+
+<Props of={DiaryEntryMenu} />
+
+**Menu for every diary entry to share, edit or delete entry.**
+
+<Playground>
+  <DiaryEntryMenu
+    history={window.history}
+    entryId={'12345'}
+    onDeleteMenuClick={() => console.log('Delete entry')}
+  />
+</Playground>

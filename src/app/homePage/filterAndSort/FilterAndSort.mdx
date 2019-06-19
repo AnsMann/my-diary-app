@@ -1,0 +1,21 @@
+---
+name: Filter and sort area
+menu: Display
+---
+
+import { Playground, Props } from 'docz'
+import { FilterAndSort } from './FilterAndSort.js'
+
+# Filter and sort area
+
+<Props of={FilterAndSort} />
+
+**Area to chose and display Filter and sort settings for diary entries.**
+
+<Playground>
+  <FilterAndSort
+    filter={{ filter: 'shared', sortBy: 'Date' }}
+    onFilterbuttonClick={() => console.log('filter now')}
+    onSortbuttonClick={() => console.log('sort now')}
+  />
+</Playground>

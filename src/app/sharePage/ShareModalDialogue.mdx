@@ -1,0 +1,27 @@
+---
+name: Share
+menu: Modal dialogue
+---
+
+import { Playground, Props } from 'docz'
+import { ShareModalDialogue } from './ShareModalDialogue.js'
+
+# Share entry
+
+<Props of={ShareModalDialogue} />
+
+**This modal either shows that entry has been shared or not.**
+
+<Playground>
+  <h3>Entry shared with Boss</h3>
+  <ShareModalDialogue
+    shareWith={'Boss'}
+    onModalButtonClick={() => console.log('ok clicked')}
+  />
+  <br />
+  <h3>Failed to share</h3>
+  <ShareModalDialogue
+    shareWith={''}
+    onModalButtonClick={() => console.log('ok clicked')}
+  />
+</Playground>

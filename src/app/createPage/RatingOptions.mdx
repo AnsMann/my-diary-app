@@ -1,0 +1,19 @@
+---
+name: Rating options
+menu: Inputs
+---
+
+import { Playground, Props } from 'docz'
+import { RatingOptions } from './RatingOptions.js'
+
+# Rating options
+
+<Props of={RatingOptions} />
+
+**These are the rating options to rate the entry day.**
+
+<Playground>
+  <RatingOptions options={{ rating: 3, output: '😃' }} isChecked={true} />
+  <RatingOptions options={{ rating: 2, output: '😶' }} isChecked={false} />
+  <RatingOptions options={{ rating: 1, output: '😔' }} isChecked={false} />
+</Playground>

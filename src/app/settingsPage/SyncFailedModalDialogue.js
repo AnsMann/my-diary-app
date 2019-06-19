@@ -18,12 +18,7 @@ const Dialogue = styled.div`
   flex-direction: column;
   font-size: 1.3rem;
   justify-content: center;
-
-  p {
-    font-weight: bold;
-    padding: 5px;
-    text-align: center;
-  }
+  padding: 10px;
 `
 const StyledIcon = styled.span`
   color: red;
@@ -31,21 +26,20 @@ const StyledIcon = styled.span`
   margin-top: 10px;
 `
 
-export function NoConnectionModal({ resetModal }) {
+export function SyncFailedModalDialogue({ resetSyncModal }) {
   useEffect(() => {
-    window.setTimeout(() => resetModal(), 3500)
+    window.setTimeout(() => resetSyncModal(), 2000)
   })
   return (
     <Dialogue>
-      <p>No Connection to database</p>
+      Sync failed
       <StyledIcon>
         <FontAwesomeIcon icon={faExclamationTriangle} />
       </StyledIcon>
-      <p>Go to settings to work offline or try again later</p>
     </Dialogue>
   )
 }
 
-NoConnectionModal.propTypes = {
-  resetModal: PropTypes.func.isRequired,
+SyncFailedModalDialogue.propTypes = {
+  resetSyncModal: PropTypes.func.isRequired,
 }

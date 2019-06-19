@@ -1,0 +1,17 @@
+---
+name: Sync failed
+menu: Modal dialogue
+---
+
+import { Playground, Props } from 'docz'
+import { SyncFailedModalDialogue } from './SyncFailedModalDialogue.js'
+
+# Switch to online
+
+<Props of={SyncFailedModalDialogue} />
+
+**This modal confirms that sync has failed.**
+
+<Playground>
+  <SyncFailedModalDialogue resetSyncModal={() => console.log('modal reset')} />
+</Playground>

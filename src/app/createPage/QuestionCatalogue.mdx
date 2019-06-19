@@ -1,0 +1,25 @@
+---
+name: Questions
+menu: Display
+---
+
+import { Playground, Props } from 'docz'
+import { QuestionCatalogue } from './QuestionCatalogue.js'
+
+# Question catalogue
+
+<Props of={QuestionCatalogue} />
+
+**These are the questions that can be answered while creating a new diary entry.**
+
+<Playground>
+  <QuestionCatalogue
+    defaultValues={{
+      positive: '',
+      negative: '',
+      additional: '',
+      content: 'here is a defaultvalue',
+      coachFeedback: 'here is another defaultvalue',
+    }}
+  />
+</Playground>

@@ -1,0 +1,19 @@
+---
+name: Sync Confirmation
+menu: Modal dialogue
+---
+
+import { Playground, Props } from 'docz'
+import { SyncConfirmationModalDialogue } from './SyncConfirmationModalDialogue.js'
+
+# Sync Confirmation
+
+<Props of={SyncConfirmationModalDialogue} />
+
+**This modal confirms that sync has completed.**
+
+<Playground>
+  <SyncConfirmationModalDialogue
+    resetSyncModal={() => console.log('modal reset')}
+  />
+</Playground>
