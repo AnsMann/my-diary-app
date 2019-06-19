@@ -8,7 +8,7 @@ import { DeleteEntryModalDialogue } from '../app/homePage/List/DeleteEntryModalD
 Enzyme.configure({ adapter: new Adapter() })
 
 describe('Modaldialogue to confirm or abort deletion', () => {
-  it('renders a modal', () => {
+  it('renders a modal with required props', () => {
     const callback = jest.fn()
     const component = renderer.create(
       <DeleteEntryModalDialogue

@@ -7,12 +7,7 @@ import { Header } from '../app/common/Header'
 Enzyme.configure({ adapter: new Adapter() })
 
 describe('Header with different title', () => {
-  it('renders an element', () => {
-    const component = renderer.create(<Header title={'test title'} />)
-    const tree = component.toJSON()
-    expect(tree).toMatchSnapshot()
-  })
-  it('renders an element with props title', () => {
+  it('renders an element with required props', () => {
     const component = renderer.create(<Header title={'test title'} />)
     const tree = component.toJSON()
     expect(tree).toMatchSnapshot()

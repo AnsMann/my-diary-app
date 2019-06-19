@@ -8,7 +8,7 @@ import { ArrowBack } from '../app/common/ArrowBack'
 Enzyme.configure({ adapter: new Adapter() })
 
 describe('Arrowicon as backbutton', () => {
-  it('renders an element', () => {
+  it('renders an element with required props', () => {
     const callback = jest.fn()
     const component = renderer.create(
       <ArrowBack onBackClick={callback} history={window.history} />

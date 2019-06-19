@@ -7,7 +7,7 @@ import { AnswerTextArea } from '../app/common/AnswerTextArea'
 Enzyme.configure({ adapter: new Adapter() })
 
 describe('AnswerTextArea for form with default values for rows and placeholder', () => {
-  it('renders an element', () => {
+  it('renders an element with required props', () => {
     const component = renderer.create(<AnswerTextArea name={'test title'} />)
     const tree = component.toJSON()
     expect(tree).toMatchSnapshot()
@@ -23,11 +23,6 @@ describe('AnswerTextArea for form with default values for rows and placeholder',
     const component = renderer.create(
       <AnswerTextArea placeholder={'placeholder'} name={'test title'} />
     )
-    const tree = component.toJSON()
-    expect(tree).toMatchSnapshot()
-  })
-  it('renders an element with props name', () => {
-    const component = renderer.create(<AnswerTextArea name={'name'} />)
     const tree = component.toJSON()
     expect(tree).toMatchSnapshot()
   })
