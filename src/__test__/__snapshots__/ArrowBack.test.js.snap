@@ -2,7 +2,7 @@
 
 exports[`Arrowicon as backbutton renders an element 1`] = `
 <div
-  className="ArrowBack__Back-sc-1gs5it7-0 gBwvDt"
+  className="ArrowBack__Back-sc-3b5jzt-0 idbODt"
   onClick={[Function]}
 >
   <svg

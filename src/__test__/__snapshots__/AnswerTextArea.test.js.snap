@@ -2,7 +2,7 @@
 
 exports[`AnswerTextArea for form with default values for rows and placeholder renders an element 1`] = `
 <textarea
-  className="AnswerTextArea__Answer-vbx0re-0 fjcCiU"
+  className="AnswerTextArea__Answer-sc-1ca9gm9-0 ekQCHP"
   placeholder="Type here"
   rows="5"
 />
@@ -10,7 +10,7 @@ exports[`AnswerTextArea for form with default values for rows and placeholder re
 
 exports[`AnswerTextArea for form with default values for rows and placeholder renders an element with all props 1`] = `
 <textarea
-  className="AnswerTextArea__Answer-vbx0re-0 fjcCiU"
+  className="AnswerTextArea__Answer-sc-1ca9gm9-0 ekQCHP"
   defaultValue="default value"
   name="name"
   placeholder="placeholder"
@@ -20,7 +20,7 @@ exports[`AnswerTextArea for form with default values for rows and placeholder re
 
 exports[`AnswerTextArea for form with default values for rows and placeholder renders an element with props defaultvalue 1`] = `
 <textarea
-  className="AnswerTextArea__Answer-vbx0re-0 fjcCiU"
+  className="AnswerTextArea__Answer-sc-1ca9gm9-0 ekQCHP"
   defaultValue="default value"
   placeholder="Type here"
   rows="5"
@@ -29,7 +29,7 @@ exports[`AnswerTextArea for form with default values for rows and placeholder re
 
 exports[`AnswerTextArea for form with default values for rows and placeholder renders an element with props name 1`] = `
 <textarea
-  className="AnswerTextArea__Answer-vbx0re-0 fjcCiU"
+  className="AnswerTextArea__Answer-sc-1ca9gm9-0 ekQCHP"
   name="name"
   placeholder="Type here"
   rows="5"
@@ -38,7 +38,7 @@ exports[`AnswerTextArea for form with default values for rows and placeholder re
 
 exports[`AnswerTextArea for form with default values for rows and placeholder renders an element with props placeholder 1`] = `
 <textarea
-  className="AnswerTextArea__Answer-vbx0re-0 fjcCiU"
+  className="AnswerTextArea__Answer-sc-1ca9gm9-0 ekQCHP"
   placeholder="placeholder"
   rows="5"
 />
@@ -46,7 +46,7 @@ exports[`AnswerTextArea for form with default values for rows and placeholder re
 
 exports[`AnswerTextArea for form with default values for rows and placeholder renders an element with props sizes 1`] = `
 <textarea
-  className="AnswerTextArea__Answer-vbx0re-0 fjcCiU"
+  className="AnswerTextArea__Answer-sc-1ca9gm9-0 ekQCHP"
   placeholder="Type here"
   rows="3"
 />

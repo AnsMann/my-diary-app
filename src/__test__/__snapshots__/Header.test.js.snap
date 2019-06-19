@@ -2,13 +2,13 @@
 
 exports[`Header with different title renders an element 1`] = `
 <header
-  className="Header__StyledHeader-rax5po-0 eSFArN"
+  className="Header__StyledHeader-nkkade-0 kAdPcH"
 />
 `;
 
 exports[`Header with different title renders an element with props title 1`] = `
 <header
-  className="Header__StyledHeader-rax5po-0 eSFArN"
+  className="Header__StyledHeader-nkkade-0 kAdPcH"
 >
   test title
 </header>

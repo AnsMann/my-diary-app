@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer'
 import Enzyme from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { mount } from 'enzyme'
-import { ArrowBack } from '../app/ArrowBack'
+import { ArrowBack } from '../app/common/ArrowBack'
 
 Enzyme.configure({ adapter: new Adapter() })
 
