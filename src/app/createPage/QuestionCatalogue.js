@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { AnswerTextArea } from './AnswerTextArea'
+import { AnswerTextArea } from '../common/AnswerTextArea'
 import PropTypes from 'prop-types'
 
 const Styledquestion = styled.h4`

@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { DayRatingInput } from './DayRatingInput'
 import 'react-dates/initialize'
 import { SingleDatePicker } from 'react-dates'
-import '../misc/_datepicker.css'
+import '../../misc/_datepicker.css'
 import moment from 'moment'
 import 'moment/locale/de'
-import { QuestionCatalogue } from './QuestionCatalogue'
-import { FormSubmitButton } from './FormSubmitButton'
 import PropTypes from 'prop-types'
+import { QuestionCatalogue } from '../createPage/QuestionCatalogue'
+import { DayRatingInput } from '../createPage/DayRatingInput'
+import { FormSubmitButton } from './FormSubmitButton'
 
 moment.locale('de')
 

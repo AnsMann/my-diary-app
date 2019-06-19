@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { DeleteEntryModalDialogue } from './DeleteEntryModalDialogue'
-import { deleteEntryInMongoDB } from './services'
-import { ModalBackground } from './ModalBackground'
-import { DiaryEntryCard } from './DiaryEntryCard'
+import { deleteEntryInMongoDB } from '../../services.js'
+import { ModalBackground } from '../..//common/ModalBackground.js'
+import { DiaryEntryCard } from '../diaryEntry/DiaryEntryCard'
 import PropTypes from 'prop-types'
 
 const ModalContainer = styled.div`

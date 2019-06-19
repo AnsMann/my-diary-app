@@ -2,9 +2,9 @@ import React from 'react'
 import moment from 'moment'
 import 'moment/locale/de'
 
-import { Header } from './Header'
-import { DiaryEntryForm } from './DiaryEntryForm'
-import { findIndex, editEntriesInMongoDB } from './utils'
+import { Header } from '../common/Header'
+import { DiaryEntryForm } from '../common/DiaryEntryForm'
+import { findIndex, editEntriesInMongoDB } from '../utils'
 
 moment.locale('de')
 

@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { AnswerTextArea } from './AnswerTextArea'
+import { AnswerTextArea } from '../common/AnswerTextArea'
 import OutsideClickHandler from 'react-outside-click-handler'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PropTypes from 'prop-types'
-import { FormSubmitButton } from './FormSubmitButton'
+import { FormSubmitButton } from '../common/FormSubmitButton'
 
 library.add(faPencilAlt)
 

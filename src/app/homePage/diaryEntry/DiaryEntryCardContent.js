@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { EntryStatusIcons } from './EntryStatusIcons'
-import { ShowDayRating } from './ShowDayRating'
+import { ShowDayRating } from '../../common/ShowDayRating.js'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import 'moment/locale/de'

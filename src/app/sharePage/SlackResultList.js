@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { filterData } from './utils'
+import { filterData } from '../utils'
 import PropTypes from 'prop-types'
 
 const SlackResult = styled.li`

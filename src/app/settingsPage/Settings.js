@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Header } from './Header'
+import { Header } from '../common/Header'
 import { SingleSetting } from './SingleSetting'
 import { SettingsModalDialogue } from './SettingsModalDialogue'
 import {
@@ -8,11 +8,11 @@ import {
   patchOnSync,
   postOnSync,
   getEntriesFromMongoDB,
-} from './services'
+} from '../services'
 import { SyncConfirmationModalDialogue } from './SyncConfirmationModalDialogue'
 import { SyncFailedModalDialogue } from './SyncFailedModalDialogue'
 import PropTypes from 'prop-types'
-import { ModalBackground } from './ModalBackground'
+import { ModalBackground } from '../common/ModalBackground'
 
 const SettingsContainer = styled.ul`
   overflow: scroll;

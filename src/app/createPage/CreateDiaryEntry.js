@@ -2,9 +2,9 @@ import React from 'react'
 import moment from 'moment'
 import 'moment/locale/de'
 import uid from 'uid'
-import { Header } from './Header'
-import { DiaryEntryForm } from './DiaryEntryForm'
-import { fetchEntries } from './services'
+import { Header } from '../common/Header'
+import { DiaryEntryForm } from '../common/DiaryEntryForm'
+import { fetchEntries } from '../services'
 import PropTypes from 'prop-types'
 
 moment.locale('de')

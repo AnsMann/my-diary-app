@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { ArrowBack } from './ArrowBack'
+import { ArrowBack } from '../common/ArrowBack'
 import { SlackResultList } from './SlackResultList'
-import { getLocalStorage, getSlackInfo, setLocalStorage } from './services'
-import { handleSlackContactData, handleSlackChannelData } from './utils'
+import { getLocalStorage, getSlackInfo, setLocalStorage } from '../services'
+import { handleSlackContactData, handleSlackChannelData } from '../utils'
 import { SearchArea } from './SearchArea'
 import PropTypes from 'prop-types'
 

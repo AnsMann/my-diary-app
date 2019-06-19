@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { DiaryEntry } from './DiaryEntry'
-import { Header } from './Header'
-import { filterEntries, sortEntries } from './utils'
-import { DiaryLogo } from './DiaryLogo'
-import { FilterAndSort } from './FilterAndSort'
+import { Header } from '../../common/Header.js'
+import { filterEntries, sortEntries } from '../../utils.js'
+import { DiaryLogo } from '../../common/DiaryLogo.js'
+import { FilterAndSort } from '../filterAndSort/FilterAndSort'
 import PropTypes from 'prop-types'
 
 const DiaryEntriesContainer = styled.ul`

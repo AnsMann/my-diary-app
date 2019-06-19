@@ -6,21 +6,21 @@ import moment from 'moment'
 import 'moment/locale/de'
 import ScrollMemory from 'react-router-scroll-memory'
 
-import { Footer } from './Footer'
-import { DiaryEntriesList } from './DiaryEntriesList'
-import { CreateDiaryEntry } from './CreateDiaryEntry'
+import { Footer } from './navigation/Footer'
+import { DiaryEntriesList } from './homePage/List/DiaryEntriesList'
+import { CreateDiaryEntry } from './createPage/CreateDiaryEntry'
 import {
   getEntriesFromMongoDB,
   setLocalStorage,
   getLocalStorage,
 } from './services'
-import { DiaryEntryDetails } from './DiaryEntryDetails'
-import { ShareDiaryEntry } from './ShareDiaryEntry'
+import { DiaryEntryDetails } from './entryDetailsPage/DiaryEntryDetails'
+import { ShareDiaryEntry } from './sharePage/ShareDiaryEntry'
 import { findIndex } from './utils'
-import { EditDiaryEntry } from './EditDiaryEntry'
-import { Settings } from './Settings'
+import { EditDiaryEntry } from './editPage/EditDiaryEntry'
+import { Settings } from './settingsPage/Settings'
 import { NoConnectionModal } from './NoConnectionModal'
-import { ModalBackground } from './ModalBackground'
+import { ModalBackground } from './common/ModalBackground'
 
 moment.locale('de')
 
