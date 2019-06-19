@@ -9,13 +9,18 @@ Enzyme.configure({ adapter: new Adapter() })
 
 describe('Arrowicon as backbutton', () => {
   it('renders an element', () => {
-    const component = renderer.create(<ArrowBack />)
+    const callback = jest.fn()
+    const component = renderer.create(
+      <ArrowBack onBackClick={callback} history={window.history} />
+    )
     const tree = component.toJSON()
     expect(tree).toMatchSnapshot()
   })
   it('triggers a callback when clicked', () => {
     const callback = jest.fn()
-    const button = mount(<ArrowBack onBackClick={callback} />)
+    const button = mount(
+      <ArrowBack onBackClick={callback} history={window.history} />
+    )
     button.simulate('click')
     expect(callback).toHaveBeenCalled()
   })

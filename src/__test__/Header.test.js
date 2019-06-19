@@ -8,7 +8,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 describe('Header with different title', () => {
   it('renders an element', () => {
-    const component = renderer.create(<Header />)
+    const component = renderer.create(<Header title={'test title'} />)
     const tree = component.toJSON()
     expect(tree).toMatchSnapshot()
   })

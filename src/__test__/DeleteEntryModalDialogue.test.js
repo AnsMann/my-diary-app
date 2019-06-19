@@ -42,5 +42,6 @@ describe('Modaldialogue to confirm or abort deletion', () => {
       .at(1)
       .simulate('click')
     expect(callbackAbort).toHaveBeenCalled()
+    component.unmount()
   })
 })

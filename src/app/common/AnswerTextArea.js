@@ -31,6 +31,6 @@ export function AnswerTextArea({
 AnswerTextArea.propTypes = {
   rows: PropTypes.number,
   placeholder: PropTypes.string,
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
   defaultValue: PropTypes.string,
 }
